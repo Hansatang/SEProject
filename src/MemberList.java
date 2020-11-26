@@ -1,13 +1,14 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class MemberList
+public class MemberList implements Serializable
 {
 
   private ArrayList<Member> members;
 
-  public MemberList(ArrayList<Member> members)
+  public MemberList()
   {
-    this.members = members;
+    this.members = new ArrayList<>();
   }
 
   /**
@@ -26,13 +27,37 @@ public class MemberList
    */
   public Member get(int index)
   {
-    if(index< members.size())
-    {
-      return members.get(index);
-    }
-    else
-    {
-      return null;
-    }
+    return members.get(index);
   }
+
+  public void addMember(Member member){
+    members.add(member);
+  }
+
+  public void removeMember(Member member){
+    members.remove(member);
+  }
+
+  public int getIndexFromName(String name){
+    for(int i = 0 ; i < members.size() ; i++){
+
+      if(members.get(i).getName().equals(name)){
+        return i;
+      }
+
+    }
+    return -1;
+  }
+
+  public ArrayList<Member> getMembers() {
+    return members;
+  }
+
+  public boolean equals(Object obj){
+    if(getMembers().equals((ArrayList)obj)){
+      return true;
+    }
+    return false;
+  }
+
 }

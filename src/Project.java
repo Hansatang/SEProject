@@ -6,17 +6,11 @@ public class Project
   private ArrayList<Requirement> requirements;
   private MemberList team;
 
-  public Project(String name, ArrayList<Requirement> requirements,
-      MemberList team)
+  public Project(String name, MemberList team)
   {
     this.name = name;
-    this.requirements = requirements;
+    this.requirements = new ArrayList<>();
     this.team = team;
-  }
-
-  public void editProject()
-  {
-
   }
 
   /**
@@ -29,11 +23,23 @@ public class Project
   }
 
   /**
+   * Sets the project's requirements.
+   * @return void
+   */
+  public void setRequirements(ArrayList<Requirement> requirements) {
+    this.requirements = requirements;
+  }
+
+  /**
    * Gets the project's team.
    * @return the project's team
    */
   public MemberList getTeam()
   {
     return team;
+  }
+
+  public String toString(){
+    return name;
   }
 }

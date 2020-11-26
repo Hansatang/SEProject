@@ -21,4 +21,7 @@ public class Task
     this.deadline = deadline;
   }
 
+  public String getName() {
+    return name;
+  }
 }

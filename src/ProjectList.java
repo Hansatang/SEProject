@@ -6,7 +6,7 @@ public class ProjectList
 
   public ProjectList()
   {
-    this.projects = projects;
+    this.projects = new ArrayList<>();
   }
 
   public void addProject()
@@ -52,6 +52,26 @@ public class ProjectList
     {
       return null;
     }
+  }
+
+  // Should be bullshit but...
+  public int[] getIndexesFromInput(String name){
+
+    ArrayList<Integer> searchResultIndexesArrList = new ArrayList<>();
+
+    for(int i = 0 ; i < projects.size() ; i++){
+
+      if(projects.get(i).getName().contains(name)){
+        searchResultIndexesArrList.add(i);
+      }
+    }
+
+    int[] searchResultIndexesArr = new int[searchResultIndexesArrList.size()];
+    for(int i = 0 ; i < searchResultIndexesArr.length ; i++){
+      searchResultIndexesArr[i] = searchResultIndexesArrList.get(i);
+    }
+
+    return searchResultIndexesArr;
   }
 
   /**

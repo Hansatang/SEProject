@@ -21,5 +21,9 @@ public class Requirement
     this.tasks = tasks;
   }
 
+  public String getName(){
+    return name;
+  }
+
 
 }
