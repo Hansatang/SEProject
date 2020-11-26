@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+   <children>
+      <MenuBar prefHeight="33.0" prefWidth="605.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <TabPane prefHeight="371.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+        <tabs>
+          <Tab closable="false" text="Employee List">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <VBox prefHeight="567.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <VBox prefHeight="539.0" prefWidth="600.0" />
+                              <HBox alignment="BASELINE_CENTER" prefHeight="17.0" prefWidth="600.0" spacing="50.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" text="Add Employee" />
+                                    <Button mnemonicParsing="false" text="Edit Employee" />
+                                    <Button mnemonicParsing="false" text="Remove Employee" />
+                                 </children>
+                              </HBox>
+                           </children></VBox>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab closable="false" text="Projects List">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <VBox layoutX="1.0" prefHeight="350.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <VBox>
+                                 <children>
+                                    <HBox alignment="CENTER" prefHeight="43.0" prefWidth="600.0">
+                                       <children>
+                                          <VBox alignment="CENTER_LEFT" prefHeight="43.0" prefWidth="143.0">
+                                             <children>
+                                                <RadioButton mnemonicParsing="false" prefHeight="17.0" prefWidth="114.0" selected="true" text="Search by name">
+                                                   <toggleGroup>
+                                                      <ToggleGroup fx:id="SearchGroup" />
+                                                   </toggleGroup>
+                                                </RadioButton>
+                                                <RadioButton mnemonicParsing="false" text="Search by employee" toggleGroup="$SearchGroup" />
+                                             </children>
+                                          </VBox>
+                                          <TextField alignment="CENTER" prefHeight="25.0" prefWidth="400.0" />
+                                          <Button mnemonicParsing="false" text="Button" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <HBox prefHeight="548.0" prefWidth="600.0">
+                                 <children>
+                                    <VBox prefHeight="200.0" prefWidth="298.0" />
+                                    <VBox prefHeight="200.0" prefWidth="300.0">
+                                       <children>
+                                          <Label prefHeight="17.0" prefWidth="329.0" text="Project info" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="BASELINE_CENTER" prefHeight="17.0" prefWidth="600.0" spacing="50.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" text="Add Project" />
+                                    <Button mnemonicParsing="false" text="Edit Project" />
+                                    <Button mnemonicParsing="false" text="Remove Project" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab closable="false" text="Details">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <HBox prefHeight="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <VBox prefHeight="538.0" prefWidth="734.0">
+                                 <children>
+                                    <VBox prefHeight="300.0" prefWidth="100.0">
+                                       <children>
+                                          <HBox prefHeight="300.0" prefWidth="200.0">
+                                             <children>
+                                                <VBox prefHeight="200.0" prefWidth="300.0" />
+                                                <VBox prefHeight="200.0" prefWidth="300.0">
+                                                   <children>
+                                                      <Label prefHeight="17.0" prefWidth="355.0" text="Requirement info" />
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="BASELINE_CENTER" prefHeight="17.0" prefWidth="600.0" spacing="50.0">
+                                             <children>
+                                                <Button mnemonicParsing="false" text="Add Requirement" />
+                                                <Button mnemonicParsing="false" text="Edit Requirement" />
+                                                <Button mnemonicParsing="false" text="Remove Requirement" />
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="300.0" prefWidth="100.0">
+                                       <children>
+                                          <HBox prefHeight="300.0" prefWidth="200.0">
+                                             <children>
+                                                <VBox prefHeight="200.0" prefWidth="300.0" />
+                                                <VBox prefHeight="200.0" prefWidth="300.0">
+                                                   <children>
+                                                      <Label prefHeight="17.0" prefWidth="400.0" text="Task info" />
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="BASELINE_CENTER" prefHeight="17.0" prefWidth="600.0" spacing="50.0">
+                                             <children>
+                                                <Button mnemonicParsing="false" text="Add Task" />
+                                                <Button mnemonicParsing="false" text="Edit Task" />
+                                                <Button mnemonicParsing="false" text="Remove Task" />
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</VBox>
