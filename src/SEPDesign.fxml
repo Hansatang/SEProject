@@ -80,32 +80,27 @@
                                        <children>
                                           <VBox alignment="CENTER_LEFT" prefHeight="43.0" prefWidth="143.0">
                                              <children>
-                                                <RadioButton mnemonicParsing="false" prefHeight="17.0" prefWidth="114.0" selected="true" text="Search by name">
+                                                <RadioButton fx:id="searchByName" mnemonicParsing="false" prefHeight="17.0" prefWidth="114.0" selected="true" text="Search by name">
                                                    <toggleGroup>
                                                       <ToggleGroup fx:id="SearchGroup" />
                                                    </toggleGroup>
                                                 </RadioButton>
-                                                <RadioButton mnemonicParsing="false" text="Search by employee" toggleGroup="$SearchGroup" />
+                                                <RadioButton fx:id="searchByEmployee" mnemonicParsing="false" text="Search by employee" toggleGroup="$SearchGroup" />
                                              </children>
                                           </VBox>
                                           <TextField fx:id="searchField" alignment="CENTER" onAction="#search" prefHeight="25.0" prefWidth="400.0" />
-                                          <Button fx:id="searchButton" mnemonicParsing="false" onAction="#searchClick" text="Button" />
+                                          <Button fx:id="searchButton" mnemonicParsing="false" onAction="#searchClick" text="Search" />
                                        </children>
                                     </HBox>
-                                    <TableView fx:id="projectTab" prefHeight="278.0" prefWidth="600.0">
+                                    <TableView fx:id="projectField" prefHeight="549.0" prefWidth="600.0">
                                       <columns>
-                                        <TableColumn prefWidth="300.0" text="C1" />
-                                        <TableColumn prefWidth="299.0" text="C2" />
+                                        <TableColumn fx:id="projectName" prefWidth="300.0" text="Project name" />
+                                        <TableColumn fx:id="projectTeam" prefWidth="299.0" text="Team" />
                                       </columns>
                                     </TableView>
                                  </children>
                               </VBox>
-                              <VBox prefHeight="200.0" prefWidth="300.0">
-                                 <children>
-                                    <Label prefHeight="350.0" prefWidth="600.0" text="Project info" />
-                                    <HBox prefHeight="548.0" prefWidth="600.0" />
-                                 </children>
-                              </VBox>
+                              <VBox prefHeight="0.0" prefWidth="600.0" />
                               <HBox alignment="BASELINE_CENTER" prefHeight="17.0" prefWidth="600.0" spacing="50.0">
                                  <children>
                                     <Button fx:id="addProjectButton" mnemonicParsing="false" onAction="#addProjectClick" text="Add Project" />
@@ -119,60 +114,64 @@
                   </AnchorPane>
             </content>
           </Tab>
-            <Tab fx:id="projectDetailsTab" closable="false" text="Project details">
+            <Tab fx:id="projectDetailsTab" closable="false" disable="true" text="Project details">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <HBox prefHeight="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <VBox prefHeight="538.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <VBox prefHeight="538.0" prefWidth="734.0">
+                              <TableView fx:id="requirementField" prefHeight="304.0" prefWidth="600.0">
+                                <columns>
+                                  <TableColumn prefWidth="150.0" text="C1" />
+                                  <TableColumn prefWidth="150.0" text="C2" />
+                                    <TableColumn prefWidth="150.0" text="Column X" />
+                                    <TableColumn prefWidth="150.0" text="Column X" />
+                                </columns>
+                              </TableView>
+                              <VBox prefHeight="248.0" prefWidth="600.0">
                                  <children>
-                                    <VBox prefHeight="300.0" prefWidth="100.0">
-                                       <children>
-                                          <HBox prefHeight="300.0" prefWidth="200.0">
-                                             <children>
-                                                <VBox prefHeight="200.0" prefWidth="300.0" />
-                                                <VBox prefHeight="200.0" prefWidth="300.0">
-                                                   <children>
-                                                      <Label prefHeight="17.0" prefWidth="355.0" text="Requirement info" />
-                                                   </children>
-                                                </VBox>
-                                             </children>
-                                          </HBox>
-                                          <HBox alignment="BASELINE_CENTER" prefHeight="17.0" prefWidth="600.0" spacing="50.0">
-                                             <children>
-                                                <Button mnemonicParsing="false" text="Add Requirement" />
-                                                <Button mnemonicParsing="false" text="Edit Requirement" />
-                                                <Button mnemonicParsing="false" text="Remove Requirement" />
-                                             </children>
-                                          </HBox>
-                                       </children>
-                                    </VBox>
-                                    <VBox prefHeight="300.0" prefWidth="100.0">
-                                       <children>
-                                          <HBox prefHeight="300.0" prefWidth="200.0">
-                                             <children>
-                                                <VBox prefHeight="200.0" prefWidth="300.0" />
-                                                <VBox prefHeight="200.0" prefWidth="300.0">
-                                                   <children>
-                                                      <Label prefHeight="17.0" prefWidth="400.0" text="Task info" />
-                                                   </children>
-                                                </VBox>
-                                             </children>
-                                          </HBox>
-                                          <HBox alignment="BASELINE_CENTER" prefHeight="17.0" prefWidth="600.0" spacing="50.0">
-                                             <children>
-                                                <Button mnemonicParsing="false" text="Add Task" />
-                                                <Button mnemonicParsing="false" text="Edit Task" />
-                                                <Button mnemonicParsing="false" text="Remove Task" />
-                                             </children>
-                                          </HBox>
-                                       </children>
-                                    </VBox>
+                                    <Label prefHeight="17.0" prefWidth="355.0" text="Requirement info" />
                                  </children>
                               </VBox>
+                              <HBox alignment="BASELINE_CENTER" prefHeight="17.0" prefWidth="600.0" spacing="50.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" text="Add Requirement" />
+                                    <Button mnemonicParsing="false" text="Edit Requirement" />
+                                    <Button mnemonicParsing="false" text="Remove Requirement" />
+                                 </children>
+                              </HBox>
                            </children>
-                        </HBox>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab disable="true" text="Requirement Details">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <VBox prefHeight="540.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <TableView fx:id="taskFIeld" prefHeight="308.0" prefWidth="600.0">
+                                <columns>
+                                  <TableColumn prefWidth="75.0" text="C1" />
+                                  <TableColumn prefWidth="75.0" text="C2" />
+                                </columns>
+                              </TableView>
+                              <VBox prefHeight="228.0" prefWidth="600.0">
+                                 <children>
+                                    <Label prefHeight="17.0" prefWidth="400.0" text="Task info" />
+                                 </children>
+                              </VBox>
+                              <HBox alignment="BASELINE_CENTER" prefHeight="17.0" prefWidth="600.0" spacing="50.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" text="Add Task" />
+                                    <Button mnemonicParsing="false" text="Edit Task" />
+                                    <Button mnemonicParsing="false" text="Remove Task" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
                      </children>
                   </AnchorPane>
               </content>

@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Project
+public class Project implements Serializable
 {
   private String name;
   private ArrayList<Requirement> requirements;
@@ -10,6 +11,14 @@ public class Project
   {
     this.name = name;
     this.requirements = new ArrayList<>();
+    this.team = team;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public void setTeam(MemberList team) {
     this.team = team;
   }
 
@@ -29,6 +38,16 @@ public class Project
   public void setRequirements(ArrayList<Requirement> requirements) {
     this.requirements = requirements;
   }
+  public String getValue()
+  {
+    String str = "";
+    for (int i = 0; i < team.size(); i++)
+    {
+      str+= team.get(i).getName()+" ,";
+    }
+    return str;
+  }
+
 
   /**
    * Gets the project's team.

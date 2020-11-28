@@ -63,11 +63,11 @@ public class EmployeeListAdapter
     }
     catch (FileNotFoundException e)
     {
-      System.out.println("File not found");
+      System.out.println("File not found: " + fileName);
     }
     catch (IOException e)
     {
-      System.out.println("IO Error writing to file");
+      System.out.println("IO Error writing to file: " + fileName);
     }
   }
 
