@@ -6,11 +6,10 @@ public class Task implements Serializable
   private int relatedRequirement,taskID, estimatedHours,totalHoursWorked;
   private Member responsibleMember;
   private  MemberList taskMembers;
-  private Deadline deadline;
 
   public Task(String name, String status, int relatedRequirement, int taskID,
       int estimatedHours, int totalHoursWorked, Member responsibleMember,
-      MemberList taskMembers, Deadline deadline)
+      MemberList taskMembers)
   {
     this.name = name;
     this.status = status;
@@ -20,7 +19,6 @@ public class Task implements Serializable
     this.totalHoursWorked = totalHoursWorked;
     this.responsibleMember = responsibleMember;
     this.taskMembers = taskMembers;
-    this.deadline = deadline;
   }
 
   public String getName() {

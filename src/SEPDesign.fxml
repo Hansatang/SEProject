@@ -122,10 +122,9 @@
                            <children>
                               <TableView fx:id="requirementField" prefHeight="304.0" prefWidth="600.0">
                                 <columns>
-                                  <TableColumn prefWidth="150.0" text="C1" />
-                                  <TableColumn prefWidth="150.0" text="C2" />
-                                    <TableColumn prefWidth="150.0" text="Column X" />
-                                    <TableColumn prefWidth="150.0" text="Column X" />
+                                  <TableColumn fx:id="requirementName" prefWidth="200.0" text="Name" />
+                                  <TableColumn fx:id="requirementStatus" prefWidth="200.0" text="Status" />
+                                    <TableColumn fx:id="requirementDeadline" prefWidth="200.0" text="Deadline" />
                                 </columns>
                               </TableView>
                               <VBox prefHeight="248.0" prefWidth="600.0">
@@ -135,9 +134,9 @@
                               </VBox>
                               <HBox alignment="BASELINE_CENTER" prefHeight="17.0" prefWidth="600.0" spacing="50.0">
                                  <children>
-                                    <Button mnemonicParsing="false" text="Add Requirement" />
-                                    <Button mnemonicParsing="false" text="Edit Requirement" />
-                                    <Button mnemonicParsing="false" text="Remove Requirement" />
+                                    <Button fx:id="addRequirementButton" mnemonicParsing="false" onAction="#addRequirementClick" text="Add Requirement" />
+                                    <Button fx:id="editRequirementButton" mnemonicParsing="false" onAction="#editRequirementClick" text="Edit Requirement" />
+                                    <Button fx:id="removeRequirementButton" mnemonicParsing="false" onAction="#removeRequirementClick" text="Remove Requirement" />
                                  </children>
                               </HBox>
                            </children>

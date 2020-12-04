@@ -14,10 +14,17 @@ public class AdapterGUI extends Application
    */
   public void start(Stage window) throws IOException
   {
+    // Set title of window
     window.setTitle("Projects Management System");
+
+    // Initialise FXMLoader and load the .FXML file type.
     FXMLLoader loader = new FXMLLoader();
     loader.setLocation(getClass().getResource("SEPDesign.fxml"));
+
+    // Initialise Scene object.
     Scene scene = new Scene(loader.load());
+
+    // Set scene of window and show window.
     window.setScene(scene);
     window.show();
   }

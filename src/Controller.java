@@ -1,6 +1,7 @@
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -8,11 +9,15 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Controller
@@ -28,14 +33,23 @@ public class Controller
   @FXML private TableColumn<Project, String> projectName;
   @FXML private TableColumn<Project, String> projectTeam;
 
-  // Project JavaFX objects
+  @FXML private TableView<Requirement> requirementField;
+  @FXML private TableColumn<Requirement, String> requirementName;
+  @FXML private TableColumn<Requirement, String> requirementStatus;
+  @FXML private TableColumn<Requirement, String> requirementDeadline;
+
+  // Project JavaFX objects \\
   TextField inputProjectName = new TextField();
   CheckBox[] memberCheckBoxes;
 
-  // Member JavaFX objects
+  // Member JavaFX objects \\
   TextField inputMemberName = new TextField();
 
-  // General JavaFX objects
+  // Requirement JavaFX objects
+  TextField inputUserStory = new TextField();
+  DatePicker inputRequirementDeadline = new DatePicker();
+
+  // General JavaFX objects \\
   Label errorLabel = new Label("");
   HashMap<String, Button> closeAndSaveButton = new HashMap<>();
 
@@ -54,12 +68,21 @@ public class Controller
   private Requirement selectedRequirement;
   private Task selectedTask;
 
+  private ArrayList<String> statusOptions = new ArrayList<>();
+
+
   /**
    * Runs one time before the GUI is shown
+   *
    * @param //args Command line arguments
    */
   public void initialize()
   {
+    statusOptions.add("Approved");
+    statusOptions.add("Ended");
+    statusOptions.add("Not Started");
+    statusOptions.add("Rejected");
+    statusOptions.add("Started");
     employeeName
         .setCellValueFactory(new PropertyValueFactory<Member, String>("Name"));
     projectName
@@ -83,11 +106,14 @@ public class Controller
     closeAndSaveButton.put("addProject", new Button("Add new project"));
     closeAndSaveButton.put("editProject", new Button("Save and close"));
 
+    closeAndSaveButton.put("addRequirement", new Button("Add new requirement"));
+    closeAndSaveButton.put("editRequirement", new Button("Save and close"));
 
   }
 
   /**
    * Method used to select a member with the mouse in the TableView so the member later can be edited or removed.
+   *
    * @param //args Command line arguments
    */
   private void setSelectedMember()
@@ -110,6 +136,7 @@ public class Controller
 
   /**
    * Method used to select a project with the mouse in the TableView so the member later can be edited or removed.
+   *
    * @param //args Command line arguments
    */
   private void setSelectedProject()
@@ -135,6 +162,7 @@ public class Controller
 
   /**
    * Updates the ProjectList objects the TreeView<Project> on the GUI
+   *
    * @param //args Command line arguments
    */
   private void updateProjectArea()
@@ -152,6 +180,7 @@ public class Controller
 
   /**
    * Updates the MemberList objects the TreeView<Member> on the GUI
+   *
    * @param //args Command line arguments
    */
   private void updateEmployeeArea()
@@ -169,6 +198,7 @@ public class Controller
 
   /**
    * FXML method to the button which add a new employee
+   *
    * @param //args Command line arguments
    */
   @FXML public void addEmployeeClick()
@@ -188,13 +218,13 @@ public class Controller
     inputMemberName.setPromptText("Enter member name");
     nameContainer.getChildren().addAll(memberName, inputMemberName);
 
-
-    closeAndSaveButton.get("addEmployee").setOnAction(new PopupListener(window));
+    closeAndSaveButton.get("addEmployee")
+        .setOnAction(new PopupListener(window));
 
     VBox layout = new VBox(10);
 
-    layout.getChildren()
-        .addAll(nameContainer, errorLabel, closeAndSaveButton.get("addEmployee"));
+    layout.getChildren().addAll(nameContainer, errorLabel,
+        closeAndSaveButton.get("addEmployee"));
     layout.setAlignment(Pos.CENTER);
 
     Scene scene = new Scene(layout);
@@ -206,6 +236,7 @@ public class Controller
 
   /**
    * FXML method to the button which edits a selected employee
+   *
    * @param //args Command line arguments
    */
   @FXML public void editEmployeeClick()
@@ -230,7 +261,8 @@ public class Controller
 
       Button closeWithSaveButton = new Button("Save changes");
 
-      closeAndSaveButton.get("editEmployee").setOnAction(new PopupListener(window));
+      closeAndSaveButton.get("editEmployee")
+          .setOnAction(new PopupListener(window));
 
       closeWithSaveButton.setOnAction(new EventHandler<ActionEvent>()
       {
@@ -270,11 +302,11 @@ public class Controller
       window.showAndWait();
 
     }
-
   }
 
   /**
    * FXML method to the button which removes a selected employee
+   *
    * @param //args Command line arguments
    */
   @FXML public void removeEmployeeClick()
@@ -343,6 +375,7 @@ public class Controller
 
   /**
    * FXML method to the button which adds a new project
+   *
    * @param //args Command line arguments
    */
   @FXML public void addProjectClick()
@@ -385,9 +418,8 @@ public class Controller
 
     VBox layout = new VBox(10);
 
-    layout.getChildren()
-        .addAll(nameContainer, memberListContainer, closeAndSaveButton.get("addProject"),
-            errorLabel);
+    layout.getChildren().addAll(nameContainer, memberListContainer,
+        closeAndSaveButton.get("addProject"), errorLabel);
 
     layout.setAlignment(Pos.CENTER);
 
@@ -400,6 +432,7 @@ public class Controller
 
   /**
    * FXML method to the button which edits a selected project
+   *
    * @param //args Command line arguments
    */
   @FXML public void editProjectClick()
@@ -447,15 +480,13 @@ public class Controller
       memberListContainer.getChildren()
           .addAll(membersLabel, memberSelectContainer);
 
-      closeAndSaveButton.get("editProject").setOnAction(new PopupListener(window));
+      closeAndSaveButton.get("editProject")
+          .setOnAction(new PopupListener(window));
 
       VBox layout = new VBox(10);
 
-      layout.getChildren().addAll(
-              nameContainer,
-              memberListContainer,
-              closeAndSaveButton.get("editProject"),
-              errorLabel);
+      layout.getChildren().addAll(nameContainer, memberListContainer,
+          closeAndSaveButton.get("editProject"), errorLabel);
 
       layout.setAlignment(Pos.CENTER);
 
@@ -468,6 +499,7 @@ public class Controller
 
   /**
    * FXML method to the button which removes a selected project
+   *
    * @param //args Command line arguments
    */
   @FXML public void removeProjectClick()
@@ -535,8 +567,135 @@ public class Controller
   }
 
   /**
+   * FXML method to the button which adds a new requirement
+   *
+   * @param //args Command line arguments
+   */
+  @FXML public void addRequirementClick()
+  {
+    Stage window = new Stage();
+    errorLabel.setText("");
+
+    window.initModality(Modality.APPLICATION_MODAL);
+    window.setTitle("Add new requirement");
+    window.setMinWidth(300);
+
+    // Requirement name input.
+    VBox nameContainer = new VBox();
+    nameContainer.setPadding(new Insets(10, 10, 0, 10));
+    Label projectName = new Label("Requirement name: ");
+    TextField inputRequirementName = new TextField();
+    inputRequirementName.setPromptText("Enter requirement name");
+
+    nameContainer.getChildren().addAll(projectName, inputProjectName);
+
+    // Requirement user story input.
+    VBox userStoryContainer = new VBox();
+    userStoryContainer.setPadding(new Insets(10, 10, 0, 10));
+    Label userStory = new Label("User story: ");
+    inputUserStory = new TextField();
+    inputUserStory.setPromptText("Enter user story");
+
+    userStoryContainer.getChildren().addAll(userStory, inputUserStory);
+
+    // Requirement status input.
+    VBox statusContainer = new VBox();
+    statusContainer.setPadding(new Insets(10, 10, 0, 10));
+    Label status = new Label("Status: ");
+
+    ComboBox inputStatus = new ComboBox();
+    for (int i = 0; i < statusOptions.size(); i++)
+    {
+      inputStatus.getItems().add(statusOptions.get(i));
+    }
+    statusContainer.getChildren().addAll(status, inputStatus);
+
+
+    // Requirement deadline input.
+    VBox deadlineContainer = new VBox();
+    deadlineContainer.setPadding(new Insets(10, 10, 0, 10));
+    Label taskDeadline = new Label("Deadline:");
+    inputRequirementDeadline.setShowWeekNumbers(false);
+    final DatePicker datePicker = new DatePicker();
+    datePicker.setOnAction(new EventHandler()
+    {
+      public void handle(Event t)
+      {
+        LocalDate date = datePicker.getValue();
+        System.err.println("Selected date: " + date);
+      }
+    });
+    inputRequirementDeadline.setDayCellFactory(picker -> new DateCell()
+    {
+      public void updateItem(LocalDate date, boolean empty)
+      {
+        super.updateItem(date, empty);
+        setDisable(empty || date.compareTo(LocalDate.now()) < 1);
+      }
+    });
+    inputRequirementDeadline.setOnAction(new EventHandler()
+    {
+      public void handle(Event t)
+      {
+        System.err
+            .println("Selected date: " + inputRequirementDeadline.getValue());
+      }
+    });
+    inputRequirementDeadline.setPromptText("Set deadline..");
+
+    deadlineContainer.getChildren()
+        .addAll(taskDeadline, inputRequirementDeadline);
+
+    // Requirement member list input.
+    VBox memberListContainer = new VBox();
+    memberListContainer.setPadding(new Insets(0, 10, 0, 10));
+    Label membersLabel = new Label("Select members: ");
+    GridPane memberSelectContainer = new GridPane();
+    memberCheckBoxes = new CheckBox[finalMemberList.size()];
+
+    for (int i = 0; i < memberCheckBoxes.length; i++)
+    {
+      memberCheckBoxes[i] = new CheckBox(finalMemberList.get(i).getName());
+      memberSelectContainer.add(memberCheckBoxes[i], i % 2, i / 2);
+      memberCheckBoxes[i].setPadding(new Insets(3, 50, 3, 3));
+    }
+
+    // Add member label Node and member selection Node
+    memberListContainer.getChildren()
+        .addAll(membersLabel, memberSelectContainer);
+
+    VBox layout = new VBox(10);
+
+    layout.getChildren()
+        .addAll(nameContainer, userStoryContainer,statusContainer, memberListContainer,
+            deadlineContainer, closeAndSaveButton.get("addRequirement"),
+            errorLabel);
+
+
+
+    layout.setAlignment(Pos.CENTER);
+
+    Scene scene = new Scene(layout);
+    window.setResizable(false);
+    window.setScene(scene);
+    window.showAndWait();
+
+  }
+
+  @FXML public void editRequirementClick()
+  {
+
+  }
+
+  @FXML public void removeRequirementClick()
+  {
+
+  }
+
+  /**
    * FXML method to the search TextField.
-   *  Description missing yet
+   * Description missing yet
+   *
    * @param //args Command line arguments
    */
   @FXML public void search()
@@ -580,6 +739,7 @@ public class Controller
   /**
    * Class to handle events from popup windows.
    * Popup windows includes the buttons which adds/edits employees, projects, requirements and tasks.
+   *
    * @param
    */
   private class PopupListener implements EventHandler<ActionEvent>
@@ -594,9 +754,10 @@ public class Controller
 
     @Override public void handle(ActionEvent actionEvent)
     {
-      if (actionEvent.getSource() == closeAndSaveButton.get("addEmployee")){
+      if (actionEvent.getSource() == closeAndSaveButton.get("addEmployee"))
+      {
         if (!(inputMemberName.getText().isEmpty() || inputMemberName.getText()
-                .equals("")))
+            .equals("")))
         {
           window.close();
           Member member = new Member(inputMemberName.getText());
@@ -611,17 +772,19 @@ public class Controller
           errorLabel.setTextFill(Color.RED);
         }
       }
-      else if (actionEvent.getSource() == closeAndSaveButton.get("editEmployee")){
+      else if (actionEvent.getSource() == closeAndSaveButton
+          .get("editEmployee"))
+      {
         if (!(inputMemberName.getText().isEmpty() || inputMemberName.getText()
-                .equals("")))
+            .equals("")))
         {
           window.close();
           Member member = new Member(inputMemberName.getText());
           System.out.println(member.getName());
           finalMemberList.getIndexFromName(selectedMember.getName());
           finalMemberList
-                  .get(finalMemberList.getIndexFromName(selectedMember.getName()))
-                  .setName(inputMemberName.getText());
+              .get(finalMemberList.getIndexFromName(selectedMember.getName()))
+              .setName(inputMemberName.getText());
           adapterEmployee.saveMembers(finalMemberList);
           updateEmployeeArea();
           updateProjectArea();
@@ -632,7 +795,8 @@ public class Controller
           errorLabel.setTextFill(Color.RED);
         }
       }
-      else if (actionEvent.getSource() == closeAndSaveButton.get("addProject")){
+      else if (actionEvent.getSource() == closeAndSaveButton.get("addProject"))
+      {
         selectedMembers = new MemberList();
         for (int i = 0; i < memberCheckBoxes.length; i++)
         {
@@ -640,13 +804,13 @@ public class Controller
           {
             selectedMembers.addMember(finalMemberList.get(i));
             System.out.println(
-                    "Member " + finalMemberList.get(i) + " has been added to "
-                            + inputProjectName.getText());
+                "Member " + finalMemberList.get(i) + " has been added to "
+                    + inputProjectName.getText());
           }
         }
 
         if (inputProjectName.getText().isEmpty() || inputProjectName.getText()
-                .equals(""))
+            .equals(""))
         {
           errorLabel.setText("ERROR: Fix name");
         }
@@ -659,14 +823,15 @@ public class Controller
           window.close();
 
           Project project = new Project(inputProjectName.getText(),
-                  selectedMembers);
+              selectedMembers);
           finalProjectList.add(project);
           adapterProjects.saveProjects(finalProjectList);
           System.out.println("Added project " + project);
           updateProjectArea();
         }
       }
-      else if (actionEvent.getSource() == closeAndSaveButton.get("editProject")) {
+      else if (actionEvent.getSource() == closeAndSaveButton.get("editProject"))
+      {
 
         // Make team of the new selected members
         selectedMembers = new MemberList();
@@ -676,22 +841,24 @@ public class Controller
           {
             selectedMembers.addMember(finalMemberList.get(i));
             System.out.println(
-                    "Member " + finalMemberList.get(i) + " has been added to "
-                            + inputProjectName.getText());
+                "Member " + finalMemberList.get(i) + " has been added to "
+                    + inputProjectName.getText());
           }
         }
 
         //Check for errors
 
         if (inputProjectName.getText().isEmpty() || inputProjectName.getText()
-                .equals(""))
+            .equals(""))
         {
           errorLabel.setText("ERROR: Fix name");
         }
         else if (selectedMembers.size() == 0)
         {
           errorLabel.setText("ERROR: Fix members");
-        } else {
+        }
+        else
+        {
 
           window.close();
 
@@ -700,6 +867,9 @@ public class Controller
           adapterProjects.saveProjects(finalProjectList);
           updateProjectArea();
         }
+      } else if(actionEvent.getSource() == closeAndSaveButton.get("addRequirement")){
+
+        System.out.println("Days until deadline: " + inputRequirementDeadline);
       }
     }
   }
