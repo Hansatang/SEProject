@@ -14,6 +14,15 @@ public class Project implements Serializable
     this.team = team;
   }
 
+  public ArrayList<Requirement> getRequirements()
+  {
+    return requirements;
+  }
+  public void add(Requirement requirement)
+  {
+    requirements.add(requirement);
+  }
+
   public void setName(String name) {
     this.name = name;
   }

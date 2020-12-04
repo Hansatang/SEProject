@@ -145,7 +145,7 @@
                   </AnchorPane>
               </content>
             </Tab>
-            <Tab disable="true" text="Requirement Details">
+            <Tab fx:id="requirementDetailsTab" disable="true" text="Requirement Details">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
