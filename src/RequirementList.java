@@ -35,6 +35,7 @@ public class RequirementList implements Serializable
         return -1;
     }
 
+
     public ArrayList<Requirement> getRequirements() {
         return requirements;
     }
@@ -49,4 +50,13 @@ public class RequirementList implements Serializable
         return false;
     }
 
+    public void remove(Requirement requirement)
+    {
+        requirements.remove(requirement);
+    }
+
+    public void remove(Task selectedTask)
+    {
+        requirements.remove(selectedTask);
+    }
 }

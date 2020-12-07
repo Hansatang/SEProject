@@ -58,7 +58,6 @@ public class EmployeeListAdapter
   {
     try
     {
-      System.out.println(members.get(0).getName());
       mfio.writeToFile(fileName, members);
     }
     catch (FileNotFoundException e)

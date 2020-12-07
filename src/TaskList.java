@@ -22,6 +22,10 @@ public class TaskList implements Serializable
         return tasks.get(index);
     }
 
+    public int size(){
+        return tasks.size();
+    }
+
     public int getIndexFromName(String name){
         for(int i = 0 ; i < tasks.size() ; i++){
             if(tasks.get(i).getName().equals(name)){
@@ -29,6 +33,10 @@ public class TaskList implements Serializable
             }
         }
         return -1;
+    }
+
+    public boolean isEmpty(){
+        return tasks.isEmpty();
     }
 
     public ArrayList<Task> getTasks() {

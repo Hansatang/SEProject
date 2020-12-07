@@ -6,7 +6,7 @@ public class Requirement implements Serializable
 {
   private String name,userstory,status;
   private int estimatedHours,totalHoursWorked;
-  private ArrayList<Task> tasks;
+  private TaskList tasks;
   private LocalDate deadline;
   private MemberList team;
 
@@ -22,8 +22,38 @@ public class Requirement implements Serializable
     this.status = status;
     this.estimatedHours = 0;
     this.totalHoursWorked = 0;
-    this.tasks = new ArrayList<>();
+    this.tasks = new TaskList();
     this.team = team;
+  }
+
+  public TaskList getTasks()
+  {
+    return tasks;
+  }
+
+  public void setUserstory(String userstory) {
+    this.userstory = userstory;
+  }
+
+  public void setStatus(String status) {
+    this.status = status;
+  }
+
+  public void setDeadline(LocalDate deadline) {
+    this.deadline = deadline;
+  }
+
+  public void setTeam(MemberList team) {
+    this.team = team;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public void remove(Task task)
+  {
+    tasks.removeTask(task);
   }
 
   public MemberList getTeam()
@@ -42,13 +72,23 @@ public class Requirement implements Serializable
 
   public int getTotalHoursWorked()
   {
-    return totalHoursWorked;
+    int sum = 0;
+    for(int i = 0 ; i < tasks.size() ; i++){
+      sum += tasks.getTask(i).getTotalHoursWorked();
+    }
+    return sum;
   }
 
   public int getEstimatedHours()
   {
-    return estimatedHours;
+    int sum = 0;
+    for(int i = 0 ; i < tasks.size() ; i++){
+      sum += tasks.getTask(i).getEstimatedHours();
+    }
+    return sum;
   }
+
+
 
   public String getUserstory()
   {

@@ -3,28 +3,48 @@ import java.time.LocalDate;
 
 public class Task implements Serializable
 {
-  private String name,status;
-  private int relatedRequirement,taskID, estimatedHours,totalHoursWorked;
+  private String name, status, taskID;
+  private int relatedRequirement, estimatedHours, totalHoursWorked;
   private LocalDate deadline;
   private Member responsibleMember;
-  private  MemberList taskMembers;
+  private MemberList taskMembers;
 
-  public Task(String name, String status, int relatedRequirement, int taskID,
-      int estimatedHours, int totalHoursWorked, Member responsibleMember, LocalDate deadline,
+  public Task(String name, String taskID,String status, LocalDate deadline,
       MemberList taskMembers)
   {
     this.deadline = deadline;
     this.name = name;
     this.status = status;
-    this.relatedRequirement = relatedRequirement;
+    relatedRequirement = 0;
     this.taskID = taskID;
-    this.estimatedHours = estimatedHours;
-    this.totalHoursWorked = totalHoursWorked;
-    this.responsibleMember = responsibleMember;
+    estimatedHours = 0;
+    totalHoursWorked = 0;
+    responsibleMember = null;
     this.taskMembers = taskMembers;
   }
 
-  public String getName() {
+  public String getName()
+  {
     return name;
+  }
+
+  public String getStatus()
+  {
+    return status;
+  }
+
+  public LocalDate getDeadline()
+  {
+    return deadline;
+  }
+
+  public int getEstimatedHours()
+  {
+    return estimatedHours;
+  }
+
+  public int getTotalHoursWorked()
+  {
+    return totalHoursWorked;
   }
 }

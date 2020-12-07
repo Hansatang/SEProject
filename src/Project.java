@@ -4,23 +4,29 @@ import java.util.ArrayList;
 public class Project implements Serializable
 {
   private String name;
-  private ArrayList<Requirement> requirements;
+  private RequirementList requirements;
   private MemberList team;
 
   public Project(String name, MemberList team)
   {
     this.name = name;
-    this.requirements = new ArrayList<>();
+    this.requirements = new RequirementList();
     this.team = team;
   }
 
-  public ArrayList<Requirement> getRequirements()
+  public RequirementList getRequirements()
   {
     return requirements;
   }
+
+  public void remove(Requirement requirement)
+  {
+    requirements.remove(requirement);
+  }
+
   public void add(Requirement requirement)
   {
-    requirements.add(requirement);
+    requirements.getRequirements().add(requirement);
   }
 
   public void setName(String name) {
@@ -44,7 +50,7 @@ public class Project implements Serializable
    * Sets the project's requirements.
    * @return void
    */
-  public void setRequirements(ArrayList<Requirement> requirements) {
+  public void setRequirements(RequirementList requirements) {
     this.requirements = requirements;
   }
   public String getValue()
