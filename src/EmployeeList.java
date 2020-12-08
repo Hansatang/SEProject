@@ -11,9 +11,9 @@ public class EmployeeList implements Serializable
   }
 
   /**
-   * Gets how many Members objects are in the list.
+   * Gets how many Employees objects are in the list.
    *
-   * @return the number of Members objects in the list
+   * @return the number of Employees objects in the list
    */
   public int size()
   {

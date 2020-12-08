@@ -111,10 +111,10 @@ public class ProjectListAdapter
   }
 
   /**
-   * Use the MyFileIO class to retrieve all projects with specified name of member.
+   * Use the MyFileIO class to retrieve all projects with specified name of employee.
    *
-   * @param searchPhrase the name to retrieve projects with specified member
-   * @return a ProjectList object with projects with specified  member name
+   * @param searchPhrase the name to retrieve projects with specified employee
+   * @return a ProjectList object with projects with specified  employee name
    */
   public ProjectList getProjectByEmployeeName(String searchPhrase)
   {
