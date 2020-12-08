@@ -59,4 +59,16 @@ public class TaskList implements Serializable
         return tasks;
     }
 
+    public Task getTask(String taskName){
+        int k=0 ;
+        for (int i = 0; i < tasks.size(); i++)
+        {
+            if (tasks.get(i).getName().equals(taskName))
+            {
+                k=i;
+                break;
+            }
+        };
+        return tasks.get(k);
+    }
 }

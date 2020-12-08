@@ -25,7 +25,7 @@ public class EmployeeListAdapter
    * Uses the MyFileIO class to retrieve a EmployeeList object with all members.
    * @return a EmployeeList object with all stored members
    */
-  public EmployeeList getAllMembers()
+  public EmployeeList getAllEmployees()
   {
     EmployeeList members = new EmployeeList();
 
@@ -54,7 +54,7 @@ public class EmployeeListAdapter
    * Use the MyFileIO class to save members.
    * @param members the list of members that will be saved
    */
-  public void saveMembers(EmployeeList members)
+  public void saveEmployees(EmployeeList members)
   {
     try
     {

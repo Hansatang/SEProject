@@ -59,4 +59,17 @@ public class RequirementList implements Serializable
     {
         requirements.remove(selectedTask);
     }
+
+    public Requirement getRequirementsByName(String requirementName){
+        int k=0 ;
+        for (int i = 0; i < requirements.size(); i++)
+        {
+            if (requirements.get(i).getName().equals(requirementName))
+            {
+                k=i;
+                break;
+            }
+        };
+        return requirements.get(k);
+    }
 }

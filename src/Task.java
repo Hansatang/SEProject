@@ -63,7 +63,7 @@ public class Task implements Serializable
     this.totalHoursWorked = totalHoursWorked;
   }
 
-  public void setTaskMembers(EmployeeList taskMembers)
+  public void setTaskEmployees(EmployeeList taskMembers)
   {
     this.taskMembers = taskMembers;
   }

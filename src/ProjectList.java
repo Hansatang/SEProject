@@ -20,7 +20,7 @@ public class ProjectList implements Serializable
 
   public void removeMember(int index, Employee employee)
   {
-    projects.get(index).getTeam().removeMember(employee);
+    projects.get(index).getTeam().removeEmployee(employee);
   }
 
 
@@ -33,7 +33,7 @@ public class ProjectList implements Serializable
     return null;
   }
 
-  public Project getProject(String projectName){
+  public Project getProjectByName(String projectName){
     int k=0 ;
     for (int i = 0; i < projects.size(); i++)
     {
@@ -42,7 +42,7 @@ public class ProjectList implements Serializable
        k=i;
        break;
       }
-    };
+    }
     return projects.get(k);
   }
 
