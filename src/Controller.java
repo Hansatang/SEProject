@@ -18,7 +18,6 @@ import javafx.stage.Stage;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Controller
 {
@@ -246,7 +245,7 @@ public class Controller
       finalProjectList = adapterProjects.getAllProjects();
       for (int i = 0; i < finalProjectList.size(); i++)
       {
-        projectField.getItems().add(finalProjectList.get(i));
+        projectField.getItems().add(finalProjectList.getProjectByIndex(i));
       }
     }
   }
@@ -270,8 +269,9 @@ public class Controller
     {
       requirementNameLabel.setText(selectedRequirement.getName());
       requirementStatusLabel.setText(selectedRequirement.getStatus());
-      requirementDeadlineLabel.setText(selectedRequirement.getDeadline().toString());
-      requirementIdLabel.setText(selectedRequirement.getId()+ "");
+      requirementDeadlineLabel
+          .setText(selectedRequirement.getDeadline().toString());
+      requirementIdLabel.setText(selectedRequirement.getId() + "");
       requirementTeamLabel.setText(selectedRequirement.getTeam().toString());
       if (!selectedRequirement.getTasks().isEmpty())
       {
@@ -301,7 +301,8 @@ public class Controller
     taskDeadlineLabel.setText(selectedTask.getDeadline() + "");
     taskEstimatedHoursLabel.setText(selectedTask.getEstimatedHours() + "");
     taskTotalWorkLabel.setText(selectedTask.getTotalHoursWorked() + "");
-    taskResponsibleEmployee.setText(selectedTask.getResponsibleEmployee().getName());
+    taskResponsibleEmployee
+        .setText(selectedTask.getResponsibleEmployee().getName());
   }
 
   /**
@@ -465,14 +466,14 @@ public class Controller
                 .getProjectByEmployeeName(selectedEmployee.getName());
             for (int i = 0; i < projects.size(); i++)
             {
-              finalProjectList.getProject(projects.get(i).getName()).getTeam()
+              finalProjectList.getProject(projects.getProjectByIndex(i).getName()).getTeam()
                   .deleteEmployee(selectedEmployee.getName());
 
               for (int j = 0;
-                   j < finalProjectList.getProject(projects.get(i).getName())
+                   j < finalProjectList.getProject(projects.getProjectByIndex(i).getName())
                        .getRequirements().size(); j++)
               {
-                finalProjectList.getProject(projects.get(i).getName())
+                finalProjectList.getProject(projects.getProjectByIndex(i).getName())
                     .getRequirements().getRequirement(j).getTeam()
                     .deleteEmployee(selectedEmployee.getName());
                 updateRequirementArea();
@@ -1162,15 +1163,19 @@ public class Controller
     Label employeesLabel = new Label("Select employees: ");
     GridPane employeeSelectContainer = new GridPane();
     employeeToggleGroup = new ToggleGroup();
-    employeeRadioButtons = new RadioButton[selectedRequirement.getTeam().size()];
+    employeeRadioButtons = new RadioButton[selectedRequirement.getTeam()
+        .size()];
 
     for (int i = 0; i < employeeRadioButtons.length; i++)
     {
-      employeeRadioButtons[i] = new RadioButton(selectedRequirement.getTeam().get(i).getName());
+      employeeRadioButtons[i] = new RadioButton(
+          selectedRequirement.getTeam().get(i).getName());
       employeeRadioButtons[i].setToggleGroup(employeeToggleGroup);
       employeeSelectContainer.add(employeeRadioButtons[i], i % 2, i / 2);
       employeeRadioButtons[i].setPadding(new Insets(3, 50, 3, 3));
-      if(selectedTask.getResponsibleEmployee().equals(selectedRequirement.getTeam().get(i))){
+      if (selectedTask.getResponsibleEmployee()
+          .equals(selectedRequirement.getTeam().get(i)))
+      {
         employeeRadioButtons[i].setSelected(true);
       }
     }
@@ -1219,9 +1224,8 @@ public class Controller
         {
           {
             window.close();
-            String temp = selectedProject.getName();
             selectedRequirement.getTasks().removeTask(selectedTask);
-            finalProjectList.getProject(temp).getRequirements()
+            finalProjectList.getProject(selectedProject.getName()).getRequirements()
                 .remove(selectedTask);
             adapterProjects.saveProjects(finalProjectList);
             updateRequirementArea();
@@ -1273,7 +1277,7 @@ public class Controller
             .getProjectByName(searchField.getText());
         for (int i = 0; i < projects.size(); i++)
         {
-          projectField.getItems().add(projects.get(i));
+          projectField.getItems().add(projects.getProjectByIndex(i));
         }
       }
       else if (searchByEmployee.isSelected())
@@ -1282,7 +1286,7 @@ public class Controller
             .getProjectByEmployeeName(searchField.getText());
         for (int i = 0; i < projects.size(); i++)
         {
-          projectField.getItems().add(projects.get(i));
+          projectField.getItems().add(projects.getProjectByIndex(i));
         }
       }
     }
@@ -1336,9 +1340,10 @@ public class Controller
               .getProjectByEmployeeName(selectedEmployee.getName());
           for (int i = 0; i < projects.size(); i++)
           {
-            finalProjectList.getProject(projects.get(i).getName()).getTeam()
-                .replaceEmployee(selectedEmployee.getName(),
-                    employee.getName());
+            finalProjectList.getProject(projects.getProjectByIndex(i).getName()).getTeam()
+                .deleteEmployee(selectedEmployee.getName());
+            finalProjectList.getProject(projects.getProjectByIndex(i).getName()).getTeam()
+                .addEmployee(employee);
           }
           adapterProjects.saveProjects(finalProjectList);
           finalEmployeeList.getIndexFromName(selectedEmployee.getName());
@@ -1385,7 +1390,7 @@ public class Controller
 
           Project project = new Project(inputProjectName.getText(),
               selectedEmployees);
-          finalProjectList.add(project);
+          finalProjectList.addProject(project);
           adapterProjects.saveProjects(finalProjectList);
           updateProjectArea();
         }
@@ -1469,7 +1474,7 @@ public class Controller
       {
         // Edit new name
         selectedRequirement.setName(inputRequirementName.getText());
-        // Edit new userstory
+        // Edit new user story
         selectedRequirement.setUserstory(inputUserStory.getText());
         // Edit new status
         selectedRequirement.setStatus(inputStatus.getValue());
@@ -1541,64 +1546,66 @@ public class Controller
           if (!(inputStatus.getValue() == null) || !(inputStatus.getValue()
               == ""))
           {
-              if (!(inputTaskEstimatedHours.getText().equals(""))
-                  || !(inputTaskEstimatedHours.getText().isEmpty())
-                  || !(inputTaskEstimatedHours.getText().isBlank()))
+            if (!(inputTaskEstimatedHours.getText().equals(""))
+                || !(inputTaskEstimatedHours.getText().isEmpty())
+                || !(inputTaskEstimatedHours.getText().isBlank()))
+            {
+              try
               {
-                try
+                if (inputTotalHoursWorked.getValue() > 0
+                    && inputTotalHoursWorked.getValue() <= Integer
+                    .parseInt(inputTaskEstimatedHours.getText()))
                 {
-                  if (inputTotalHoursWorked.getValue() > 0
-                      && inputTotalHoursWorked.getValue() <= Integer
-                      .parseInt(inputTaskEstimatedHours.getText()))
+                  if (!inputTaskDeadline.getValue().toString().isEmpty()
+                      || !inputTaskDeadline.getValue().toString().isBlank())
                   {
-                    if (!inputTaskDeadline.getValue().toString().isEmpty()
-                        || !inputTaskDeadline.getValue().toString().isBlank())
+                    // Edit new name
+                    selectedTask.setName(inputTaskName.getText());
+                    // Edit new status
+                    selectedTask.setStatus(inputStatus.getValue());
+                    // Run loop to check which employees to add and which to not add
+                    for (int i = 0; i < employeeRadioButtons.length; i++)
                     {
-                      // Edit new name
-                      selectedTask.setName(inputTaskName.getText());
-                      // Edit new status
-                      selectedTask.setStatus(inputStatus.getValue());
-                      // Run loop to check which employees to add and which to not add
-                      for(int i = 0 ; i < employeeRadioButtons.length ; i++){
-                        if(employeeRadioButtons[i].isSelected()){
-                          selectedEmployee = selectedRequirement.getTeam().get(i);
-                        }
+                      if (employeeRadioButtons[i].isSelected())
+                      {
+                        selectedEmployee = selectedRequirement.getTeam().get(i);
                       }
-                      // Edit new team from selected checkboxes
-                      selectedTask.setResponsibleEmployee(selectedEmployee);
-                      // Edit estimated hours
-                      selectedTask.setEstimatedHours(
-                          Integer.parseInt(inputTaskEstimatedHours.getText()));
-                      // Edit total hours
-                      selectedTask.setTotalHoursWorked(
-                          inputTotalHoursWorked.getValue());
+                    }
+                    // Edit new team from selected checkboxes
+                    selectedTask.setResponsibleEmployee(selectedEmployee);
+                    // Edit estimated hours
+                    selectedTask.setEstimatedHours(
+                        Integer.parseInt(inputTaskEstimatedHours.getText()));
+                    // Edit total hours
+                    selectedTask
+                        .setTotalHoursWorked(inputTotalHoursWorked.getValue());
 
-                      // Edit new deadline
-                      selectedTask.setDeadline(inputTaskDeadline.getValue());
-                      // Close window
-                      window.close();
-                      // Update GUI table with requirements to show changes
-                      updateTaskArea();
-                      updateTaskLabels();
-                      // Save all changes
-                      adapterProjects.saveProjects(finalProjectList);
-                      // END of editing task
-                    }
-                    else
-                    {
-                      errorLabel.setText("Fix date");
-                    }
+                    // Edit new deadline
+                    selectedTask.setDeadline(inputTaskDeadline.getValue());
+                    // Close window
+                    window.close();
+                    // Update GUI table with requirements to show changes
+                    updateTaskArea();
+                    updateTaskLabels();
+                    // Save all changes
+                    adapterProjects.saveProjects(finalProjectList);
+                    // END of editing task
+                  }
+                  else
+                  {
+                    errorLabel.setText("Fix date");
                   }
                 }
-                catch (NullPointerException e)
-                {
-                  errorLabel.setText("Fix total hours");
-                }
               }
-              else
+              catch (NullPointerException e)
               {
-                errorLabel.setText("Fix estimated hours");
+                errorLabel.setText("Fix total hours");
               }
+            }
+            else
+            {
+              errorLabel.setText("Fix estimated hours");
+            }
           }
           else
           {
