@@ -211,7 +211,7 @@ public class Controller
               requirementDetailsTab.setText(
                   selectedRequirement.getName() + " requirement details");
               requirementDetailsTab.setDisable(false);
-              updateRequirementArea();
+              updateRequirementLabels();
               updateTaskArea();
             }
           }
@@ -250,21 +250,8 @@ public class Controller
     }
   }
 
-  /**
-   * Updates the Requirement objects on the TreeView<Project> on the GUI
-   */
-  private void updateRequirementArea()
+  private void updateRequirementLabels()
   {
-    requirementField.getItems().clear();
-    if (adapterProjects != null)
-    {
-      for (int i = 0; i < selectedProject.getRequirements().size(); i++)
-      {
-        requirementField.getItems()
-            .add(selectedProject.getRequirements().getRequirement(i));
-      }
-    }
-
     if (selectedRequirement != null)
     {
       requirementNameLabel.setText(selectedRequirement.getName());
@@ -291,6 +278,24 @@ public class Controller
       }
       requirementUserStoryLabel.setText(selectedRequirement.getUserstory());
     }
+  }
+
+  /**
+   * Updates the Requirement objects on the TreeView<Project> on the GUI
+   */
+  private void updateRequirementArea()
+  {
+    requirementField.getItems().clear();
+    if (adapterProjects != null)
+    {
+      for (int i = 0; i < selectedProject.getRequirements().size(); i++)
+      {
+        requirementField.getItems()
+            .add(selectedProject.getRequirements().getRequirement(i));
+      }
+    }
+
+
   }
 
   private void updateTaskLabels()
@@ -1496,6 +1501,7 @@ public class Controller
         window.close();
         // Update GUI table with requirements to show changes
         updateRequirementArea();
+        updateRequirementLabels();
         // Save all changes
         adapterProjects.saveProjects(finalProjectList);
         // END of editing requirement
