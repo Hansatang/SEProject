@@ -43,6 +43,7 @@ public class Controller
   @FXML private Label requirementStatusLabel;
   @FXML private Label requirementTeamLabel;
   @FXML private Label requirementDeadlineLabel;
+  @FXML private Label requirementIdLabel;
   @FXML private TextArea requirementUserStoryLabel;
   @FXML private Label requirementEstimatedLabel;
   @FXML private Label requirementHoursWorkedLabel;
@@ -53,6 +54,7 @@ public class Controller
   @FXML private Label taskIdLabel;
   @FXML private Label taskEstimatedHoursLabel;
   @FXML private Label taskTotalWorkLabel;
+  @FXML private Label taskResponsibleEmployee;
 
   @FXML private TableView<Task> taskField;
   @FXML private TableColumn<Task, String> taskName;
@@ -268,8 +270,8 @@ public class Controller
     {
       requirementNameLabel.setText(selectedRequirement.getName());
       requirementStatusLabel.setText(selectedRequirement.getStatus());
-      requirementDeadlineLabel
-          .setText(selectedRequirement.getDeadline().toString());
+      requirementDeadlineLabel.setText(selectedRequirement.getDeadline().toString());
+      requirementIdLabel.setText(selectedRequirement.getId()+ "");
       requirementTeamLabel.setText(selectedRequirement.getTeam().toString());
       if (!selectedRequirement.getTasks().isEmpty())
       {
@@ -299,6 +301,7 @@ public class Controller
     taskDeadlineLabel.setText(selectedTask.getDeadline() + "");
     taskEstimatedHoursLabel.setText(selectedTask.getEstimatedHours() + "");
     taskTotalWorkLabel.setText(selectedTask.getTotalHoursWorked() + "");
+    taskResponsibleEmployee.setText(selectedTask.getResponsibleEmployee().getName());
   }
 
   /**
@@ -1154,30 +1157,22 @@ public class Controller
 
     deadlineContainer.getChildren().addAll(taskDeadline, inputTaskDeadline);
 
-    // Task employee list input.
     VBox employeeListContainer = new VBox();
     employeeListContainer.setPadding(new Insets(0, 10, 0, 10));
     Label employeesLabel = new Label("Select employees: ");
     GridPane employeeSelectContainer = new GridPane();
+    employeeToggleGroup = new ToggleGroup();
+    employeeRadioButtons = new RadioButton[selectedRequirement.getTeam().size()];
 
-    employeeCheckBoxes = new CheckBox[selectedProject.getTeam().size()];
-
-    for (int i = 0; i < employeeCheckBoxes.length; i++)
+    for (int i = 0; i < employeeRadioButtons.length; i++)
     {
-      employeeCheckBoxes[i] = new CheckBox(
-          selectedProject.getTeam().get(i).getName());
-      employeeSelectContainer.add(employeeCheckBoxes[i], i % 2, i / 2);
-      employeeCheckBoxes[i].setPadding(new Insets(3, 50, 3, 3));
-
-      for (int j = 0; j < selectedRequirement.getTeam().size(); j++)
-      {
-        if (employeeCheckBoxes[i].getText()
-            .equals(selectedRequirement.getTeam().get(j).getName()))
-        {
-          employeeCheckBoxes[i].setSelected(true);
-        }
+      employeeRadioButtons[i] = new RadioButton(selectedRequirement.getTeam().get(i).getName());
+      employeeRadioButtons[i].setToggleGroup(employeeToggleGroup);
+      employeeSelectContainer.add(employeeRadioButtons[i], i % 2, i / 2);
+      employeeRadioButtons[i].setPadding(new Insets(3, 50, 3, 3));
+      if(selectedTask.getResponsibleEmployee().equals(selectedRequirement.getTeam().get(i))){
+        employeeRadioButtons[i].setSelected(true);
       }
-
     }
 
     // Add employee label Node and employee selection Node
@@ -1503,7 +1498,6 @@ public class Controller
       else if (actionEvent.getSource() == addTaskButton)
       {
 
-        selectedEmployees = new EmployeeList();
         for (int i = 0; i < employeeRadioButtons.length; i++)
         {
           if (employeeRadioButtons[i].isSelected())
@@ -1532,6 +1526,7 @@ public class Controller
           Task task = new Task(inputTaskName.getText(), inputStatus.getValue(),
               Integer.parseInt(inputTaskEstimatedHours.getText()),
               inputTaskDeadline.getValue(), selectedEmployee);
+          task.setResponsibleEmployee(selectedEmployee);
           selectedRequirement.getTasks().addTask(task);
           adapterProjects.saveProjects(finalProjectList);
           updateTaskArea();
@@ -1546,17 +1541,6 @@ public class Controller
           if (!(inputStatus.getValue() == null) || !(inputStatus.getValue()
               == ""))
           {
-            selectedEmployees = new EmployeeList();
-            // Run loop to check which employees to add and which to not add
-            for (int i = 0; i < employeeRadioButtons.length; i++)
-            {
-              if (employeeRadioButtons[i].isSelected())
-              {
-                selectedEmployee = selectedRequirement.getTeam().get(i);
-              }
-            }
-            if (!(selectedEmployee == null))
-            {
               if (!(inputTaskEstimatedHours.getText().equals(""))
                   || !(inputTaskEstimatedHours.getText().isEmpty())
                   || !(inputTaskEstimatedHours.getText().isBlank()))
@@ -1574,16 +1558,10 @@ public class Controller
                       selectedTask.setName(inputTaskName.getText());
                       // Edit new status
                       selectedTask.setStatus(inputStatus.getValue());
-                      // New EmployeeList object to replace the old one
-                      selectedEmployees = new EmployeeList();
                       // Run loop to check which employees to add and which to not add
-                      for (int i = 0; i < employeeCheckBoxes.length; i++)
-                      {
-                        if (employeeCheckBoxes[i].isSelected())
-                        {
-                          selectedEmployees
-                              .addEmployee(selectedProject.getTeam().get(i));
-                          selectedTask.setResponsibleEmployee(selectedEmployee);
+                      for(int i = 0 ; i < employeeRadioButtons.length ; i++){
+                        if(employeeRadioButtons[i].isSelected()){
+                          selectedEmployee = selectedRequirement.getTeam().get(i);
                         }
                       }
                       // Edit new team from selected checkboxes
@@ -1621,11 +1599,6 @@ public class Controller
               {
                 errorLabel.setText("Fix estimated hours");
               }
-            }
-            else
-            {
-              errorLabel.setText("Fix employee");
-            }
           }
           else
           {

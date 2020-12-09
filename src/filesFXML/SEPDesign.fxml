@@ -199,6 +199,23 @@
                                           <Insets left="15.0" />
                                        </padding>
                                     </HBox>
+                                    <HBox prefHeight="25.0" prefWidth="200.0">
+                                       <children>
+                                          <Label prefWidth="150.0" text="ID:">
+                                             <font>
+                                                <Font size="16.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="requirementIdLabel" prefHeight="25.0">
+                                             <font>
+                                                <Font size="16.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <padding>
+                                          <Insets left="15.0" />
+                                       </padding>
+                                    </HBox>
                                     <HBox layoutX="10.0" layoutY="233.0" prefHeight="25.0" prefWidth="200.0">
                                        <children>
                                           <Label prefWidth="150.0" text="Team:">
@@ -395,6 +412,23 @@
                                              </font>
                                           </Label>
                                           <Label fx:id="taskTotalWorkLabel">
+                                             <font>
+                                                <Font size="16.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <padding>
+                                          <Insets left="15.0" />
+                                       </padding>
+                                    </HBox>
+                                    <HBox layoutX="10.0" layoutY="160.0" prefHeight="25.0">
+                                       <children>
+                                          <Label prefWidth="175.0" text="Responsible Employee:">
+                                             <font>
+                                                <Font size="16.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="taskResponsibleEmployee">
                                              <font>
                                                 <Font size="16.0" />
                                              </font>
