@@ -36,6 +36,19 @@ public class RequirementList implements Serializable
         return -1;
     }
 
+    public Requirement getRequirementByName(String projectName){
+        int k=0 ;
+        for (int i = 0; i < requirements.size(); i++)
+        {
+            if (requirements.get(i).getName().equals(projectName))
+            {
+                k=i;
+                break;
+            }
+        }
+        return requirements.get(k);
+    }
+
 
     public ArrayList<Requirement> getRequirements() {
         return requirements;
@@ -70,7 +83,7 @@ public class RequirementList implements Serializable
                 k=i;
                 break;
             }
-        };
+        }
         return requirements.get(k);
     }
 }

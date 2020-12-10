@@ -35,7 +35,11 @@ public class AdapterGUI extends Application
   private CheckMenuItem editTableMenuItem;
   private CheckMenuItem editFieldsMenuItem;
 
-  private MyTabListener tabListener;
+  private static MyTabListener tabListener;
+
+  public static MyTabListener getTabListener(){
+    return tabListener;
+  }
 
   /**
    * @param window The Stage object that will be displayed
@@ -113,15 +117,20 @@ public class AdapterGUI extends Application
       if (newTab == employeeListTab)
       {
         employeeListTab.updateEmployeeArea();
+        requirementListTab.updateRequirementArea();
       }
       else if (newTab == projectListTab)
       {
         projectListTab.updateProjectArea();
+        requirementListTab.updateRequirementArea();
+        taskListTab.updateTaskArea();
       }
       else if (newTab == requirementListTab)
       {
         requirementListTab.updateRequirementArea();
+        System.out.println(projectListTab.getSelectedProject().getName());
         requirementListTab.setSelectedProject(projectListTab.getSelectedProject());
+        taskListTab.updateTaskArea();
 
       }
       else if (newTab == taskListTab)

@@ -11,7 +11,6 @@ public class TaskList implements Serializable
     }
 
     public void addTask(Task task){
-        task.setId(tasks.size());
         tasks.add(task);
     }
 

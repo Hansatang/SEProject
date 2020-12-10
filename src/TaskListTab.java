@@ -47,12 +47,12 @@ public class TaskListTab extends Tab
 
   Label errorLabel = new Label("");
 
-  private Label taskNameLabel;
-  private Label taskStatusLabel;
-  private Label taskDeadlineLabel;
-  private Label taskIDLabel;
-  private Label taskEstimatedHoursLabel;
-  private Label taskTotalWorkLabel;
+  private Label taskNameLabel = new Label();
+  private Label taskStatusLabel = new Label();
+  private Label taskDeadlineLabel = new Label();
+  private Label taskIDLabel = new Label();
+  private Label taskEstimatedHoursLabel = new Label();
+  private Label taskTotalWorkLabel = new Label();
 
   //Task JavaFx objects
   TextField inputTaskName = new TextField();
@@ -60,10 +60,9 @@ public class TaskListTab extends Tab
   ComboBox<String> inputTaskStatus = new ComboBox<>();
   TextField inputTaskEstimation = new TextField();
   DatePicker inputTaskDeadline = new DatePicker();
-  TextField inputTaskEstimatedHours = new TextField();
   ComboBox<Integer> inputTotalHoursWorked = new ComboBox<>();
-  ComboBox<String> inputStatus = new ComboBox<>();
   RadioButton[] employeeRadioButtons;
+  VBox taskInfoContainer;
 
   private final ArrayList<String> statusOptions = new ArrayList<>();
 
@@ -85,30 +84,57 @@ public class TaskListTab extends Tab
 
     listener = new MyActionListener();
 
-    taskTableView = new TableView<Task>();
+    taskTableView = new TableView<>();
     defaultSelectionModel = taskTableView.getSelectionModel();
     taskTableView.setPrefHeight(597);
 
-    taskName = new TableColumn<Task, String>(" Name");
+    taskName = new TableColumn<>(" Name");
     taskName
-        .setCellValueFactory(new PropertyValueFactory<Task, String>("Name"));
+        .setCellValueFactory(new PropertyValueFactory<>("Name"));
     taskName.setPrefWidth(199);
 
     taskTableView.getColumns().add(taskName);
 
-    taskStatus = new TableColumn<Task, String>(" Status");
+    taskStatus = new TableColumn<>(" Status");
     taskStatus
-        .setCellValueFactory(new PropertyValueFactory<Task, String>("Status"));
+        .setCellValueFactory(new PropertyValueFactory<>("Status"));
     taskStatus.setPrefWidth(199);
 
     taskTableView.getColumns().add(taskStatus);
 
-    taskDeadline = new TableColumn<Task, String>(" Deadline");
-    taskDeadline.setCellValueFactory(
-        new PropertyValueFactory<Task, String>("Deadline"));
+    taskDeadline = new TableColumn<>(" Deadline");
+    taskDeadline.setCellValueFactory(new PropertyValueFactory<>("Deadline"));
     taskDeadline.setPrefWidth(199);
 
     taskTableView.getColumns().add(taskDeadline);
+
+
+    taskInfoContainer = new VBox();
+
+    Label infoLabel = new Label("Name:");
+    infoLabel.setPrefWidth(150);
+    HBox infoBox = new HBox(infoLabel, taskNameLabel);
+    taskInfoContainer.getChildren().add(infoBox);
+    infoLabel = new Label("Status:");
+    infoLabel.setPrefWidth(150);
+    infoBox = new HBox(infoLabel, taskStatusLabel);
+    taskInfoContainer.getChildren().add(infoBox);
+    infoLabel = new Label("Deadline:");
+    infoLabel.setPrefWidth(150);
+    infoBox = new HBox(infoLabel, taskDeadlineLabel);
+    taskInfoContainer.getChildren().add(infoBox);
+    infoLabel = new Label("ID:");
+    infoLabel.setPrefWidth(150);
+    infoBox = new HBox(infoLabel, taskIDLabel);
+    taskInfoContainer.getChildren().add(infoBox);
+    infoLabel = new Label("Estimated hours:");
+    infoLabel.setPrefWidth(150);
+    infoBox = new HBox(infoLabel, taskEstimatedHoursLabel);
+    taskInfoContainer.getChildren().add(infoBox);
+    infoLabel = new Label("Total hours:");
+    infoLabel.setPrefWidth(150);
+    infoBox = new HBox(infoLabel, taskTotalWorkLabel);
+    taskInfoContainer.getChildren().add(infoBox);
 
     addTask = new Button("Add Task");
     addTask.setOnAction(listener);
@@ -129,6 +155,7 @@ public class TaskListTab extends Tab
     tabTask = new VBox(10);
     tabTask.setAlignment(Pos.CENTER);
     tabTask.getChildren().add(taskTableView);
+    tabTask.getChildren().add(taskInfoContainer);
     tabTask.getChildren().add(buttonContainer);
 
     super.setContent(tabTask);
@@ -136,6 +163,7 @@ public class TaskListTab extends Tab
     setSelectedTask();
 
     finalEmployeeList = adapterEmployee.getAllEmployees();
+    finalProjectList = adapterProject.getAllProjects();
 
     if (selectedTask != null)
     {
@@ -208,7 +236,7 @@ public class TaskListTab extends Tab
               int index = taskTableView.getSelectionModel().getSelectedIndex();
               selectedTask = taskTableView.getItems().get(index);
 
-              //              updateTaskLabels();
+              updateTaskLabels();
             }
           }
         });
@@ -223,25 +251,22 @@ public class TaskListTab extends Tab
       {
         if (adapterProject != null)
         {
-
-          for (int i = 0;
-               i < finalProjectList.getProjectByName(selectedProject.getName())
-                   .getRequirements()
-                   .getRequirementsByName(selectedRequirement.getName()).getTasks()
-                   .size(); i++)
+          finalProjectList = adapterProject.getAllProjects();
+          if (finalProjectList.getProjectByName(selectedProject.getName()).getRequirements().getRequirementsByName(selectedRequirement.getName()).getTasks()
+              != null)
           {
-            System.out.println(
-                finalProjectList.getProjectByName(selectedProject.getName())
-                    .getRequirements()
-                    .getRequirementsByName(selectedRequirement.getName()).getTasks()
-                    .size());
-            taskTableView.getItems().add(
-                finalProjectList.getProjectByName(selectedProject.getName())
-                    .getRequirements()
-                    .getRequirementsByName(selectedRequirement.getName()).getTasks()
-                    .getTask(i));
+            for (int i = 0; i < finalProjectList.getProjectByName(selectedProject.getName()).getRequirements()
+                .getRequirementsByName(selectedRequirement.getName()).getTasks()
+                .size(); i++)
+            {
+              System.out.println(
+                  finalProjectList.getProjectByName(selectedProject.getName()).getRequirements()
+                      .getRequirementsByName(selectedRequirement.getName()).getTasks().size());
+              taskTableView.getItems().add(
+                  finalProjectList.getProjectByName(selectedProject.getName()).getRequirements()
+                      .getRequirementsByName(selectedRequirement.getName()).getTasks().getTask(i));
+            }
           }
-
         }
       }
     }

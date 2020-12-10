@@ -37,34 +37,40 @@ public class RequirementListTab extends Tab
   private Project selectedProject;
 
   private EmployeeListAdapter adapterEmployee;
-  private ProjectListAdapter adapterProject = new ProjectListAdapter(
-      "Projects.bin");
+  private ProjectListAdapter adapterProject;
 
   private ProjectList finalProjectList;
   private EmployeeList finalEmployeeList;
 
   Label errorLabel = new Label("");
 
-  private Label requirementNameLabel;
-  private Label requirementStatusLabel;
-  private Label requirementTeamLabel;
-  private Label requirementDeadlineLabel;
-  private TextArea requirementUserStoryLabel;
-  private Label requirementEstimatedLabel;
-  private Label requirementHoursWorkedLabel;
+  private Label requirementNameLabel = new Label();
+  private Label requirementStatusLabel = new Label();
+  private Label requirementTeamLabel = new Label();
+  private Label requirementDeadlineLabel = new Label();
+  private TextArea requirementUserStoryLabel = new TextArea();
+  private Label requirementEstimatedLabel = new Label();
+  private Label requirementHoursWorkedLabel = new Label();
 
   // Requirement JavaFX objects
   TextField inputRequirementName = new TextField();
   TextField inputUserStory = new TextField();
   ComboBox<String> inputTaskStatus = new ComboBox<>();
   DatePicker inputRequirementDeadline = new DatePicker();
+  VBox requirementInfoContainer;
 
   private final ArrayList<String> statusOptions = new ArrayList<>();
 
-  public RequirementListTab(String title, ProjectListAdapter adapterProject,
+  public RequirementListTab(String title, ProjectListAdapter adapterProjects,
       EmployeeListAdapter adapterEmployees)
   {
     super(title);
+
+    this.adapterProject = adapterProjects;
+    finalProjectList = adapterProject.getAllProjects();
+
+    this.adapterEmployee = adapterEmployees;
+    finalEmployeeList = adapterEmployee.getAllEmployees();
 
     statusOptions.add("Approved");
     statusOptions.add("Ended");
@@ -72,10 +78,7 @@ public class RequirementListTab extends Tab
     statusOptions.add("Rejected");
     statusOptions.add("Started");
 
-    this.adapterProject = adapterProject;
-    finalProjectList = adapterProject.getAllProjects();
-    this.adapterEmployee = adapterEmployees;
-    finalEmployeeList = adapterEmployee.getAllEmployees();
+
 
     listener = new MyActionListener();
 
@@ -104,6 +107,37 @@ public class RequirementListTab extends Tab
 
     requirementTableView.getColumns().add(requirementDeadline);
 
+    requirementInfoContainer = new VBox();
+
+    Label infoLabel = new Label("Name:");
+    infoLabel.setPrefWidth(150);
+    HBox infoBox = new HBox(infoLabel, requirementNameLabel);
+    requirementInfoContainer.getChildren().add(infoBox);
+    infoLabel = new Label("Status:");
+    infoLabel.setPrefWidth(150);
+    infoBox = new HBox(infoLabel, requirementStatusLabel);
+    requirementInfoContainer.getChildren().add(infoBox);
+    infoLabel = new Label("Team:");
+    infoLabel.setPrefWidth(150);
+    infoBox = new HBox(infoLabel, requirementTeamLabel);
+    requirementInfoContainer.getChildren().add(infoBox);
+    infoLabel = new Label("Deadline::");
+    infoLabel.setPrefWidth(150);
+    infoBox = new HBox(infoLabel, requirementDeadlineLabel);
+    requirementInfoContainer.getChildren().add(infoBox);
+    infoLabel = new Label("Estimated time:");
+    infoLabel.setPrefWidth(150);
+    infoBox = new HBox(infoLabel, requirementEstimatedLabel);
+    requirementInfoContainer.getChildren().add(infoBox);
+    infoLabel = new Label("Total hours:");
+    infoLabel.setPrefWidth(150);
+    infoBox = new HBox(infoLabel, requirementHoursWorkedLabel);
+    requirementInfoContainer.getChildren().add(infoBox);
+    infoLabel = new Label("User story:");
+    infoLabel.setPrefWidth(150);
+    infoBox = new HBox(infoLabel, requirementUserStoryLabel);
+    requirementInfoContainer.getChildren().add(infoBox);
+
     addRequirement = new Button("Add requirement");
     addRequirement.setOnAction(listener);
 
@@ -113,7 +147,8 @@ public class RequirementListTab extends Tab
     removeRequirement = new Button("Remove requirement");
     removeRequirement.setOnAction(listener);
 
-    HBox buttonContainer = new HBox(addRequirement,editRequirement,removeRequirement);
+    HBox buttonContainer = new HBox(addRequirement, editRequirement,
+        removeRequirement);
     buttonContainer.setPrefHeight(30);
     buttonContainer.setSpacing(50);
     buttonContainer.setPadding(new Insets(0, 10, 10, 10));
@@ -122,17 +157,19 @@ public class RequirementListTab extends Tab
     tabRequirement = new VBox(10);
     tabRequirement.setAlignment(Pos.CENTER);
     tabRequirement.getChildren().add(requirementTableView);
+    tabRequirement.getChildren().add(requirementInfoContainer);
     tabRequirement.getChildren().add(buttonContainer);
-
 
     super.setContent(tabRequirement);
 
-    setSelectedRequirement();
-
     finalEmployeeList = adapterEmployee.getAllEmployees();
+    finalProjectList = adapterProject.getAllProjects();
+
+    setSelectedRequirement();
 
     if (selectedRequirement != null)
     {
+      System.out.println(selectedRequirement.getName());
       updateRequirementArea();
     }
 
@@ -179,7 +216,10 @@ public class RequirementListTab extends Tab
   {
     System.out.println("Nah");
     selectedProject = selectedProject1;
-    updateRequirementArea();
+    if (selectedProject.getRequirements() != null)
+    {
+      updateRequirementArea();
+    }
   }
 
   private void setSelectedRequirement()
@@ -197,7 +237,7 @@ public class RequirementListTab extends Tab
                   .getSelectedIndex();
 
               selectedRequirement = requirementTableView.getItems().get(index);
-              //              updateRequirementLabels();
+              updateRequirementLabels();
             }
           }
         });
@@ -210,8 +250,9 @@ public class RequirementListTab extends Tab
     {
       if (adapterProject != null)
       {
+        finalProjectList = adapterProject.getAllProjects();
         if (finalProjectList.getProjectByName(selectedProject.getName())
-            .getRequirements() != null)
+            != null)
         {
           for (int i = 0;
                i < finalProjectList.getProjectByName(selectedProject.getName())
@@ -230,6 +271,7 @@ public class RequirementListTab extends Tab
   {
     if (selectedRequirement != null)
     {
+
       requirementNameLabel.setText(selectedRequirement.getName());
       requirementStatusLabel.setText(selectedRequirement.getStatus());
       requirementDeadlineLabel
@@ -329,8 +371,8 @@ public class RequirementListTab extends Tab
           employeeListContainer.setPadding(new Insets(0, 10, 0, 10));
           Label employeesLabel = new Label("Select employees: ");
           GridPane employeeSelectContainer = new GridPane();
-          CheckBox[] employeeCheckBoxes = new CheckBox[finalProjectList.getProjectByName(selectedProject.getName()).getTeam()
-              .size()];
+          CheckBox[] employeeCheckBoxes = new CheckBox[finalProjectList
+              .getProjectByName(selectedProject.getName()).getTeam().size()];
 
           for (int i = 0; i < employeeCheckBoxes.length; i++)
           {
@@ -569,7 +611,8 @@ public class RequirementListTab extends Tab
             {
               {
                 window.close();
-                finalProjectList.getProjectByName(selectedProject.getName()).remove(selectedRequirement);
+                finalProjectList.getProjectByName(selectedProject.getName())
+                    .remove(selectedRequirement);
                 adapterProject.saveProjects(finalProjectList);
                 updateRequirementArea();
                 selectedRequirement = null;
