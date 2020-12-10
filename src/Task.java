@@ -3,24 +3,66 @@ import java.time.LocalDate;
 
 public class Task implements Serializable
 {
-  private String name, status, taskID;
-  private int relatedRequirement, estimatedHours, totalHoursWorked;
+  private String name, status;
+  private int relatedRequirement, estimatedHours, totalHoursWorked, id;
   private LocalDate deadline;
-  private Member responsibleMember;
-  private MemberList taskMembers;
+  private Employee responsibleEmployee;
 
-  public Task(String name, String taskID,String status, LocalDate deadline,
-      MemberList taskMembers)
+  public Task(String name,String status, int estimatedHours, LocalDate deadline, Employee responsibleEmployee)
   {
     this.deadline = deadline;
     this.name = name;
     this.status = status;
     relatedRequirement = 0;
-    this.taskID = taskID;
-    estimatedHours = 0;
+    this.estimatedHours = estimatedHours;
     totalHoursWorked = 0;
-    responsibleMember = null;
-    this.taskMembers = taskMembers;
+    responsibleEmployee = null;
+    this.responsibleEmployee = responsibleEmployee;
+  }
+
+  public void setName(String name)
+  {
+    this.name = name;
+  }
+
+  public void setStatus(String status)
+  {
+    this.status = status;
+  }
+
+  public int getId()
+  {
+    return id;
+  }
+
+  public void setId(int id)
+  {
+    this.id = id;
+  }
+
+  public void setDeadline(LocalDate deadline)
+  {
+    this.deadline = deadline;
+  }
+
+  public Employee getResponsibleEmployee()
+  {
+    return responsibleEmployee;
+  }
+
+  public void setEstimatedHours(int estimatedHours)
+  {
+    this.estimatedHours = estimatedHours;
+  }
+
+  public void setTotalHoursWorked(int totalHoursWorked)
+  {
+    this.totalHoursWorked = totalHoursWorked;
+  }
+
+  public void setResponsibleEmployee(Employee responsibleEmployee)
+  {
+    this.responsibleEmployee = responsibleEmployee;
   }
 
   public String getName()

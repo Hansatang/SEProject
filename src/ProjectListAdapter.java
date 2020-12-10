@@ -67,9 +67,9 @@ public class ProjectListAdapter
 
       for (int i = 0; i < result.size(); i++)
       {
-        if (result.get(i).getName().contains(searchPhrase))
+        if (result.getProjectByIndex(i).getName().contains(searchPhrase))
         {
-          projects.add(result.get(i));
+          projects.addProject(result.getProjectByIndex(i));
         }
       }
     }
@@ -111,10 +111,10 @@ public class ProjectListAdapter
   }
 
   /**
-   * Use the MyFileIO class to retrieve all projects with specified name of member.
+   * Use the MyFileIO class to retrieve all projects with specified name of employee.
    *
-   * @param searchPhrase the name to retrieve projects with specified member
-   * @return a ProjectList object with projects with specified  member name
+   * @param searchPhrase the name to retrieve projects with specified employee
+   * @return a ProjectList object with projects with specified  employee name
    */
   public ProjectList getProjectByEmployeeName(String searchPhrase)
   {
@@ -129,12 +129,11 @@ public class ProjectListAdapter
       {
         for (int i = 0; i < result.size(); i++)
         {
-          System.out.println(result.get(i).getTeam().size());
-          for (int j = 0; j < result.get(i).getTeam().size(); j++)
+          for (int j = 0; j < result.getProjectByIndex(i).getTeam().size(); j++)
           {
-            if (result.get(i).getTeam().get(j).getName().contains(searchPhrase))
+            if (result.getProjectByIndex(i).getTeam().get(j).getName().contains(searchPhrase))
             {
-              projects.add(result.get(i));
+              projects.addProject(result.getProjectByIndex(i));
             }
           }
 

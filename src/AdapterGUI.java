@@ -18,7 +18,7 @@ public class AdapterGUI extends Application
 
     // Initialise FXMLoader and load the .FXML file type.
     FXMLLoader loader = new FXMLLoader();
-    loader.setLocation(getClass().getResource("SEPDesign.fxml"));
+    loader.setLocation(getClass().getResource("filesFXML/SEPDesign.fxml"));
 
     // Initialise Scene object.
     Scene scene = new Scene(loader.load());

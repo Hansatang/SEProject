@@ -1,10 +1,10 @@
 import java.io.Serializable;
 
-public class Member implements Serializable
+public class Employee implements Serializable
 {
   private String name;
 
-  public Member(String name)
+  public Employee(String name)
   {
     this.name = name;
   }

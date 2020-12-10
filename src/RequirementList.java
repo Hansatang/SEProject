@@ -15,6 +15,7 @@ public class RequirementList implements Serializable
     }
 
     public void addRequirement(Requirement requirement){
+        requirement.setId(size());
         requirements.add(requirement);
     }
 

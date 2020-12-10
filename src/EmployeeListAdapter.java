@@ -22,16 +22,16 @@ public class EmployeeListAdapter
   }
 
   /**
-   * Uses the MyFileIO class to retrieve a MemberList object with all members.
-   * @return a MemberList object with all stored members
+   * Uses the MyFileIO class to retrieve a EmployeeList object with all members.
+   * @return a EmployeeList object with all stored members
    */
-  public MemberList getAllMembers()
+  public EmployeeList getAllEmployees()
   {
-    MemberList members = new MemberList();
+    EmployeeList members = new EmployeeList();
 
     try
     {
-      members = (MemberList) mfio.readObjectFromFile(fileName);
+      members = (EmployeeList) mfio.readObjectFromFile(fileName);
     }
     catch (FileNotFoundException e)
     {
@@ -54,7 +54,7 @@ public class EmployeeListAdapter
    * Use the MyFileIO class to save members.
    * @param members the list of members that will be saved
    */
-  public void saveMembers(MemberList members)
+  public void saveEmployees(EmployeeList members)
   {
     try
     {

@@ -1,21 +1,20 @@
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 public class Requirement implements Serializable
 {
   private String name,userstory,status;
-  private int estimatedHours,totalHoursWorked;
+  private int estimatedHours,totalHoursWorked, id;
   private TaskList tasks;
   private LocalDate deadline;
-  private MemberList team;
+  private EmployeeList team;
 
   public String getStatus()
   {
     return status;
   }
 
-  public Requirement(String name, String userstory, String status, LocalDate deadline, MemberList team) {
+  public Requirement(String name, String userstory, String status, LocalDate deadline, EmployeeList team) {
     this.deadline = deadline;
     this.name = name;
     this.userstory = userstory;
@@ -43,7 +42,7 @@ public class Requirement implements Serializable
     this.deadline = deadline;
   }
 
-  public void setTeam(MemberList team) {
+  public void setTeam(EmployeeList team) {
     this.team = team;
   }
 
@@ -56,7 +55,7 @@ public class Requirement implements Serializable
     tasks.removeTask(task);
   }
 
-  public MemberList getTeam()
+  public EmployeeList getTeam()
   {
     return team;
   }
@@ -68,6 +67,14 @@ public class Requirement implements Serializable
 
   public String getName(){
     return name;
+  }
+
+  public int getId(){
+    return id;
+  }
+
+  public void setId(int id){
+    this.id = id;
   }
 
   public int getTotalHoursWorked()
