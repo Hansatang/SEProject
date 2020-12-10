@@ -1,0 +1,122 @@
+package Project;
+
+import Employee.Employee;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+
+public class ProjectList implements Serializable
+{
+  private ArrayList<Project> projects;
+
+  public ProjectList()
+  {
+    this.projects = new ArrayList<>();
+  }
+
+  public void addProject()
+  {}
+
+  public void removeProject(Project selectedProject)
+  {
+    projects.remove(selectedProject);
+  }
+
+  public void removeEmployee(int index, Employee employee)
+  {
+    projects.get(index).getTeam().removeEmployee(employee);
+  }
+
+
+  public int getNumbersOfProjects()
+  {
+    return 0;
+  }
+
+  public Project getProject(int index){
+    return null;
+  }
+
+  public Project getProjectByName(String projectName){
+    int k=0 ;
+    for (int i = 0; i < projects.size(); i++)
+    {
+      if (projects.get(i).getName().equals(projectName))
+      {
+       k=i;
+       break;
+      }
+    }
+    return projects.get(k);
+  }
+
+  /**
+   * Gets how many Project.Project objects are in the list.
+   * @return the number of Project.Project objects in the list
+   */
+  public int size()
+  {
+    return projects.size();
+  }
+
+  /**
+   * Gets a Project.Project object from position index from the list.
+   * @param index the position in the list of the Project.Project object
+   * @return the Project.Project object at position index if one exists, else null
+   */
+  public Project get(int index)
+  {
+    if(index<projects.size())
+    {
+      return projects.get(index);
+    }
+    else
+    {
+      return null;
+    }
+  }
+
+  // Should be bullshit but...
+  public int[] getIndexesFromInput(String name){
+
+    ArrayList<Integer> searchResultIndexesArrList = new ArrayList<>();
+
+    for(int i = 0 ; i < projects.size() ; i++){
+
+      if(projects.get(i).getName().contains(name)){
+        searchResultIndexesArrList.add(i);
+      }
+    }
+
+    int[] searchResultIndexesArr = new int[searchResultIndexesArrList.size()];
+    for(int i = 0 ; i < searchResultIndexesArr.length ; i++){
+      searchResultIndexesArr[i] = searchResultIndexesArrList.get(i);
+    }
+
+    return searchResultIndexesArr;
+  }
+
+  public ArrayList<Project> getProjectsWhereEmployeeIsIn(Employee employee){
+
+    ArrayList<Project> projectsEmployeeIsIn = new ArrayList<>();
+
+    for(int i = 0 ; i < projects.size() ; i++){
+      for(int j = 0 ; j < projects.get(i).getTeam().size() ; i++){
+        if(projects.get(i).getTeam().get(j).equals(employee)){
+          projectsEmployeeIsIn.add(projects.get(i));
+        }
+      }
+    }
+    return projectsEmployeeIsIn;
+  }
+
+  /**
+   * Adds a Project.Project to the list.
+   * @param project the project to add to the list
+   */
+  public void add(Project project)
+  {
+    projects.add(project);
+  }
+
+}
