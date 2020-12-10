@@ -65,7 +65,7 @@ public class TaskListTab extends Tab
   final private String NAME = "Name";
   final private String STATUS = "Status";
   final private String DEADLINE = "Deadline";
-  final private String ID = "Deadline";
+  final private String ID = "Id";
   final private String ESTIMATEDHOURS = "Estimated Hours";
   final private String TOTALHOURS = "Total Hours";
   final private String ADD = "Add task";
@@ -275,14 +275,14 @@ public class TaskListTab extends Tab
 
   private void updateTaskLabels()
   {
-    taskNameLabel.setText(" Name: " + selectedTask.getName());
-    taskIDLabel.setText(" Id: " + selectedTask.getTaskID());
-    taskStatusLabel.setText(" Status: " + selectedTask.getStatus());
-    taskDeadlineLabel.setText(" Deadline: " + selectedTask.getDeadline());
+    taskNameLabel.setText(selectedTask.getName());
+    taskIDLabel.setText(selectedTask.getTaskID());
+    taskStatusLabel.setText(selectedTask.getStatus());
+    taskDeadlineLabel.setText(selectedTask.getDeadline()+"");
     taskEstimatedHoursLabel
-        .setText(" Estimated hours: " + selectedTask.getEstimatedHours());
+        .setText(selectedTask.getEstimatedHours()+"");
     taskTotalWorkLabel
-        .setText(" Total work: " + selectedTask.getTotalHoursWorked());
+        .setText(selectedTask.getTotalHoursWorked()+"");
   }
 
   private class MyActionListener implements EventHandler<ActionEvent>
@@ -486,7 +486,7 @@ public class TaskListTab extends Tab
 
         // Task status input.
         VBox statusContainer = statusComboBoxWindowPart();
-        inputTaskStatus.setValue(selectedRequirement.getStatus());
+        inputTaskStatus.setValue(selectedTask.getStatus());
 
         // Task deadline input.
         VBox deadlineContainer = new VBox();
