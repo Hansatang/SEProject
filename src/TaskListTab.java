@@ -602,11 +602,13 @@ public class TaskListTab extends Tab
                 .setDeadline(inputTaskDeadline.getValue());
             // Close window
             window.close();
-            // Update GUI table with requirements to show changes
-            updateTaskArea();
-//            updateTaskLabels();
             // Save all changes
             adapterProject.saveProjects(finalProjectList);
+//
+
+            // Update GUI table with requirements to show changes
+            updateTaskArea();
+            updateTaskLabels();
             // END of editing task
           }
         });

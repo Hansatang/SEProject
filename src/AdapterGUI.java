@@ -46,7 +46,7 @@ public class AdapterGUI extends Application
    */
   public void start(Stage window) throws IOException
   {
-    window.setTitle("Student File Adapter GUI 4");
+    window.setTitle("Project Management System");
 
     adapterProjects = new ProjectListAdapter("Projects.bin");
     adapterEmployee = new EmployeeListAdapter("Employees.bin");
@@ -117,20 +117,15 @@ public class AdapterGUI extends Application
       if (newTab == employeeListTab)
       {
         employeeListTab.updateEmployeeArea();
-        requirementListTab.updateRequirementArea();
       }
       else if (newTab == projectListTab)
       {
         projectListTab.updateProjectArea();
-        requirementListTab.updateRequirementArea();
-        taskListTab.updateTaskArea();
       }
       else if (newTab == requirementListTab)
       {
         requirementListTab.updateRequirementArea();
-        System.out.println(projectListTab.getSelectedProject().getName());
         requirementListTab.setSelectedProject(projectListTab.getSelectedProject());
-        taskListTab.updateTaskArea();
 
       }
       else if (newTab == taskListTab)

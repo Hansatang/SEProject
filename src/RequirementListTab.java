@@ -37,7 +37,8 @@ public class RequirementListTab extends Tab
   private Project selectedProject;
 
   private EmployeeListAdapter adapterEmployee;
-  private ProjectListAdapter adapterProject;
+  private ProjectListAdapter adapterProject = new ProjectListAdapter(
+      "Projects.bin");
 
   private ProjectList finalProjectList;
   private EmployeeList finalEmployeeList;
@@ -61,16 +62,10 @@ public class RequirementListTab extends Tab
 
   private final ArrayList<String> statusOptions = new ArrayList<>();
 
-  public RequirementListTab(String title, ProjectListAdapter adapterProjects,
+  public RequirementListTab(String title, ProjectListAdapter adapterProject,
       EmployeeListAdapter adapterEmployees)
   {
     super(title);
-
-    this.adapterProject = adapterProjects;
-    finalProjectList = adapterProject.getAllProjects();
-
-    this.adapterEmployee = adapterEmployees;
-    finalEmployeeList = adapterEmployee.getAllEmployees();
 
     statusOptions.add("Approved");
     statusOptions.add("Ended");
@@ -78,7 +73,10 @@ public class RequirementListTab extends Tab
     statusOptions.add("Rejected");
     statusOptions.add("Started");
 
-
+    this.adapterProject = adapterProject;
+    finalProjectList = adapterProject.getAllProjects();
+    this.adapterEmployee = adapterEmployees;
+    finalEmployeeList = adapterEmployee.getAllEmployees();
 
     listener = new MyActionListener();
 
@@ -162,14 +160,12 @@ public class RequirementListTab extends Tab
 
     super.setContent(tabRequirement);
 
-    finalEmployeeList = adapterEmployee.getAllEmployees();
-    finalProjectList = adapterProject.getAllProjects();
-
     setSelectedRequirement();
+
+    finalEmployeeList = adapterEmployee.getAllEmployees();
 
     if (selectedRequirement != null)
     {
-      System.out.println(selectedRequirement.getName());
       updateRequirementArea();
     }
 
@@ -216,10 +212,7 @@ public class RequirementListTab extends Tab
   {
     System.out.println("Nah");
     selectedProject = selectedProject1;
-    if (selectedProject.getRequirements() != null)
-    {
-      updateRequirementArea();
-    }
+    updateRequirementArea();
   }
 
   private void setSelectedRequirement()
@@ -250,7 +243,7 @@ public class RequirementListTab extends Tab
     {
       if (adapterProject != null)
       {
-        finalProjectList = adapterProject.getAllProjects();
+        finalProjectList=adapterProject.getAllProjects();
         if (finalProjectList.getProjectByName(selectedProject.getName())
             != null)
         {
@@ -567,10 +560,11 @@ public class RequirementListTab extends Tab
                 .setDeadline(inputRequirementDeadline.getValue());
             // Close window
             window.close();
-            // Update GUI table with requirements to show changes
-            updateRequirementArea();
             // Save all changes
             adapterProject.saveProjects(finalProjectList);
+            // Update GUI table with requirements to show changes
+            updateRequirementArea();
+            updateRequirementLabels();
             // END of editing requirement
           }
         });
