@@ -7,7 +7,6 @@ import Project.ProjectListTab;
 import Project.Project;
 import Project.ProjectList;
 import Project.ProjectListAdapter;
-import Requirement.Requirement;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -27,6 +26,7 @@ import javafx.stage.Stage;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class RequirementListTab extends Tab
 {
@@ -50,7 +50,7 @@ public class RequirementListTab extends Tab
   private AdapterGUI adapterGUI;
 
   private EmployeeListAdapter adapterEmployee;
-  private ProjectListAdapter adapterProject ;
+  private ProjectListAdapter adapterProject;
 
   private ProjectList finalProjectList;
   private EmployeeList finalEmployeeList;
@@ -72,13 +72,14 @@ public class RequirementListTab extends Tab
   DatePicker inputRequirementDeadline = new DatePicker();
   VBox requirementInfoContainer;
 
-  private final ArrayList<String> statusOptions = new ArrayList<>();
+  private final ArrayList<String> statusOptions = new ArrayList<>(
+      Arrays.asList("Approved", "Ended", "Not Started", "Rejected", "Started"));
 
   private final String name = "Name";
   private final String status = "Status";
   private final String team = "Team";
   private final String deadline = "Deadline";
-  private final String userstory = "Userstory";
+  private final String userStory = "Userstory";
   private final String estimatedHours = "Estimated worked hours";
   private final String totalWorkedHours = "Total worked hours";
 
@@ -104,7 +105,7 @@ public class RequirementListTab extends Tab
   private final String errorUserStory = "ERROR: Fix user story";
   private final String errorEmployees = "ERROR: Fix employees";
 
-  public RequirementListTab(String title, ProjectListAdapter adapterProject,
+  public RequirementListTab(String title, ProjectListAdapter adapterProjects,
       EmployeeListAdapter adapterEmployees, ProjectListTab projectListTab,
       AdapterGUI adapterGUI)
   {
@@ -112,20 +113,8 @@ public class RequirementListTab extends Tab
 
     this.adapterGUI = adapterGUI;
     this.projectListTab = projectListTab;
-    this.adapterProject = adapterProject;
+    this.adapterProject = adapterProjects;
     this.adapterEmployee = adapterEmployees;
-    finalProjectList = adapterProject.getAllProjects();
-    finalEmployeeList = adapterEmployee.getAllEmployees();
-    statusOptions.add("Approved");
-    statusOptions.add("Ended");
-    statusOptions.add("Not Started");
-    statusOptions.add("Rejected");
-    statusOptions.add("Started");
-
-    this.adapterProject = adapterProject;
-    finalProjectList = adapterProject.getAllProjects();
-    this.adapterEmployee = adapterEmployees;
-    finalEmployeeList = adapterEmployee.getAllEmployees();
 
     listener = new MyActionListener();
 
@@ -142,13 +131,12 @@ public class RequirementListTab extends Tab
     requirementStatus = new TableColumn<>(status);
     requirementStatus.setCellValueFactory(new PropertyValueFactory<>(status));
     requirementStatus.setPrefWidth(199);
-
     requirementTableView.getColumns().add(requirementStatus);
 
     requirementDeadline = new TableColumn<>(deadline);
-    requirementDeadline.setCellValueFactory(new PropertyValueFactory<>(deadline));
+    requirementDeadline
+        .setCellValueFactory(new PropertyValueFactory<>(deadline));
     requirementDeadline.setPrefWidth(199);
-
     requirementTableView.getColumns().add(requirementDeadline);
 
     requirementInfoContainer = new VBox();
@@ -177,7 +165,7 @@ public class RequirementListTab extends Tab
     infoLabel.setPrefWidth(150);
     infoBox = new HBox(infoLabel, requirementHoursWorkedLabel);
     requirementInfoContainer.getChildren().add(infoBox);
-    infoLabel = new Label(userstory);
+    infoLabel = new Label(userStory);
     infoLabel.setPrefWidth(150);
     infoBox = new HBox(infoLabel, requirementUserStoryLabel);
     requirementInfoContainer.getChildren().add(infoBox);
@@ -207,14 +195,16 @@ public class RequirementListTab extends Tab
     super.setContent(tabRequirement);
 
     setSelectedRequirement();
+  }
 
-    finalEmployeeList = adapterEmployee.getAllEmployees();
+  public Requirement getSelectedRequirement()
+  {
+    return selectedRequirement;
+  }
 
-    if (selectedRequirement != null)
-    {
-      updateRequirementArea();
-    }
-
+  public Project getSelectedProject()
+  {
+    return selectedProject;
   }
 
   private void nameWindow(Stage window, String str)
@@ -238,24 +228,24 @@ public class RequirementListTab extends Tab
 
   private VBox statusComboBoxWindowPart()
   {
-
     VBox statusContainer = new VBox();
     statusContainer.setPadding(new Insets(10, 10, 0, 10));
     Label status = new Label("Status");
 
     inputTaskStatus = new ComboBox();
-    for (int i = 0; i < statusOptions.size(); i++)
+    for (String statusOption : statusOptions)
     {
-      inputTaskStatus.getItems().add(statusOptions.get(i));
+      inputTaskStatus.getItems().add(statusOption);
     }
+    inputTaskStatus.getSelectionModel().select(0);
     statusContainer.getChildren().addAll(status, inputTaskStatus);
 
     return statusContainer;
   }
 
-  public void setSelectedProject(Project selectedProject1)
+  public void setSelectedProject(Project projectSelected)
   {
-    selectedProject = selectedProject1;
+    selectedProject = projectSelected;
     updateRequirementArea();
   }
 
@@ -284,23 +274,16 @@ public class RequirementListTab extends Tab
   public void updateRequirementArea()
   {
     requirementTableView.getItems().clear();
-    if (selectedProject != null)
+    finalProjectList = adapterProject.getAllProjects();
+    if (finalProjectList.getProjectByName(selectedProject.getName()) != null)
     {
-      if (adapterProject != null)
+      for (int i = 0;
+           i < finalProjectList.getProjectByName(selectedProject.getName())
+               .getRequirements().size(); i++)
       {
-        finalProjectList = adapterProject.getAllProjects();
-        if (finalProjectList.getProjectByName(selectedProject.getName())
-            != null)
-        {
-          for (int i = 0;
-               i < finalProjectList.getProjectByName(selectedProject.getName())
-                   .getRequirements().size(); i++)
-          {
-            requirementTableView.getItems().add(
-                finalProjectList.getProjectByName(selectedProject.getName())
-                    .getRequirements().getRequirement(i));
-          }
-        }
+        requirementTableView.getItems().add(
+            finalProjectList.getProjectByName(selectedProject.getName())
+                .getRequirements().getRequirement(i));
       }
     }
   }
@@ -309,7 +292,6 @@ public class RequirementListTab extends Tab
   {
     if (selectedRequirement != null)
     {
-
       requirementNameLabel.setText(selectedRequirement.getName());
       requirementStatusLabel.setText(selectedRequirement.getStatus());
       requirementDeadlineLabel
@@ -335,16 +317,6 @@ public class RequirementListTab extends Tab
     }
   }
 
-  public Requirement getSelectedRequirement()
-  {
-    return selectedRequirement;
-  }
-
-  public Project getSelectedProject()
-  {
-    return selectedProject;
-  }
-
   private class MyActionListener implements EventHandler<ActionEvent>
   {
     public void handle(ActionEvent e)
@@ -362,7 +334,7 @@ public class RequirementListTab extends Tab
 
           // Requirement.Requirement user story input.
           VBox requirementUserStoryContainer = textFieldWindowPart(
-              inputUserStory, userstory);
+              inputUserStory, userStory);
 
           // Requirement.Requirement status input.
           VBox statusContainer = statusComboBoxWindowPart();
@@ -372,6 +344,7 @@ public class RequirementListTab extends Tab
           deadlineContainer.setPadding(new Insets(10, 10, 0, 10));
           Label taskDeadline = new Label(deadline);
           inputRequirementDeadline.setShowWeekNumbers(false);
+          inputRequirementDeadline.setValue(null);
           final DatePicker datePicker = new DatePicker();
           datePicker.setOnAction(new EventHandler()
           {
@@ -393,8 +366,8 @@ public class RequirementListTab extends Tab
           {
             public void handle(Event t)
             {
-              System.err.println(
-                  selectedDate + inputRequirementDeadline.getValue());
+              System.err
+                  .println(selectedDate + inputRequirementDeadline.getValue());
             }
           });
           inputRequirementDeadline.setPromptText(selectDate);
@@ -431,7 +404,7 @@ public class RequirementListTab extends Tab
             @Override public void handle(ActionEvent e)
             {
               EmployeeList selectedEmployees = new EmployeeList();
-              finalEmployeeList=adapterEmployee.getAllEmployees();
+              finalEmployeeList = adapterEmployee.getAllEmployees();
               for (int i = 0; i < employeeCheckBoxes.length; i++)
               {
                 if (employeeCheckBoxes[i].isSelected())
@@ -439,7 +412,6 @@ public class RequirementListTab extends Tab
                   selectedEmployees.addEmployee(finalEmployeeList.get(i));
                 }
               }
-
               if (inputRequirementName.getText().isEmpty()
                   || inputRequirementName.getText().equals(""))
               {
@@ -470,7 +442,6 @@ public class RequirementListTab extends Tab
                 adapterProject.saveProjects(finalProjectList);
                 updateRequirementArea();
               }
-
             }
           });
 
@@ -480,7 +451,6 @@ public class RequirementListTab extends Tab
                   closeWithSaveButton, errorLabel);
 
           layout.setAlignment(Pos.CENTER);
-
           Scene scene = new Scene(layout);
           window.setScene(scene);
           window.showAndWait();
@@ -489,140 +459,138 @@ public class RequirementListTab extends Tab
       }
       else if (e.getSource() == editRequirement)
       {
-        Stage window = new Stage();
-        errorLabel.setText("");
-        nameWindow(window, editRequirementString + selectedRequirement.getName());
-
-        // Requirement.Requirement name input.
-        VBox requirementNameContainer = textFieldWindowPart(
-            inputRequirementName, newRequirementName);
-
-        inputRequirementName.setText(selectedRequirement.getName());
-
-        // Requirement.Requirement user story input.
-        VBox requirementUserStoryContainer = textFieldWindowPart(inputUserStory,
-            userstory);
-
-        inputUserStory.setText(selectedRequirement.getUserstory());
-
-        // Requirement.Requirement status input.
-        VBox statusContainer = statusComboBoxWindowPart();
-        inputTaskStatus.setValue(selectedRequirement.getStatus());
-
-        // Requirement.Requirement deadline input.
-        VBox deadlineContainer = new VBox();
-        deadlineContainer.setPadding(new Insets(10, 10, 0, 10));
-        Label taskDeadline = new Label(deadline);
-        inputRequirementDeadline.setShowWeekNumbers(false);
-        final DatePicker datePicker = new DatePicker();
-        datePicker.setOnAction(new EventHandler()
+        if (!(selectedRequirement == null))
         {
-          public void handle(Event t)
-          {
-            LocalDate date = datePicker.getValue();
-            System.err.println(selectedDate + date);
-          }
-        });
-        inputRequirementDeadline.setDayCellFactory(picker -> new DateCell()
-        {
-          public void updateItem(LocalDate date, boolean empty)
-          {
-            super.updateItem(date, empty);
-            setDisable(empty || date.compareTo(LocalDate.now()) < 1);
-          }
-        });
-        inputRequirementDeadline.setOnAction(new EventHandler()
-        {
-          public void handle(Event t)
-          {
-            System.err.println(
-                selectedDate + inputRequirementDeadline.getValue());
-          }
-        });
-        inputRequirementDeadline.setPromptText(selectDate);
-        inputRequirementDeadline.setValue(selectedRequirement.getDeadline());
+          Stage window = new Stage();
+          errorLabel.setText("");
+          nameWindow(window,
+              editRequirementString + selectedRequirement.getName());
 
-        deadlineContainer.getChildren()
-            .addAll(taskDeadline, inputRequirementDeadline);
+          // Requirement.Requirement name input.
+          VBox requirementNameContainer = textFieldWindowPart(
+              inputRequirementName, newRequirementName);
 
-        // Requirement.Requirement employee list input.
-        VBox employeeListContainer = new VBox();
-        employeeListContainer.setPadding(new Insets(0, 10, 0, 10));
-        Label employeesLabel = new Label(getSelectEmployeesString);
-        GridPane employeeSelectContainer = new GridPane();
-        CheckBox[] employeeCheckBoxes = new CheckBox[selectedProject.getTeam()
-            .size()];
+          inputRequirementName.setText(selectedRequirement.getName());
 
-        for (int i = 0; i < employeeCheckBoxes.length; i++)
-        {
-          employeeCheckBoxes[i] = new CheckBox(
-              selectedProject.getTeam().get(i).getName());
-          employeeSelectContainer.add(employeeCheckBoxes[i], i % 2, i / 2);
-          employeeCheckBoxes[i].setPadding(new Insets(3, 50, 3, 3));
-          for (int j = 0; j < selectedRequirement.getTeam().size(); j++)
+          // Requirement.Requirement user story input.
+          VBox requirementUserStoryContainer = textFieldWindowPart(
+              inputUserStory, userStory);
+
+          inputUserStory.setText(selectedRequirement.getUserstory());
+
+          // Requirement.Requirement status input.
+          VBox statusContainer = statusComboBoxWindowPart();
+          inputTaskStatus.setValue(selectedRequirement.getStatus());
+
+          // Requirement.Requirement deadline input.
+          VBox deadlineContainer = new VBox();
+          deadlineContainer.setPadding(new Insets(10, 10, 0, 10));
+          Label taskDeadline = new Label(deadline);
+          inputRequirementDeadline.setShowWeekNumbers(false);
+          final DatePicker datePicker = new DatePicker();
+          datePicker.setOnAction(new EventHandler()
           {
-            if (employeeCheckBoxes[i].getText().equals(
-                selectedRequirement.getTeam().getEmployees().get(j).getName()))
+            public void handle(Event t)
             {
-              employeeCheckBoxes[i].setSelected(true);
+              LocalDate date = datePicker.getValue();
+              System.err.println(selectedDate + date);
             }
-          }
-        }
-
-        // Add employee label Node and employee selection Node
-        employeeListContainer.getChildren()
-            .addAll(employeesLabel, employeeSelectContainer);
-
-        VBox layout = new VBox(10);
-
-        Button closeWithSaveButton = new Button("saveAndCloseString");
-
-        closeWithSaveButton.setOnAction(new EventHandler<ActionEvent>()
-        {
-          @Override public void handle(ActionEvent e)
+          });
+          inputRequirementDeadline.setDayCellFactory(picker -> new DateCell()
           {
-            // Edit new name
-            selectedRequirement.setName(inputRequirementName.getText());
-            // Edit new userstory
-            selectedRequirement.setUserstory(inputUserStory.getText());
-            // Edit new status
-            selectedRequirement.setStatus(inputTaskStatus.getValue());
-            // New Employee.EmployeeList object to replace the old one
-            EmployeeList selectedEmployees = new EmployeeList();
-            // Run loop to check which employees to add and which to not add
-            for (int i = 0; i < employeeCheckBoxes.length; i++)
+            public void updateItem(LocalDate date, boolean empty)
             {
-              if (employeeCheckBoxes[i].isSelected())
+              super.updateItem(date, empty);
+              setDisable(empty || date.compareTo(LocalDate.now()) < 1);
+            }
+          });
+          inputRequirementDeadline.setPromptText(selectDate);
+          inputRequirementDeadline.setValue(selectedRequirement.getDeadline());
+
+          deadlineContainer.getChildren()
+              .addAll(taskDeadline, inputRequirementDeadline);
+
+          // Requirement.Requirement employee list input.
+          VBox employeeListContainer = new VBox();
+          employeeListContainer.setPadding(new Insets(0, 10, 0, 10));
+          Label employeesLabel = new Label(getSelectEmployeesString);
+          GridPane employeeSelectContainer = new GridPane();
+          CheckBox[] employeeCheckBoxes = new CheckBox[selectedProject.getTeam()
+              .size()];
+
+          for (int i = 0; i < employeeCheckBoxes.length; i++)
+          {
+            employeeCheckBoxes[i] = new CheckBox(
+                selectedProject.getTeam().get(i).getName());
+            employeeSelectContainer.add(employeeCheckBoxes[i], i % 2, i / 2);
+            employeeCheckBoxes[i].setPadding(new Insets(3, 50, 3, 3));
+            for (int j = 0; j < selectedRequirement.getTeam().size(); j++)
+            {
+              if (employeeCheckBoxes[i].getText().equals(
+                  selectedRequirement.getTeam().getEmployees().get(j)
+                      .getName()))
               {
-                selectedEmployees.addEmployee(selectedProject.getTeam().get(i));
+                employeeCheckBoxes[i].setSelected(true);
               }
             }
-            // Edit new team from selected checkboxes
-            selectedRequirement.setTeam(selectedEmployees);
-            // Edit new deadline
-            selectedRequirement
-                .setDeadline(inputRequirementDeadline.getValue());
-            // Close window
-            window.close();
-            // Save all changes
-            adapterProject.saveProjects(finalProjectList);
-            // Update GUI table with requirements to show changes
-            updateRequirementArea();
-            adapterGUI.changeTaskTabTitle(selectedRequirement);
-            updateRequirementLabels();
-            // END of editing requirement
           }
-        });
 
-        layout.getChildren()
-            .addAll(requirementNameContainer, requirementUserStoryContainer,
-                statusContainer, employeeListContainer, deadlineContainer,
-                closeWithSaveButton, errorLabel);
-        layout.setAlignment(Pos.CENTER);
+          // Add employee label Node and employee selection Node
+          employeeListContainer.getChildren()
+              .addAll(employeesLabel, employeeSelectContainer);
 
-        Scene scene = new Scene(layout);
-        window.setScene(scene);
-        window.showAndWait();
+          VBox layout = new VBox(10);
+
+          Button closeWithSaveButton = new Button("saveAndCloseString");
+
+          closeWithSaveButton.setOnAction(new EventHandler<ActionEvent>()
+          {
+            @Override public void handle(ActionEvent e)
+            {
+              // Edit new name
+              selectedRequirement.setName(inputRequirementName.getText());
+              // Edit new user story
+              selectedRequirement.setUserstory(inputUserStory.getText());
+              // Edit new status
+              selectedRequirement.setStatus(inputTaskStatus.getValue());
+              // New Employee.EmployeeList object to replace the old one
+              EmployeeList selectedEmployees = new EmployeeList();
+              // Run loop to check which employees to add and which to not add
+              for (int i = 0; i < employeeCheckBoxes.length; i++)
+              {
+                if (employeeCheckBoxes[i].isSelected())
+                {
+                  selectedEmployees
+                      .addEmployee(selectedProject.getTeam().get(i));
+                }
+              }
+              // Edit new team from selected checkboxes
+              selectedRequirement.setTeam(selectedEmployees);
+              // Edit new deadline
+              selectedRequirement
+                  .setDeadline(inputRequirementDeadline.getValue());
+              // Close window
+              window.close();
+              // Save all changes
+              adapterProject.saveProjects(finalProjectList);
+              // Update GUI table with requirements to show changes
+              updateRequirementArea();
+              adapterGUI.changeTaskTabTitle(selectedRequirement);
+              updateRequirementLabels();
+              // END of editing requirement
+            }
+          });
+
+          layout.getChildren()
+              .addAll(requirementNameContainer, requirementUserStoryContainer,
+                  statusContainer, employeeListContainer, deadlineContainer,
+                  closeWithSaveButton, errorLabel);
+          layout.setAlignment(Pos.CENTER);
+
+          Scene scene = new Scene(layout);
+          window.setScene(scene);
+          window.showAndWait();
+        }
       }
 
       else if (e.getSource() == removeRequirement)
@@ -630,8 +598,7 @@ public class RequirementListTab extends Tab
         if (!(selectedRequirement == null))
         {
           Stage window = new Stage();
-          nameWindow(window,
-              removeString + selectedRequirement.getName());
+          nameWindow(window, removeString + selectedRequirement.getName());
 
           HBox nameContainer = new HBox(2);
           nameContainer.setPadding(new Insets(10, 10, 0, 10));
@@ -656,7 +623,6 @@ public class RequirementListTab extends Tab
                 updateRequirementArea();
                 adapterGUI.closeTaskTabTitle();
                 selectedRequirement = null;
-
               }
             }
           });
@@ -683,7 +649,6 @@ public class RequirementListTab extends Tab
           window.showAndWait();
 
         }
-
       }
     }
   }

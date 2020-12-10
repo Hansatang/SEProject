@@ -16,11 +16,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
 public class AdapterGUI extends Application
 {
-
   // Adapters
   private ProjectListAdapter adapterProjects;
   private EmployeeListAdapter adapterEmployee;
@@ -157,17 +154,16 @@ public class AdapterGUI extends Application
       }
       else if (newTab == requirementListTab)
       {
-        requirementListTab.updateRequirementArea();
         requirementListTab
             .setSelectedProject(projectListTab.getSelectedProject());
-
+        requirementListTab.updateRequirementArea();
       }
       else if (newTab == taskListTab)
       {
-        taskListTab.updateTaskArea();
+        taskListTab.setSelectedProject(requirementListTab.getSelectedProject());
         taskListTab.setSelectedRequirement(
             requirementListTab.getSelectedRequirement());
-        taskListTab.setSelectedProject(requirementListTab.getSelectedProject());
+        taskListTab.updateTaskArea();
       }
     }
   }

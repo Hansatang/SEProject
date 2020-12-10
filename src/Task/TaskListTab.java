@@ -1,6 +1,5 @@
 package Task;
 
-import Employee.Employee;
 import Employee.EmployeeList;
 import Employee.EmployeeListAdapter;
 import Project.Project;
@@ -25,6 +24,7 @@ import javafx.stage.Stage;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class TaskListTab extends Tab
 {
@@ -70,18 +70,13 @@ public class TaskListTab extends Tab
   RadioButton[] employeeRadioButtons;
   VBox taskInfoContainer;
 
-  private final ArrayList<String> statusOptions = new ArrayList<>();
+  private final ArrayList<String> statusOptions = new ArrayList<>(
+      Arrays.asList("Approved","Ended","Not Started","Rejected","Started"));
 
   public TaskListTab(String title, ProjectListAdapter adapterProject,
       EmployeeListAdapter adapterEmployees)
   {
     super(title);
-
-    statusOptions.add("Approved");
-    statusOptions.add("Ended");
-    statusOptions.add("Not Started");
-    statusOptions.add("Rejected");
-    statusOptions.add("Started");
 
     this.adapterProject = adapterProject;
     finalProjectList = adapterProject.getAllProjects();
@@ -95,15 +90,13 @@ public class TaskListTab extends Tab
     taskTableView.setPrefHeight(597);
 
     taskName = new TableColumn<>(" Name");
-    taskName
-        .setCellValueFactory(new PropertyValueFactory<>("Name"));
+    taskName.setCellValueFactory(new PropertyValueFactory<>("Name"));
     taskName.setPrefWidth(199);
 
     taskTableView.getColumns().add(taskName);
 
     taskStatus = new TableColumn<>(" Status");
-    taskStatus
-        .setCellValueFactory(new PropertyValueFactory<>("Status"));
+    taskStatus.setCellValueFactory(new PropertyValueFactory<>("Status"));
     taskStatus.setPrefWidth(199);
 
     taskTableView.getColumns().add(taskStatus);
@@ -113,7 +106,6 @@ public class TaskListTab extends Tab
     taskDeadline.setPrefWidth(199);
 
     taskTableView.getColumns().add(taskDeadline);
-
 
     taskInfoContainer = new VBox();
 
@@ -167,14 +159,6 @@ public class TaskListTab extends Tab
     super.setContent(tabTask);
 
     setSelectedTask();
-
-    finalEmployeeList = adapterEmployee.getAllEmployees();
-
-    if (selectedTask != null)
-    {
-      updateTaskArea();
-    }
-
   }
 
   private void nameWindow(Stage window, String str)
@@ -193,7 +177,6 @@ public class TaskListTab extends Tab
     inputText.setText("");
     inputText.setPromptText("Enter " + labelName.toLowerCase());
     nameContainer.getChildren().addAll(label, inputText);
-
     return nameContainer;
   }
 
@@ -203,12 +186,12 @@ public class TaskListTab extends Tab
     VBox statusContainer = new VBox();
     statusContainer.setPadding(new Insets(10, 10, 0, 10));
     Label status = new Label("Status: ");
-
     inputTaskStatus = new ComboBox();
     for (int i = 0; i < statusOptions.size(); i++)
     {
       inputTaskStatus.getItems().add(statusOptions.get(i));
     }
+    inputTaskStatus.getSelectionModel().select(0);
     statusContainer.getChildren().addAll(status, inputTaskStatus);
 
     return statusContainer;
@@ -216,16 +199,12 @@ public class TaskListTab extends Tab
 
   public void setSelectedRequirement(Requirement selectedRequirement1)
   {
-    System.out.println("Nah");
     selectedRequirement = selectedRequirement1;
-    updateTaskArea();
   }
 
   public void setSelectedProject(Project selectedProject1)
   {
-    System.out.println("Nah");
     selectedProject = selectedProject1;
-    updateTaskArea();
   }
 
   private void setSelectedTask()
@@ -240,7 +219,6 @@ public class TaskListTab extends Tab
             {
               int index = taskTableView.getSelectionModel().getSelectedIndex();
               selectedTask = taskTableView.getItems().get(index);
-
               updateTaskLabels();
             }
           }
@@ -250,26 +228,16 @@ public class TaskListTab extends Tab
   public void updateTaskArea()
   {
     taskTableView.getItems().clear();
-    if (selectedProject != null)
+    finalProjectList = adapterProject.getAllProjects();
+    selectedRequirement = finalProjectList
+        .getProjectByName(selectedProject.getName()).getRequirements()
+        .getRequirementsByName(selectedRequirement.getName());
+    if (selectedRequirement.getTasks() != null)
     {
-      if (selectedRequirement != null)
+      for (int i = 0; i < selectedRequirement.getTasks().size(); i++)
       {
-        if (adapterProject != null)
-        {
-          finalProjectList = adapterProject.getAllProjects();
-          selectedRequirement = finalProjectList
-              .getProjectByName(selectedProject.getName()).getRequirements()
-              .getRequirementsByName(selectedRequirement.getName());
-          if (selectedRequirement.getTasks() != null)
-          {
-            for (int i = 0; i < selectedRequirement.getTasks().size(); i++)
-            {
-              System.out.println(selectedRequirement.getTasks().size());
-              taskTableView.getItems()
-                  .add(selectedRequirement.getTasks().getTask(i));
-            }
-          }
-        }
+        System.out.println(selectedRequirement.getTasks().size());
+        taskTableView.getItems().add(selectedRequirement.getTasks().getTask(i));
       }
     }
   }
@@ -315,6 +283,7 @@ public class TaskListTab extends Tab
         deadlineContainer.setPadding(new Insets(10, 10, 0, 10));
         Label taskDeadline = new Label("Deadline:");
         inputTaskDeadline.setShowWeekNumbers(false);
+        inputTaskDeadline.setValue(null);
         final DatePicker datePicker = new DatePicker();
         datePicker.setOnAction(new EventHandler()
         {
@@ -331,14 +300,6 @@ public class TaskListTab extends Tab
             super.updateItem(date, empty);
             setDisable(empty || date.compareTo(LocalDate.now()) < 1
                 || date.compareTo(selectedRequirement.getDeadline()) > 0);
-          }
-        });
-        inputTaskDeadline.setOnAction(new EventHandler()
-        {
-          public void handle(Event t)
-          {
-            System.err
-                .println("Selected date: " + inputTaskDeadline.getValue());
           }
         });
         inputTaskDeadline.setPromptText("Set deadline..");
@@ -409,7 +370,6 @@ public class TaskListTab extends Tab
             else
             {
               window.close();
-
               Task task = new Task(inputTaskName.getText(),
                   inputTaskID.getText(), inputTaskStatus.getValue(),
                   Integer.parseInt(inputTaskEstimation.getText()),
@@ -418,10 +378,8 @@ public class TaskListTab extends Tab
                   .getRequirements()
                   .getRequirementsByName(selectedRequirement.getName())
                   .getTasks().addTask(task);
-              ;
               adapterProject.saveProjects(finalProjectList);
               updateTaskArea();
-
             }
           }
         });
@@ -432,7 +390,6 @@ public class TaskListTab extends Tab
                 deadlineContainer, closeWithSaveButton, errorLabel);
 
         layout.setAlignment(Pos.CENTER);
-
         Scene scene = new Scene(layout);
         window.setScene(scene);
         window.showAndWait();
@@ -541,7 +498,6 @@ public class TaskListTab extends Tab
               employeeCheckBoxes[i].setSelected(true);
             }
           }
-
         }
 
         // Add employee label Node and employee selection Node
@@ -600,14 +556,12 @@ public class TaskListTab extends Tab
                 errorLabel);
 
         layout.setAlignment(Pos.CENTER);
-
         Scene scene = new Scene(layout);
         window.setScene(scene);
         window.showAndWait();
       }
 
       else if (e.getSource() == removeTask)
-
       {
         if (!(selectedTask == null))
         {
@@ -622,7 +576,6 @@ public class TaskListTab extends Tab
           nameContainer.getChildren().addAll(projectName);
 
           Button closeWithSaveButton = new Button("Save and close");
-
           Button closeWithOutSaveButton = new Button("Save without closing");
 
           closeWithSaveButton.setOnAction(new EventHandler<ActionEvent>()
@@ -658,14 +611,13 @@ public class TaskListTab extends Tab
           layout.getChildren()
               .addAll(nameContainer, errorLabel, closeWithSaveButton,
                   closeWithOutSaveButton);
-          layout.setAlignment(Pos.CENTER);
 
+          layout.setAlignment(Pos.CENTER);
           Scene scene = new Scene(layout);
           window.setScene(scene);
           window.showAndWait();
 
         }
-
       }
     }
   }

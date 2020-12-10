@@ -3,7 +3,6 @@ package Project;
 import Employee.EmployeeList;
 import Employee.EmployeeListAdapter;
 import Main.AdapterGUI;
-import Project.Project;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -83,18 +82,18 @@ public class ProjectListTab extends Tab
     finalEmployeeList = adapterEmployee.getAllEmployees();
     listener = new MyActionListener();
 
-    projectTableView = new TableView<Project>();
+    projectTableView = new TableView<>();
     defaultSelectionModel = projectTableView.getSelectionModel();
     projectTableView.setPrefHeight(projectTableViewHeight);
 
-    projectName = new TableColumn<Project, String>(name);
+    projectName = new TableColumn<>(name);
     projectName
-        .setCellValueFactory(new PropertyValueFactory<Project, String>(name));
+        .setCellValueFactory(new PropertyValueFactory<>(name));
     projectName.setPrefWidth(projectColumnTableViewWidth);
 
-    projectTeam = new TableColumn<Project, String>(team);
+    projectTeam = new TableColumn<>(team);
     projectTeam
-        .setCellValueFactory(new PropertyValueFactory<Project, String>(team));
+        .setCellValueFactory(new PropertyValueFactory<>(team));
     projectTeam.setPrefWidth(projectColumnTableViewWidth);
 
     searchByName = new RadioButton();
@@ -445,6 +444,7 @@ public class ProjectListTab extends Tab
                   adapterProject.saveProjects(finalProjectList);
                 }
                 updateProjectArea();
+                adapterGUI.closeRequirementTabTitle();
                 selectedProject = null;
               }
             }

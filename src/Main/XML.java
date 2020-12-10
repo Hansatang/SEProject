@@ -24,7 +24,7 @@ public class XML {
     }
     try
     {
-      FileOutputStream fileOut = new FileOutputStream("C:/Users/esben/Desktop/RWD/xml/projectList.xml");
+      FileOutputStream fileOut = new FileOutputStream("projectList.xml");
       PrintWriter write = new PrintWriter(fileOut);
 
       write.println("<?xml version='1.0' encoding='UTF-8'?> ");
