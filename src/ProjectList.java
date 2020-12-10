@@ -11,7 +11,8 @@ public class ProjectList implements Serializable
   }
 
   public void addProject()
-  {}
+  {
+  }
 
   public void removeProject(Project selectedProject)
   {
@@ -23,24 +24,25 @@ public class ProjectList implements Serializable
     projects.get(index).getTeam().removeEmployee(employee);
   }
 
-
   public int getNumbersOfProjects()
   {
     return 0;
   }
 
-  public Project getProject(int index){
+  public Project getProject(int index)
+  {
     return null;
   }
 
-  public Project getProjectByName(String projectName){
-    int k=0 ;
+  public Project getProjectByName(String projectName)
+  {
+    int k = 0;
     for (int i = 0; i < projects.size(); i++)
     {
       if (projects.get(i).getName().equals(projectName))
       {
-       k=i;
-       break;
+        k = i;
+        break;
       }
     }
     return projects.get(k);
@@ -48,6 +50,7 @@ public class ProjectList implements Serializable
 
   /**
    * Gets how many Project objects are in the list.
+   *
    * @return the number of Project objects in the list
    */
   public int size()
@@ -57,12 +60,13 @@ public class ProjectList implements Serializable
 
   /**
    * Gets a Project object from position index from the list.
+   *
    * @param index the position in the list of the Project object
    * @return the Project object at position index if one exists, else null
    */
   public Project get(int index)
   {
-    if(index<projects.size())
+    if (index < projects.size())
     {
       return projects.get(index);
     }
@@ -73,32 +77,40 @@ public class ProjectList implements Serializable
   }
 
   // Should be bullshit but...
-  public int[] getIndexesFromInput(String name){
+  public int[] getIndexesFromInput(String name)
+  {
 
     ArrayList<Integer> searchResultIndexesArrList = new ArrayList<>();
 
-    for(int i = 0 ; i < projects.size() ; i++){
+    for (int i = 0; i < projects.size(); i++)
+    {
 
-      if(projects.get(i).getName().contains(name)){
+      if (projects.get(i).getName().contains(name))
+      {
         searchResultIndexesArrList.add(i);
       }
     }
 
     int[] searchResultIndexesArr = new int[searchResultIndexesArrList.size()];
-    for(int i = 0 ; i < searchResultIndexesArr.length ; i++){
+    for (int i = 0; i < searchResultIndexesArr.length; i++)
+    {
       searchResultIndexesArr[i] = searchResultIndexesArrList.get(i);
     }
 
     return searchResultIndexesArr;
   }
 
-  public ArrayList<Project> getProjectsWhereEmployeeIsIn(Employee employee){
+  public ArrayList<Project> getProjectsWhereEmployeeIsIn(Employee employee)
+  {
 
     ArrayList<Project> projectsEmployeeIsIn = new ArrayList<>();
 
-    for(int i = 0 ; i < projects.size() ; i++){
-      for(int j = 0 ; j < projects.get(i).getTeam().size() ; i++){
-        if(projects.get(i).getTeam().get(j).equals(employee)){
+    for (int i = 0; i < projects.size(); i++)
+    {
+      for (int j = 0; j < projects.get(i).getTeam().size(); i++)
+      {
+        if (projects.get(i).getTeam().get(j).equals(employee))
+        {
           projectsEmployeeIsIn.add(projects.get(i));
         }
       }
@@ -108,6 +120,7 @@ public class ProjectList implements Serializable
 
   /**
    * Adds a Project to the list.
+   *
    * @param project the project to add to the list
    */
   public void add(Project project)

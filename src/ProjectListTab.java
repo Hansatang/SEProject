@@ -31,6 +31,7 @@ public class ProjectListTab extends Tab
   private MyActionListener listener;
 
   private Project selectedProject;
+  private AdapterGUI adapterGUI;
 
   private EmployeeListAdapter adapterEmployee;
   private ProjectListAdapter adapterProject;
@@ -66,10 +67,10 @@ public class ProjectListTab extends Tab
   private String searchRadioButtonEmployee = "Search by employee";
 
   public ProjectListTab(String title, ProjectListAdapter adapterP,
-      EmployeeListAdapter adapterE)
+      EmployeeListAdapter adapterE, AdapterGUI adapterGUI)
   {
     super(title);
-
+    this.adapterGUI = adapterGUI;
     this.adapterProject = adapterP;
     finalProjectList = adapterProject.getAllProjects();
     this.adapterEmployee = adapterE;
@@ -77,18 +78,18 @@ public class ProjectListTab extends Tab
 
     listener = new MyActionListener();
 
-    projectTableView = new TableView<Project>();
+    projectTableView = new TableView<>();
     defaultSelectionModel = projectTableView.getSelectionModel();
     projectTableView.setPrefHeight(projectTableViewHeight);
 
-    projectName = new TableColumn<Project, String>(name);
+    projectName = new TableColumn<>(name);
     projectName
-        .setCellValueFactory(new PropertyValueFactory<Project, String>(name));
+        .setCellValueFactory(new PropertyValueFactory<>(name));
     projectName.setPrefWidth(projectColumnTableViewWidth);
 
-    projectTeam = new TableColumn<Project, String>(team);
+    projectTeam = new TableColumn<>(team);
     projectTeam
-        .setCellValueFactory(new PropertyValueFactory<Project, String>(team));
+        .setCellValueFactory(new PropertyValueFactory<>(team));
     projectTeam.setPrefWidth(projectColumnTableViewWidth);
 
     searchByName = new RadioButton();
@@ -161,6 +162,7 @@ public class ProjectListTab extends Tab
               int index = projectTableView.getSelectionModel()
                   .getSelectedIndex();
               selectedProject = projectTableView.getItems().get(index);
+              adapterGUI.changeRequirementTabTitle(selectedProject);
             }
           }
         });
@@ -275,6 +277,7 @@ public class ProjectListTab extends Tab
               adapterProject.saveProjects(finalProjectList);
 
               updateProjectArea();
+              adapterGUI.changeRequirementTabTitle(selectedProject);
             }
           }
         });
@@ -365,13 +368,12 @@ public class ProjectListTab extends Tab
               }
               else
               {
-
                 window.close();
-
                 selectedProject.setName(inputProjectName.getText());
                 selectedProject.setTeam(selectedEmployees);
                 adapterProject.saveProjects(finalProjectList);
                 updateProjectArea();
+                adapterGUI.changeRequirementTabTitle(selectedProject);
               }
             }
           });
@@ -436,6 +438,7 @@ public class ProjectListTab extends Tab
                   adapterProject.saveProjects(finalProjectList);
                 }
                 updateProjectArea();
+                adapterGUI.closeRequirementTabTitle();
                 selectedProject = null;
               }
             }

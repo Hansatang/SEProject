@@ -119,7 +119,8 @@ public class ProjectListAdapter
   public ProjectList getProjectByEmployeeName(String searchPhrase)
   {
     ProjectList projects = new ProjectList();
-    try {
+    try
+    {
       ProjectList result = (ProjectList) mfio.readObjectFromFile(fileName);
       if (searchPhrase.equals(""))
       {

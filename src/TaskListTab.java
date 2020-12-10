@@ -3,7 +3,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -12,7 +11,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -37,7 +35,6 @@ public class TaskListTab extends Tab
   private Project selectedProject;
   private Requirement selectedRequirement;
   private Task selectedTask;
-  private Employee selectedEmployee;
 
   private EmployeeListAdapter adapterEmployee;
   private ProjectListAdapter adapterProject;
@@ -64,9 +61,24 @@ public class TaskListTab extends Tab
   RadioButton[] employeeRadioButtons;
   VBox taskInfoContainer;
 
+  //Hardoded values
+  final private String NAME = "Name";
+  final private String STATUS = "Status";
+  final private String DEADLINE = "Deadline";
+  final private String ID = "Deadline";
+  final private String ESTIMATEDHOURS = "Estimated Hours";
+  final private String TOTALHOURS = "Total Hours";
+  final private String ADD = "Add task";
+  final private String EDIT = "Edit task";
+  final private String REMOVE = "Remove task";
+
+  final private int taskTableViewHeight = 597;
+  final private int taskTableViewColumnWIdth = 199;
+  final private int infoLabelWidth = 150;
+
   private final ArrayList<String> statusOptions = new ArrayList<>();
 
-  public TaskListTab(String title, ProjectListAdapter adapterProject,
+  public TaskListTab(String title, ProjectListAdapter adapterProjects,
       EmployeeListAdapter adapterEmployees)
   {
     super(title);
@@ -77,7 +89,7 @@ public class TaskListTab extends Tab
     statusOptions.add("Rejected");
     statusOptions.add("Started");
 
-    this.adapterProject = adapterProject;
+    this.adapterProject = adapterProjects;
     finalProjectList = adapterProject.getAllProjects();
     this.adapterEmployee = adapterEmployees;
     finalEmployeeList = adapterEmployee.getAllEmployees();
@@ -86,64 +98,61 @@ public class TaskListTab extends Tab
 
     taskTableView = new TableView<>();
     defaultSelectionModel = taskTableView.getSelectionModel();
-    taskTableView.setPrefHeight(597);
+    taskTableView.setPrefHeight(taskTableViewHeight);
 
-    taskName = new TableColumn<>(" Name");
-    taskName
-        .setCellValueFactory(new PropertyValueFactory<>("Name"));
-    taskName.setPrefWidth(199);
+    taskName = new TableColumn<>(NAME);
+    taskName.setCellValueFactory(new PropertyValueFactory<>(NAME));
+    taskName.setPrefWidth(taskTableViewColumnWIdth);
 
     taskTableView.getColumns().add(taskName);
 
-    taskStatus = new TableColumn<>(" Status");
-    taskStatus
-        .setCellValueFactory(new PropertyValueFactory<>("Status"));
-    taskStatus.setPrefWidth(199);
+    taskStatus = new TableColumn<>(STATUS);
+    taskStatus.setCellValueFactory(new PropertyValueFactory<>(STATUS));
+    taskStatus.setPrefWidth(taskTableViewColumnWIdth);
 
     taskTableView.getColumns().add(taskStatus);
 
-    taskDeadline = new TableColumn<>(" Deadline");
-    taskDeadline.setCellValueFactory(new PropertyValueFactory<>("Deadline"));
-    taskDeadline.setPrefWidth(199);
+    taskDeadline = new TableColumn<>(DEADLINE);
+    taskDeadline.setCellValueFactory(new PropertyValueFactory<>(DEADLINE));
+    taskDeadline.setPrefWidth(taskTableViewColumnWIdth);
 
     taskTableView.getColumns().add(taskDeadline);
 
-
     taskInfoContainer = new VBox();
 
-    Label infoLabel = new Label("Name:");
-    infoLabel.setPrefWidth(150);
+    Label infoLabel = new Label(NAME + ":");
+    infoLabel.setPrefWidth(infoLabelWidth);
     HBox infoBox = new HBox(infoLabel, taskNameLabel);
     taskInfoContainer.getChildren().add(infoBox);
-    infoLabel = new Label("Status:");
-    infoLabel.setPrefWidth(150);
+    infoLabel = new Label(STATUS + ":");
+    infoLabel.setPrefWidth(infoLabelWidth);
     infoBox = new HBox(infoLabel, taskStatusLabel);
     taskInfoContainer.getChildren().add(infoBox);
-    infoLabel = new Label("Deadline:");
-    infoLabel.setPrefWidth(150);
+    infoLabel = new Label(DEADLINE + ":");
+    infoLabel.setPrefWidth(infoLabelWidth);
     infoBox = new HBox(infoLabel, taskDeadlineLabel);
     taskInfoContainer.getChildren().add(infoBox);
-    infoLabel = new Label("ID:");
-    infoLabel.setPrefWidth(150);
+    infoLabel = new Label(ID + ":");
+    infoLabel.setPrefWidth(infoLabelWidth);
     infoBox = new HBox(infoLabel, taskIDLabel);
     taskInfoContainer.getChildren().add(infoBox);
-    infoLabel = new Label("Estimated hours:");
-    infoLabel.setPrefWidth(150);
+    infoLabel = new Label(ESTIMATEDHOURS + ":");
+    infoLabel.setPrefWidth(infoLabelWidth);
     infoBox = new HBox(infoLabel, taskEstimatedHoursLabel);
     taskInfoContainer.getChildren().add(infoBox);
-    infoLabel = new Label("Total hours:");
-    infoLabel.setPrefWidth(150);
+    infoLabel = new Label(TOTALHOURS + ":");
+    infoLabel.setPrefWidth(infoLabelWidth);
     infoBox = new HBox(infoLabel, taskTotalWorkLabel);
     taskInfoContainer.getChildren().add(infoBox);
 
-    addTask = new Button("Add Task");
+    addTask = new Button(ADD);
     addTask.setOnAction(listener);
     addTask.setOnAction(listener);
 
-    editTask = new Button("Edit Task");
+    editTask = new Button(EDIT);
     editTask.setOnAction(listener);
 
-    removeTask = new Button("Remove Task");
+    removeTask = new Button(REMOVE);
     removeTask.setOnAction(listener);
 
     HBox buttonContainer = new HBox(addTask, editTask, removeTask);
@@ -169,7 +178,6 @@ public class TaskListTab extends Tab
     {
       updateTaskArea();
     }
-
   }
 
   private void nameWindow(Stage window, String str)
@@ -194,11 +202,9 @@ public class TaskListTab extends Tab
 
   private VBox statusComboBoxWindowPart()
   {
-
     VBox statusContainer = new VBox();
     statusContainer.setPadding(new Insets(10, 10, 0, 10));
     Label status = new Label("Status: ");
-
     inputTaskStatus = new ComboBox();
     for (int i = 0; i < statusOptions.size(); i++)
     {
@@ -211,14 +217,12 @@ public class TaskListTab extends Tab
 
   public void setSelectedRequirement(Requirement selectedRequirement1)
   {
-    System.out.println("Nah");
     selectedRequirement = selectedRequirement1;
     updateTaskArea();
   }
 
   public void setSelectedProject(Project selectedProject1)
   {
-    System.out.println("Nah");
     selectedProject = selectedProject1;
     updateTaskArea();
   }
@@ -252,19 +256,16 @@ public class TaskListTab extends Tab
         if (adapterProject != null)
         {
           finalProjectList = adapterProject.getAllProjects();
-          if (finalProjectList.getProjectByName(selectedProject.getName()).getRequirements().getRequirementsByName(selectedRequirement.getName()).getTasks()
-              != null)
+          selectedRequirement = finalProjectList
+              .getProjectByName(selectedProject.getName()).getRequirements()
+              .getRequirementsByName(selectedRequirement.getName());
+          if (selectedRequirement.getTasks() != null)
           {
-            for (int i = 0; i < finalProjectList.getProjectByName(selectedProject.getName()).getRequirements()
-                .getRequirementsByName(selectedRequirement.getName()).getTasks()
-                .size(); i++)
+            for (int i = 0; i < selectedRequirement.getTasks().size(); i++)
             {
-              System.out.println(
-                  finalProjectList.getProjectByName(selectedProject.getName()).getRequirements()
-                      .getRequirementsByName(selectedRequirement.getName()).getTasks().size());
-              taskTableView.getItems().add(
-                  finalProjectList.getProjectByName(selectedProject.getName()).getRequirements()
-                      .getRequirementsByName(selectedRequirement.getName()).getTasks().getTask(i));
+              System.out.println(selectedRequirement.getTasks().size());
+              taskTableView.getItems()
+                  .add(selectedRequirement.getTasks().getTask(i));
             }
           }
         }
@@ -414,8 +415,8 @@ public class TaskListTab extends Tab
                   inputTaskDeadline.getValue(), selectedEmployees);
               finalProjectList.getProjectByName(selectedProject.getName())
                   .getRequirements()
-                  .getRequirementsByName(selectedRequirement.getName()).getTasks()
-                  .addTask(task);
+                  .getRequirementsByName(selectedRequirement.getName())
+                  .getTasks().addTask(task);
               ;
               adapterProject.saveProjects(finalProjectList);
               updateTaskArea();
@@ -555,20 +556,11 @@ public class TaskListTab extends Tab
           public void handle(ActionEvent e)
           {
             // Edit new name
-            finalProjectList.getProjectByName(selectedProject.getName())
-                .getRequirements().getRequirementsByName(selectedRequirement.getName())
-                .getTasks().getTask(selectedTask.getName())
-                .setName(inputTaskName.getText());
+            selectedTask.setName(inputTaskName.getText());
             // Edit new ID
-            finalProjectList.getProjectByName(selectedProject.getName())
-                .getRequirements().getRequirementsByName(selectedRequirement.getName())
-                .getTasks().getTask(selectedTask.getName())
-                .setTaskID(inputTaskID.getText());
+            selectedTask.setTaskID(inputTaskID.getText());
             // Edit new status
-            finalProjectList.getProjectByName(selectedProject.getName())
-                .getRequirements().getRequirementsByName(selectedRequirement.getName())
-                .getTasks().getTask(selectedTask.getName())
-                .setStatus(inputTaskStatus.getValue());
+            selectedTask.setStatus(inputTaskStatus.getValue());
             // New EmployeeList object to replace the old one
             EmployeeList selectedEmployees = new EmployeeList();
             // Run loop to check which employees to add and which to not add
@@ -580,32 +572,19 @@ public class TaskListTab extends Tab
               }
             }
             // Edit new team from selected checkboxes
-            finalProjectList.getProjectByName(selectedProject.getName())
-                .getRequirements().getRequirementsByName(selectedRequirement.getName())
-                .getTasks().getTask(selectedTask.getName())
-                .setTaskEmployees(selectedEmployees);
+            selectedTask.setTaskEmployees(selectedEmployees);
             // Edit estimated hours
-            finalProjectList.getProjectByName(selectedProject.getName())
-                .getRequirements().getRequirementsByName(selectedRequirement.getName())
-                .getTasks().getTask(selectedTask.getName())
-                .setEstimatedHours(
+            selectedTask.setEstimatedHours(
                 Integer.parseInt(inputTaskEstimation.getText()));
             // Edit total hours
-            finalProjectList.getProjectByName(selectedProject.getName())
-                .getRequirements().getRequirementsByName(selectedRequirement.getName())
-                .getTasks().getTask(selectedTask.getName())
+            selectedTask
                 .setTotalHoursWorked((Integer) inputTaskWorkDone.getValue());
             // Edit new deadline
-            finalProjectList.getProjectByName(selectedProject.getName())
-                .getRequirements().getRequirementsByName(selectedRequirement.getName())
-                .getTasks().getTask(selectedTask.getName())
-                .setDeadline(inputTaskDeadline.getValue());
+            selectedTask.setDeadline(inputTaskDeadline.getValue());
             // Close window
             window.close();
             // Save all changes
             adapterProject.saveProjects(finalProjectList);
-//
-
             // Update GUI table with requirements to show changes
             updateTaskArea();
             updateTaskLabels();
@@ -652,7 +631,8 @@ public class TaskListTab extends Tab
               {
                 window.close();
                 selectedRequirement.getTasks().removeTask(selectedTask);
-                finalProjectList.getProjectByName(selectedProject.getName()).getRequirements()
+                finalProjectList.getProjectByName(selectedProject.getName())
+                    .getRequirements()
                     .getRequirementsByName(selectedRequirement.getName())
                     .remove(selectedTask);
                 adapterProject.saveProjects(finalProjectList);

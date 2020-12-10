@@ -37,7 +37,8 @@ public class AdapterGUI extends Application
 
   private static MyTabListener tabListener;
 
-  public static MyTabListener getTabListener(){
+  public static MyTabListener getTabListener()
+  {
     return tabListener;
   }
 
@@ -56,12 +57,17 @@ public class AdapterGUI extends Application
     tabPane = new TabPane();
     tabPane.getSelectionModel().selectedItemProperty().addListener(tabListener);
 
-    employeeListTab = new EmployeeListTab("All Students", adapterProjects, adapterEmployee);
-    projectListTab = new ProjectListTab("Change Country", adapterProjects, adapterEmployee);
-    requirementListTab = new RequirementListTab("Project detail",adapterProjects,adapterEmployee);
-    taskListTab = new TaskListTab("Requirement detail", adapterProjects,adapterEmployee);
+    employeeListTab = new EmployeeListTab("Employees", adapterProjects,
+        adapterEmployee);
+    projectListTab = new ProjectListTab("Projects", adapterProjects,
+        adapterEmployee, this);
+    requirementListTab = new RequirementListTab("Project detail",
+        adapterProjects, adapterEmployee, projectListTab, this);
+    taskListTab = new TaskListTab("Requirement detail", adapterProjects,
+        adapterEmployee);
 
-
+    requirementListTab.setDisable(true);
+    taskListTab.setDisable(true);
 
     tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
     tabPane.getTabs().add(employeeListTab);
@@ -70,16 +76,12 @@ public class AdapterGUI extends Application
     tabPane.getTabs().add(taskListTab);
     exitMenuItem = new MenuItem("Exit");
 
-
     aboutMenuItem = new MenuItem("About");
-
 
     editTableMenuItem = new CheckMenuItem("Select in student table");
     editTableMenuItem.setSelected(true);
 
-
     editFieldsMenuItem = new CheckMenuItem("Edit name fields");
-
 
     fileMenu = new Menu("File");
     editMenu = new Menu("Edit");
@@ -109,6 +111,30 @@ public class AdapterGUI extends Application
     window.show();
   }
 
+  public void changeRequirementTabTitle(Project selectedProject)
+  {
+    requirementListTab.setText(selectedProject.getName() + " project details");
+    requirementListTab.setDisable(false);
+  }
+
+  public void changeTaskTabTitle(Requirement selectedRequirement)
+  {
+    taskListTab.setText(selectedRequirement.getName() + " requirement details");
+    taskListTab.setDisable(false);
+  }
+
+  public void closeRequirementTabTitle()
+  {
+    requirementListTab.setText("Project details");
+    requirementListTab.setDisable(true);
+  }
+
+  public void closeTaskTabTitle()
+  {
+    taskListTab.setText("Requirement details");
+    taskListTab.setDisable(true);
+  }
+
   private class MyTabListener implements ChangeListener<Tab>
   {
     public void changed(ObservableValue<? extends Tab> tab, Tab oldTab,
@@ -125,13 +151,15 @@ public class AdapterGUI extends Application
       else if (newTab == requirementListTab)
       {
         requirementListTab.updateRequirementArea();
-        requirementListTab.setSelectedProject(projectListTab.getSelectedProject());
+        requirementListTab
+            .setSelectedProject(projectListTab.getSelectedProject());
 
       }
       else if (newTab == taskListTab)
       {
         taskListTab.updateTaskArea();
-        taskListTab.setSelectedRequirement(requirementListTab.getSelectedRequirement());
+        taskListTab.setSelectedRequirement(
+            requirementListTab.getSelectedRequirement());
         taskListTab.setSelectedProject(requirementListTab.getSelectedProject());
       }
     }

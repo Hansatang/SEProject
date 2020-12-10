@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 public class RequirementListTab extends Tab
 {
+  private String title;
 
   private VBox tabRequirement;
 
@@ -35,6 +36,9 @@ public class RequirementListTab extends Tab
 
   private Requirement selectedRequirement;
   private Project selectedProject;
+
+  private ProjectListTab projectListTab;
+  private AdapterGUI adapterGUI;
 
   private EmployeeListAdapter adapterEmployee;
   private ProjectListAdapter adapterProject = new ProjectListAdapter(
@@ -63,44 +67,44 @@ public class RequirementListTab extends Tab
   private final ArrayList<String> statusOptions = new ArrayList<>();
 
   public RequirementListTab(String title, ProjectListAdapter adapterProject,
-      EmployeeListAdapter adapterEmployees)
+      EmployeeListAdapter adapterEmployees, ProjectListTab projectListTab,
+      AdapterGUI adapterGUI)
   {
     super(title);
 
+    this.adapterGUI = adapterGUI;
+    this.projectListTab = projectListTab;
+    this.adapterProject = adapterProject;
+    this.adapterEmployee = adapterEmployees;
+    finalProjectList = adapterProject.getAllProjects();
+    finalEmployeeList = adapterEmployee.getAllEmployees();
     statusOptions.add("Approved");
     statusOptions.add("Ended");
     statusOptions.add("Not Started");
     statusOptions.add("Rejected");
     statusOptions.add("Started");
 
-    this.adapterProject = adapterProject;
-    finalProjectList = adapterProject.getAllProjects();
-    this.adapterEmployee = adapterEmployees;
-    finalEmployeeList = adapterEmployee.getAllEmployees();
-
     listener = new MyActionListener();
 
-    requirementTableView = new TableView<Requirement>();
+    requirementTableView = new TableView<>();
     defaultSelectionModel = requirementTableView.getSelectionModel();
     requirementTableView.setPrefHeight(597);
 
-    requirementName = new TableColumn<Requirement, String>(" Name");
-    requirementName.setCellValueFactory(
-        new PropertyValueFactory<Requirement, String>("Name"));
+    requirementName = new TableColumn<>(" Name");
+    requirementName.setCellValueFactory(new PropertyValueFactory<>("Name"));
     requirementName.setPrefWidth(199);
 
     requirementTableView.getColumns().add(requirementName);
 
-    requirementStatus = new TableColumn<Requirement, String>(" Status");
-    requirementStatus.setCellValueFactory(
-        new PropertyValueFactory<Requirement, String>("Status"));
+    requirementStatus = new TableColumn<>(" Status");
+    requirementStatus.setCellValueFactory(new PropertyValueFactory<>("Status"));
     requirementStatus.setPrefWidth(199);
 
     requirementTableView.getColumns().add(requirementStatus);
 
-    requirementDeadline = new TableColumn<Requirement, String>(" Deadline");
+    requirementDeadline = new TableColumn<>(" Deadline");
     requirementDeadline.setCellValueFactory(
-        new PropertyValueFactory<Requirement, String>("Deadline"));
+        new PropertyValueFactory<>("Deadline"));
     requirementDeadline.setPrefWidth(199);
 
     requirementTableView.getColumns().add(requirementDeadline);
@@ -168,7 +172,6 @@ public class RequirementListTab extends Tab
     {
       updateRequirementArea();
     }
-
   }
 
   private void nameWindow(Stage window, String str)
@@ -187,13 +190,11 @@ public class RequirementListTab extends Tab
     inputText.setText("");
     inputText.setPromptText("Enter " + labelName.toLowerCase());
     nameContainer.getChildren().addAll(label, inputText);
-
     return nameContainer;
   }
 
   private VBox statusComboBoxWindowPart()
   {
-
     VBox statusContainer = new VBox();
     statusContainer.setPadding(new Insets(10, 10, 0, 10));
     Label status = new Label("Status: ");
@@ -210,7 +211,6 @@ public class RequirementListTab extends Tab
 
   public void setSelectedProject(Project selectedProject1)
   {
-    System.out.println("Nah");
     selectedProject = selectedProject1;
     updateRequirementArea();
   }
@@ -230,11 +230,13 @@ public class RequirementListTab extends Tab
                   .getSelectedIndex();
 
               selectedRequirement = requirementTableView.getItems().get(index);
+              adapterGUI.changeTaskTabTitle(selectedRequirement);
               updateRequirementLabels();
             }
           }
         });
   }
+
 
   public void updateRequirementArea()
   {
@@ -243,7 +245,7 @@ public class RequirementListTab extends Tab
     {
       if (adapterProject != null)
       {
-        finalProjectList=adapterProject.getAllProjects();
+        finalProjectList = adapterProject.getAllProjects();
         if (finalProjectList.getProjectByName(selectedProject.getName())
             != null)
         {
@@ -524,7 +526,6 @@ public class RequirementListTab extends Tab
             }
           }
         }
-
         // Add employee label Node and employee selection Node
         employeeListContainer.getChildren()
             .addAll(employeesLabel, employeeSelectContainer);
@@ -539,7 +540,7 @@ public class RequirementListTab extends Tab
           {
             // Edit new name
             selectedRequirement.setName(inputRequirementName.getText());
-            // Edit new userstory
+            // Edit new user story
             selectedRequirement.setUserstory(inputUserStory.getText());
             // Edit new status
             selectedRequirement.setStatus(inputTaskStatus.getValue());
@@ -564,6 +565,7 @@ public class RequirementListTab extends Tab
             adapterProject.saveProjects(finalProjectList);
             // Update GUI table with requirements to show changes
             updateRequirementArea();
+            adapterGUI.changeTaskTabTitle(selectedRequirement);
             updateRequirementLabels();
             // END of editing requirement
           }
@@ -609,6 +611,7 @@ public class RequirementListTab extends Tab
                     .remove(selectedRequirement);
                 adapterProject.saveProjects(finalProjectList);
                 updateRequirementArea();
+                adapterGUI.closeTaskTabTitle();
                 selectedRequirement = null;
 
               }

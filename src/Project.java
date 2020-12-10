@@ -28,16 +28,19 @@ public class Project implements Serializable
     requirements.getRequirements().add(requirement);
   }
 
-  public void setName(String name) {
+  public void setName(String name)
+  {
     this.name = name;
   }
 
-  public void setTeam(EmployeeList team) {
+  public void setTeam(EmployeeList team)
+  {
     this.team = team;
   }
 
   /**
    * Gets the project's name.
+   *
    * @return the project's name
    */
   public String getName()
@@ -47,24 +50,27 @@ public class Project implements Serializable
 
   /**
    * Sets the project's requirements.
+   *
    * @return void
    */
-  public void setRequirements(RequirementList requirements) {
+  public void setRequirements(RequirementList requirements)
+  {
     this.requirements = requirements;
   }
+
   public String getValue()
   {
     String str = "";
     for (int i = 0; i < team.size(); i++)
     {
-      str+= team.get(i).getName()+" ,";
+      str += team.get(i).getName() + " ,";
     }
     return str;
   }
 
-
   /**
    * Gets the project's team.
+   *
    * @return the project's team
    */
   public EmployeeList getTeam()
@@ -72,7 +78,8 @@ public class Project implements Serializable
     return team;
   }
 
-  public String toString(){
+  public String toString()
+  {
     return name;
   }
 }

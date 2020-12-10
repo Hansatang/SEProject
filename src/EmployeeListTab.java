@@ -56,8 +56,6 @@ public class EmployeeListTab extends Tab
   final private int windowMinWidth = 300;
   final private String errorLabelName = "ERROR: invalid project name";
 
-
-
   public EmployeeListTab(String title, ProjectListAdapter adapterP,
       EmployeeListAdapter adapterE)
   {
@@ -75,8 +73,8 @@ public class EmployeeListTab extends Tab
     employeeTableView.setPrefHeight(employeeTableViewHeight);
 
     employeeName = new TableColumn<Employee, String>(name);
-    employeeName.setCellValueFactory(
-        new PropertyValueFactory<Employee, String>(name));
+    employeeName
+        .setCellValueFactory(new PropertyValueFactory<Employee, String>(name));
     employeeName.setPrefWidth(employeeTableViewWidth);
 
     employeeTableView.getColumns().add(employeeName);
@@ -90,17 +88,18 @@ public class EmployeeListTab extends Tab
     removeEmployee = new Button(removeEmployeeButtonName);
     removeEmployee.setOnAction(listener);
 
-    HBox buttonsContainer = new HBox(addEmployee,editEmployee,removeEmployee);
+    HBox buttonsContainer = new HBox(addEmployee, editEmployee, removeEmployee);
     buttonsContainer.setPrefHeight(buttonsContainerHeight);
     buttonsContainer.setSpacing(buttonsContainerSpacing);
-    buttonsContainer.setPadding(new Insets(buttonsContainerV1, buttonsContainerV2, buttonsContainerV3, buttonsContainerV4));
+    buttonsContainer.setPadding(
+        new Insets(buttonsContainerV1, buttonsContainerV2, buttonsContainerV3,
+            buttonsContainerV4));
     buttonsContainer.setAlignment(Pos.CENTER);
 
     tabEmployee = new VBox(VBoxV);
     tabEmployee.setAlignment(Pos.CENTER);
     tabEmployee.getChildren().add(employeeTableView);
     tabEmployee.getChildren().add(buttonsContainer);
-
 
     super.setContent(tabEmployee);
 
@@ -219,7 +218,8 @@ public class EmployeeListTab extends Tab
         {
           Stage window = new Stage();
 
-          nameWindow(window, editEmployeeButtonName + selectedEmployee.getName());
+          nameWindow(window,
+              editEmployeeButtonName + selectedEmployee.getName());
 
           // Employee name input.
           VBox employeeNameContainer = textFieldWindowPart(inputEmployeeName,
@@ -283,7 +283,8 @@ public class EmployeeListTab extends Tab
         {
           Stage window = new Stage();
 
-          nameWindow(window, removeEmployeeButtonName + selectedEmployee.getName());
+          nameWindow(window,
+              removeEmployeeButtonName + selectedEmployee.getName());
 
           // Employee name input.
           HBox nameContainer = new HBox(2);

@@ -36,7 +36,6 @@ public class EmployeeList implements Serializable
     employees.add(employee);
   }
 
-
   public void removeEmployee(Employee employee)
   {
     employees.remove(employee);
@@ -47,7 +46,7 @@ public class EmployeeList implements Serializable
     employees.remove(getIndexFromName(name));
   }
 
-  public void replaceEmployee(String name,String newName)
+  public void replaceEmployee(String name, String newName)
   {
     employees.get(getIndexFromName(name)).setName(newName);
   }
@@ -56,12 +55,10 @@ public class EmployeeList implements Serializable
   {
     for (int i = 0; i < employees.size(); i++)
     {
-
       if (employees.get(i).getName().equals(name))
       {
         return i;
       }
-
     }
     return -1;
   }
@@ -86,7 +83,7 @@ public class EmployeeList implements Serializable
   public String toString()
   {
     String str = "";
-    if (employees.size()!=0)
+    if (employees.size() != 0)
     {
       for (int i = 0; i < employees.size(); i++)
       {
