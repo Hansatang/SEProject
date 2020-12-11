@@ -347,7 +347,7 @@ public class ProjectListTab extends Tab
           employeeListContainer.getChildren()
               .addAll(employeesLabel, employeeSelectContainer);
 
-          Button closeWithSaveButton = new Button("Add new project");
+          Button closeWithSaveButton = new Button("Save and close");
 
           closeWithSaveButton.setOnAction(new EventHandler<ActionEvent>()
           {
@@ -436,11 +436,7 @@ public class ProjectListTab extends Tab
                 window.close();
                 System.out.println(selectedProject.getName());
                 finalProjectList.removeProject(selectedProject);
-                if (adapterProject != null)
-                {
-                  ProjectList projects = adapterProject.getProjectByEmployeeName(selectedProject.getName());
-                  adapterProject.saveProjects(finalProjectList);
-                }
+                adapterProject.saveProjects(finalProjectList);
                 updateProjectArea();
                 adapterGUI.closeRequirementTabTitle();
                 adapterGUI.closeTaskTabTitle();

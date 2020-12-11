@@ -245,6 +245,7 @@ public class EmployeeListTab extends Tab
                 window.close();
                 ProjectList projects = adapterProject
                     .getProjectByEmployeeName(selectedEmployee.getName());
+                finalProjectList = adapterProject.getAllProjects();
                 for (int i = 0; i < projects.size(); i++)
                 {
                   finalProjectList.getProjectByName(projects.get(i).getName())
@@ -256,6 +257,7 @@ public class EmployeeListTab extends Tab
                 finalEmployeeList.get(finalEmployeeList
                     .getIndexFromName(selectedEmployee.getName()))
                     .setName(inputEmployeeName.getText());
+
                 adapterProject.saveProjects(finalProjectList);
                 adapterEmployee.saveEmployees(finalEmployeeList);
 

@@ -88,9 +88,9 @@ public class RequirementListTab extends Tab
   private final String selectDate = "Select date...";
   private final String getSelectEmployeesString = "Select employees: ";
 
-  private final String addRequirementString = "Add requirement";
-  private final String editRequirementString = "Edit requirement";
-  private final String removeRequirementString = "Remove requirement";
+  private final String addRequirementString = "Add requirement ";
+  private final String editRequirementString = "Edit requirement ";
+  private final String removeRequirementString = "Remove requirement ";
   private final String removeString = "Remove requirement";
   private final String confirmRemoveString = "Do you really want to remove: ";
   private final String saveAndCloseString = "Save and close";
@@ -541,7 +541,7 @@ public class RequirementListTab extends Tab
 
           VBox layout = new VBox(10);
 
-          Button closeWithSaveButton = new Button("saveAndCloseString");
+          Button closeWithSaveButton = new Button("Save and Close");
 
           closeWithSaveButton.setOnAction(new EventHandler<ActionEvent>()
           {
