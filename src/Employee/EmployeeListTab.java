@@ -1,6 +1,5 @@
 package Employee;
 
-import Employee.Employee;
 import Project.ProjectList;
 import Project.ProjectListAdapter;
 import javafx.beans.value.ChangeListener;
@@ -248,8 +247,8 @@ public class EmployeeListTab extends Tab
                 for (int i = 0; i < projects.size(); i++)
                 {
                   finalProjectList.getProjectByName(projects.get(i).getName())
-                      .getTeam().replaceEmployee(selectedEmployee.getName(),
-                      inputEmployeeName.getText());
+                      .getTeam().getEmployees().get(finalProjectList.getProjectByName(projects.get(i).getName())
+                      .getTeam().getIndexFromName(name)).setName(inputEmployeeName.getText());
                 }
                 adapterProject.saveProjects(finalProjectList);
 
@@ -325,7 +324,8 @@ public class EmployeeListTab extends Tab
                   for (int i = 0; i < projects.size(); i++)
                   {
                     finalProjectList.getProjectByName(projects.get(i).getName())
-                        .getTeam().deleteEmployee(selectedEmployee.getName());
+                        .getTeam().getEmployees().remove(finalProjectList.getProjectByName(projects.get(i).getName())
+                        .getTeam().getIndexFromName(selectedEmployee.getName()));
                   }
                   adapterProject.saveProjects(finalProjectList);
                 }
