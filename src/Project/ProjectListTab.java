@@ -105,6 +105,7 @@ public class ProjectListTab extends Tab
     searchingType.getToggles().add(searchByName);
     searchingType.getToggles().add(searchByEmployee);
     searchField = new TextField();
+    searchField.setOnAction(listener);
     searchField.setPrefWidth(searchFieldWidth);
     projectTableView.getColumns().add(projectName);
     projectTableView.getColumns().add(projectTeam);
@@ -287,7 +288,8 @@ public class ProjectListTab extends Tab
           }
         });
 
-        VBox layout = new VBox(10);
+        VBox layout = new VBox(5);
+        layout.setPadding(new Insets(0, 0, 10, 0));
 
         layout.getChildren()
             .addAll(projectNameContainer, employeeListContainer, errorMessage,
@@ -321,6 +323,7 @@ public class ProjectListTab extends Tab
           employeeListContainer.setPadding(new Insets(0, 10, 0, 10));
           Label employeesLabel = new Label("Select employees: ");
           GridPane employeeSelectContainer = new GridPane();
+          finalEmployeeList = adapterEmployee.getAllEmployees();
           CheckBox[] employeeCheckBoxes = new CheckBox[finalEmployeeList
               .size()];
 
@@ -384,7 +387,8 @@ public class ProjectListTab extends Tab
             }
           });
 
-          VBox layout = new VBox(10);
+          VBox layout = new VBox(5);
+          layout.setPadding(new Insets(0, 0, 10, 0));
 
           layout.getChildren()
               .addAll(projectNameContainer, employeeListContainer,
@@ -455,7 +459,8 @@ public class ProjectListTab extends Tab
             }
           });
 
-          VBox layout = new VBox(10);
+          VBox layout = new VBox(5);
+          layout.setPadding(new Insets(0, 0, 10, 0));
 
           layout.getChildren()
               .addAll(nameContainer, errorMessage, closingButtons);
@@ -468,7 +473,7 @@ public class ProjectListTab extends Tab
         }
 
       }
-      if (e.getSource() == searchButton)
+      if (e.getSource() == searchButton || e.getSource() == searchField)
       {
         projectTableView.getItems().clear();
         if (adapterProject != null)

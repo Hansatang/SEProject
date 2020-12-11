@@ -48,9 +48,10 @@ public class EmployeeListTab extends Tab
   final private String name = "Name";
   final private int employeeTableViewHeight = 500;
   final private int employeeTableViewWidth = 598;
-  final private String addEmployeeButtonName = "Add employee";
-  final private String editEmployeeButtonName = "Edit employee";
-  final private String removeEmployeeButtonName = "Remove employee";
+  final private String addEmployeeButtonName = "Add employee ";
+  final private String editEmployeeButtonName = "Edit employee ";
+  final private String removeEmployeeButtonName = "Remove employee ";
+  final private String saveAndCloseButtonName = "Save and close";
   final private String textFieldPromptText = "Enter ";
   final private int buttonsContainerHeight = 30;
   final private int buttonsContainerSpacing = 50;
@@ -224,15 +225,15 @@ public class EmployeeListTab extends Tab
         {
           Stage window = new Stage();
 
-          nameWindow(window, editEmployeeButtonName + selectedEmployee.getName());
+          nameWindow(window, editEmployeeButtonName+ selectedEmployee.getName());
 
           // Employee.Employee name input.
           VBox employeeNameContainer = textFieldWindowPart(inputEmployeeName,
-              addEmployeeButtonName);
+              editEmployeeButtonName);
 
           inputEmployeeName.setText(selectedEmployee.getName());
 
-          Button closeWithSaveButton = new Button(editEmployeeButtonName);
+          Button closeWithSaveButton = new Button(saveAndCloseButtonName);
 
           closeWithSaveButton.setOnAction(new EventHandler<ActionEvent>()
           {
@@ -242,24 +243,22 @@ public class EmployeeListTab extends Tab
                   .getText().equals("")))
               {
                 window.close();
-                Employee employee = new Employee(inputEmployeeName.getText());
                 ProjectList projects = adapterProject
                     .getProjectByEmployeeName(selectedEmployee.getName());
                 for (int i = 0; i < projects.size(); i++)
                 {
                   finalProjectList.getProjectByName(projects.get(i).getName())
                       .getTeam().replaceEmployee(selectedEmployee.getName(),
-                      employee.getName());
+                      inputEmployeeName.getText());
                 }
                 adapterProject.saveProjects(finalProjectList);
-                finalEmployeeList.getIndexFromName(selectedEmployee.getName());
 
                 finalEmployeeList.get(finalEmployeeList
                     .getIndexFromName(selectedEmployee.getName()))
                     .setName(inputEmployeeName.getText());
                 adapterProject.saveProjects(finalProjectList);
-
                 adapterEmployee.saveEmployees(finalEmployeeList);
+
 
                 updateEmployeeArea();
               }
@@ -288,7 +287,7 @@ public class EmployeeListTab extends Tab
         {
           Stage window = new Stage();
 
-          nameWindow(window, removeEmployeeButtonName + selectedEmployee.getName());
+          nameWindow(window, removeEmployeeButtonName +selectedEmployee.getName());
 
           // Employee.Employee name input.
           HBox nameContainer = new HBox(2);
