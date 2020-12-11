@@ -445,6 +445,7 @@ public class ProjectListTab extends Tab
                 }
                 updateProjectArea();
                 adapterGUI.closeRequirementTabTitle();
+                adapterGUI.closeTaskTabTitle();
                 selectedProject = null;
               }
             }
