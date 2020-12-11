@@ -77,6 +77,7 @@ public class AdapterGUI extends Application
     tabPane.getTabs().add(requirementListTab);
     tabPane.getTabs().add(taskListTab);
     exitMenuItem = new MenuItem("Exit");
+    exitMenuItem.setOnAction(e->window.close());
 
     aboutMenuItem = new MenuItem("About");
 
