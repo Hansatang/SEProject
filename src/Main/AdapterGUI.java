@@ -33,22 +33,17 @@ public class AdapterGUI extends Application
   private MenuBar menuBar;
 
   private Menu fileMenu;
-  private Menu editMenu;
   private Menu aboutMenu;
 
   private MenuItem exitMenuItem;
   private MenuItem aboutMenuItem;
-
-  private CheckMenuItem editTableMenuItem;
-  private CheckMenuItem editFieldsMenuItem;
 
   private MyTabListener tabListener;
 
   /**
    * @param window The Stage object that will be displayed
    */
-  public void start(Stage window)
-  {
+  public void start(Stage window) {
     window.setTitle("Project Management System");
 
     adapterProjects = new ProjectListAdapter("Projects.bin");
@@ -59,14 +54,10 @@ public class AdapterGUI extends Application
     tabPane = new TabPane();
     tabPane.getSelectionModel().selectedItemProperty().addListener(tabListener);
 
-    employeeListTab = new EmployeeListTab("Employees", adapterProjects,
-        adapterEmployee);
-    projectListTab = new ProjectListTab("Projects", adapterProjects,
-        adapterEmployee, this);
-    requirementListTab = new RequirementListTab("Project detail",
-        adapterProjects, adapterEmployee, projectListTab, this);
-    taskListTab = new TaskListTab("Requirement detail", adapterProjects,
-        adapterEmployee);
+    employeeListTab = new EmployeeListTab("Employees", adapterProjects, adapterEmployee);
+    projectListTab = new ProjectListTab("Projects", adapterProjects, adapterEmployee, this);
+    requirementListTab = new RequirementListTab("Project detail", adapterProjects, adapterEmployee, projectListTab, this);
+    taskListTab = new TaskListTab("Requirement detail", adapterProjects, adapterEmployee);
 
     requirementListTab.setDisable(true);
     taskListTab.setDisable(true);
@@ -81,26 +72,16 @@ public class AdapterGUI extends Application
 
     aboutMenuItem = new MenuItem("About");
 
-    editTableMenuItem = new CheckMenuItem("Select in student table");
-    editTableMenuItem.setSelected(true);
-
-    editFieldsMenuItem = new CheckMenuItem("Edit name fields");
-
     fileMenu = new Menu("File");
-    editMenu = new Menu("Edit");
     aboutMenu = new Menu("About");
 
     fileMenu.getItems().add(exitMenuItem);
-
-    editMenu.getItems().add(editTableMenuItem);
-    editMenu.getItems().add(editFieldsMenuItem);
 
     aboutMenu.getItems().add(aboutMenuItem);
 
     menuBar = new MenuBar();
 
     menuBar.getMenus().add(fileMenu);
-    menuBar.getMenus().add(editMenu);
     menuBar.getMenus().add(aboutMenu);
 
     mainPane = new VBox();
@@ -114,6 +95,10 @@ public class AdapterGUI extends Application
     window.show();
 
     window.setOnCloseRequest(e -> XML.run());
+  }
+
+  private void setupMenu(){
+
   }
 
   public void changeRequirementTabTitle(Project selectedProject)

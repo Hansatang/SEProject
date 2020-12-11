@@ -434,13 +434,7 @@ public class ProjectListTab extends Tab
                 finalProjectList.removeProject(selectedProject);
                 if (adapterProject != null)
                 {
-                  ProjectList projects = adapterProject
-                      .getProjectByEmployeeName(selectedProject.getName());
-                  for (int i = 0; i < projects.size(); i++)
-                  {
-                    finalProjectList.getProjectByName(projects.get(i).getName())
-                        .getTeam().deleteEmployee(selectedProject.getName());
-                  }
+                  ProjectList projects = adapterProject.getProjectByEmployeeName(selectedProject.getName());
                   adapterProject.saveProjects(finalProjectList);
                 }
                 updateProjectArea();

@@ -3,8 +3,7 @@ package Employee;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class EmployeeList implements Serializable
-{
+public class EmployeeList implements Serializable {
   private ArrayList<Employee> employees;
 
   public EmployeeList()
@@ -12,19 +11,15 @@ public class EmployeeList implements Serializable
     this.employees = new ArrayList<>();
   }
 
-  /**
-   * Gets how many Employees objects are in the list.
-   *
-   * @return the number of Employees objects in the list
+ /** Gets how many Employees objects are in the list.
+   * @return integer of the number of Employee objects in the list
    */
   public int size()
   {
     return employees.size();
   }
 
-  /**
-   * Gets a Employee.Employee object from position index from the list.
-   *
+ /** Gets an Employee object from position index from the list.
    * @param index the position in the list of the Employee.Employee object
    * @return the Employee.Employee object at position index if one exists, else null
    */
@@ -42,16 +37,6 @@ public class EmployeeList implements Serializable
   public void removeEmployee(Employee employee)
   {
     employees.remove(employee);
-  }
-
-  public void deleteEmployee(String name)
-  {
-    employees.remove(getIndexFromName(name));
-  }
-
-  public void replaceEmployee(String name,String newName)
-  {
-    employees.get(getIndexFromName(name)).setName(newName);
   }
 
   public int getIndexFromName(String name)
