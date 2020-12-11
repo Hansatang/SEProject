@@ -39,6 +39,16 @@ public class EmployeeList implements Serializable {
     employees.remove(employee);
   }
 
+  public void deleteEmployee(String name)
+  {
+    employees.remove(getIndexFromName(name));
+  }
+
+  public void replaceEmployee(String name,String newName)
+  {
+    employees.get(getIndexFromName(name)).setName(newName);
+  }
+
   public int getIndexFromName(String name)
   {
     for (int i = 0; i < employees.size(); i++)
