@@ -245,7 +245,7 @@ public class RequirementListTab extends Tab
 
   public void setSelectedProject(Project projectSelected)
   {
-    selectedProject = projectSelected;
+    selectedProject = adapterProject.getAllProjects().getProjectByName(projectSelected.getName());
     updateRequirementArea();
   }
 
@@ -397,7 +397,7 @@ public class RequirementListTab extends Tab
 
           VBox layout = new VBox(10);
 
-          Button closeWithSaveButton = new Button(saveAndCloseString);
+          Button closeWithSaveButton = new Button("Add requirement");
 
           closeWithSaveButton.setOnAction(new EventHandler<ActionEvent>()
           {
@@ -611,14 +611,19 @@ public class RequirementListTab extends Tab
 
           Button closeWithOutSaveButton = new Button(notSaveAndCloseString);
 
+          HBox closingButtons = new HBox(closeWithSaveButton,
+              closeWithOutSaveButton);
+          closingButtons.setPadding(new Insets(10, 40, 10, 50));
+          closingButtons.setSpacing(50);
+
           closeWithSaveButton.setOnAction(new EventHandler<ActionEvent>()
           {
             public void handle(ActionEvent e)
             {
               {
                 window.close();
-                finalProjectList.getProjectByName(selectedProject.getName())
-                    .remove(selectedRequirement);
+                finalProjectList.getProjectByName(selectedProject.getName()).getRequirements()
+                    .removeRequirement(selectedRequirement);
                 adapterProject.saveProjects(finalProjectList);
                 updateRequirementArea();
                 adapterGUI.closeTaskTabTitle();
@@ -640,8 +645,7 @@ public class RequirementListTab extends Tab
           VBox layout = new VBox(10);
 
           layout.getChildren()
-              .addAll(nameContainer, errorLabel, closeWithSaveButton,
-                  closeWithOutSaveButton);
+              .addAll(nameContainer, errorLabel, closingButtons);
           layout.setAlignment(Pos.CENTER);
 
           Scene scene = new Scene(layout);

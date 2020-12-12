@@ -97,34 +97,46 @@ public class AdapterGUI extends Application
     window.setOnCloseRequest(e -> XML.run());
   }
 
-  private void setupMenu(){
-
-  }
-
+  /**
+   * Updates the name of the requirementListTable Tab and set it's state to not disabled
+   */
   public void changeRequirementTabTitle(Project selectedProject)
   {
     requirementListTab.setText(selectedProject.getName() + " project details");
     requirementListTab.setDisable(false);
   }
 
+  /**
+   * Updates the name of the taskListTable Tab and set it's state to not disabled
+   */
   public void changeTaskTabTitle(Requirement selectedRequirement)
   {
     taskListTab.setText(selectedRequirement.getName() + " requirement details");
     taskListTab.setDisable(false);
   }
 
+  /**
+   * Updates the name of the requirementListTable Tab and set it's state to disabled
+   */
   public void closeRequirementTabTitle()
   {
     requirementListTab.setText("Project details");
     requirementListTab.setDisable(true);
   }
 
+  /**
+   * Updates the name of the taskListTable Tab and set it's state to disabled
+   */
   public void closeTaskTabTitle()
   {
     taskListTab.setText("Requirement details");
     taskListTab.setDisable(true);
   }
 
+  /*
+   * Inner change listener class
+   * @author Krzysztof Pacierz
+   */
   private class MyTabListener implements ChangeListener<Tab>
   {
     public void changed(ObservableValue<? extends Tab> tab, Tab oldTab,

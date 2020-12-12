@@ -57,6 +57,7 @@ public class TaskListTab extends Tab
   private Label taskStatusLabel = new Label();
   private Label taskDeadlineLabel = new Label();
   private Label taskIDLabel = new Label();
+  private Label taskEmployeeLabel = new Label();
   private Label taskEstimatedHoursLabel = new Label();
   private Label taskTotalWorkLabel = new Label();
 
@@ -120,6 +121,10 @@ public class TaskListTab extends Tab
     infoLabel = new Label("Deadline:");
     infoLabel.setPrefWidth(150);
     infoBox = new HBox(infoLabel, taskDeadlineLabel);
+    taskInfoContainer.getChildren().add(infoBox);
+    infoLabel = new Label("Responsible Employees:");
+    infoLabel.setPrefWidth(150);
+    infoBox = new HBox(infoLabel, taskEmployeeLabel);
     taskInfoContainer.getChildren().add(infoBox);
     infoLabel = new Label("ID:");
     infoLabel.setPrefWidth(150);
@@ -244,14 +249,15 @@ public class TaskListTab extends Tab
 
   private void updateTaskLabels()
   {
-    taskNameLabel.setText(" Name: " + selectedTask.getName());
-    taskIDLabel.setText(" Id: " + selectedTask.getTaskID());
-    taskStatusLabel.setText(" Status: " + selectedTask.getStatus());
-    taskDeadlineLabel.setText(" Deadline: " + selectedTask.getDeadline());
+    taskNameLabel.setText(selectedTask.getName());
+    taskIDLabel.setText(selectedTask.getTaskID());
+    taskEmployeeLabel.setText(selectedTask.getTaskMembers()+"");
+    taskStatusLabel.setText(selectedTask.getStatus());
+    taskDeadlineLabel.setText(selectedTask.getDeadline()+"");
     taskEstimatedHoursLabel
-        .setText(" Estimated hours: " + selectedTask.getEstimatedHours());
+        .setText(selectedTask.getEstimatedHours()+"");
     taskTotalWorkLabel
-        .setText(" Total work: " + selectedTask.getTotalHoursWorked());
+        .setText(selectedTask.getTotalHoursWorked()+"");
   }
 
   private class MyActionListener implements EventHandler<ActionEvent>
@@ -577,6 +583,10 @@ public class TaskListTab extends Tab
 
           Button closeWithSaveButton = new Button("Save and close");
           Button closeWithOutSaveButton = new Button("Save without closing");
+          HBox closingButtons = new HBox(closeWithSaveButton,
+              closeWithOutSaveButton);
+          closingButtons.setPadding(new Insets(10, 40, 10, 50));
+          closingButtons.setSpacing(50);
 
           closeWithSaveButton.setOnAction(new EventHandler<ActionEvent>()
           {
@@ -609,8 +619,7 @@ public class TaskListTab extends Tab
           VBox layout = new VBox(10);
 
           layout.getChildren()
-              .addAll(nameContainer, errorLabel, closeWithSaveButton,
-                  closeWithOutSaveButton);
+              .addAll(nameContainer, errorLabel, closingButtons);
 
           layout.setAlignment(Pos.CENTER);
           Scene scene = new Scene(layout);

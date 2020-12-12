@@ -8,8 +8,7 @@ import java.io.IOException;
 /**
  * An adapter to the projects file, making it easy to retrieve and store information.
  *
- * @author Krzysztof PAcierz
- * @version 1.0
+ * @author Krzysztof Pacierz
  */
 public class ProjectListAdapter
 {
@@ -18,7 +17,6 @@ public class ProjectListAdapter
 
   /**
    * 1-argument constructor setting the file name.
-   *
    * @param fileName the name and path of the file where projects will be saved and retrieved
    */
   public ProjectListAdapter(String fileName)
@@ -28,9 +26,8 @@ public class ProjectListAdapter
   }
 
   /**
-   * Uses the Main.MyFileIO class to retrieve a Project.ProjectList object with all Projects.
-   *
-   * @return a Project.ProjectList object with all stored projects
+   * Uses the MyFileIO class to retrieve a ProjectList object with all Projects.
+   * @return a ProjectList object with all stored projects
    */
   public ProjectList getAllProjects()
   {
@@ -56,10 +53,9 @@ public class ProjectListAdapter
   }
 
   /**
-   * Use the Main.MyFileIO class to retrieve all projects with specified name.
-   *
+   * Use the MMyFileIO class to retrieve all projects with specified name.
    * @param searchPhrase the name to retrieve projects with
-   * @return a Project.ProjectList object with projects with specified name
+   * @return a ProjectList object with projects with specified name
    */
   public ProjectList getProjectByName(String searchPhrase)
   {
@@ -73,7 +69,7 @@ public class ProjectListAdapter
       {
         if (result.get(i).getName().contains(searchPhrase))
         {
-          projects.add(result.get(i));
+          projects.addProject(result.get(i));
         }
       }
     }
@@ -94,8 +90,7 @@ public class ProjectListAdapter
   }
 
   /**
-   * Use the Main.MyFileIO class to save projects.
-   *
+   * Use the MyFileIO class to save projects.
    * @param projects the list of projects that will be saved
    */
   public void saveProjects(ProjectList projects)
@@ -115,10 +110,9 @@ public class ProjectListAdapter
   }
 
   /**
-   * Use the Main.MyFileIO class to retrieve all projects with specified name of employee.
-   *
+   * Use the MyFileIO class to retrieve all projects with specified name of employee.
    * @param searchPhrase the name to retrieve projects with specified employee
-   * @return a Project.ProjectList object with projects with specified  employee name
+   * @return a ProjectList object with projects with specified  employee name
    */
   public ProjectList getProjectByEmployeeName(String searchPhrase)
   {
@@ -137,7 +131,7 @@ public class ProjectListAdapter
           {
             if (result.get(i).getTeam().get(j).getName().contains(searchPhrase))
             {
-              projects.add(result.get(i));
+              projects.addProject(result.get(i));
             }
           }
 

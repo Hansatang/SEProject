@@ -5,40 +5,25 @@ import Requirement.Requirement;
 import Requirement.RequirementList;
 
 import java.io.Serializable;
-
+/**
+ * A class representing a project with a name, requirement list and employee team.
+ * @author Krzysztof Pacierz
+ */
 public class Project implements Serializable
 {
   private String name;
   private RequirementList requirements;
   private EmployeeList team;
 
+  /**
+   * Two-argument constructor.
+   * @param name the project's name
+   * @param team the project's employee team
+   */
   public Project(String name, EmployeeList team)
   {
     this.name = name;
     this.requirements = new RequirementList();
-    this.team = team;
-  }
-
-  public RequirementList getRequirements()
-  {
-    return requirements;
-  }
-
-  public void remove(Requirement requirement)
-  {
-    requirements.remove(requirement);
-  }
-
-  public void add(Requirement requirement)
-  {
-    requirements.getRequirements().add(requirement);
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public void setTeam(EmployeeList team) {
     this.team = team;
   }
 
@@ -52,22 +37,29 @@ public class Project implements Serializable
   }
 
   /**
+   * Sets the project's name.
+   * @param name what the project's name will be set to
+   */
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  /**
+   * Gets the project's requirement list.
+   * @return the project's requirement list
+   */
+  public RequirementList getRequirements()
+  {
+    return requirements;
+  }
+
+  /**
    * Sets the project's requirements.
-   * @return void
+   * @param requirements what the project's requirement list will be set to
    */
   public void setRequirements(RequirementList requirements) {
     this.requirements = requirements;
   }
-  public String getValue()
-  {
-    String str = "";
-    for (int i = 0; i < team.size(); i++)
-    {
-      str+= team.get(i).getName()+" ,";
-    }
-    return str;
-  }
-
 
   /**
    * Gets the project's team.
@@ -77,6 +69,15 @@ public class Project implements Serializable
   {
     return team;
   }
+
+  /**
+   * Sets the project's team.
+   * @param team what the project's team will be set to
+   */
+  public void setTeam(EmployeeList team) {
+    this.team = team;
+  }
+
 
   public String toString(){
     return name;

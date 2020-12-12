@@ -71,14 +71,23 @@ public class ProjectListTab extends Tab
   private String searchRadioButtonName = "Search by name";
   private String searchRadioButtonEmployee = "Search by employee";
 
-  public ProjectListTab(String title, ProjectListAdapter adapterP,
-      EmployeeListAdapter adapterE, AdapterGUI adapterGUI)
+
+
+  /**
+   * Constructor initializing the GUI components
+   * @param title The title of the tab
+   * @param  projectAdapter object used for retrieving and storing project information
+   * @param  employeeAdapter object used for retrieving and storing employee information
+   * @param  adapterGUI object used for communication between Tabs
+   */
+  public ProjectListTab(String title, ProjectListAdapter projectAdapter,
+      EmployeeListAdapter employeeAdapter, AdapterGUI adapterGUI)
   {
     super(title);
     this.adapterGUI = adapterGUI;
-    this.adapterProject = adapterP;
+    this.adapterProject = projectAdapter;
     finalProjectList = adapterProject.getAllProjects();
-    this.adapterEmployee = adapterE;
+    this.adapterEmployee = employeeAdapter;
     finalEmployeeList = adapterEmployee.getAllEmployees();
     listener = new MyActionListener();
 
@@ -150,11 +159,18 @@ public class ProjectListTab extends Tab
 
   }
 
+  /**
+   * Gets the selectedProject Project.
+   * @return the selectedProject Project
+   */
   public Project getSelectedProject()
   {
     return selectedProject;
   }
 
+  /**
+   * Sets the selectedProject.
+   */
   private void setSelectedProject()
   {
     projectTableView.getSelectionModel().selectedItemProperty()
@@ -175,9 +191,7 @@ public class ProjectListTab extends Tab
   }
 
   /**
-   * Updates the Project.ProjectList objects the TreeView<Project.Project> on the GUI
-   *
-   * @param //args Command line arguments
+   * Updates the projectTableView tableView with information from the projects file
    */
   public void updateProjectArea()
   {
@@ -192,14 +206,24 @@ public class ProjectListTab extends Tab
     }
   }
 
-  private void nameWindow(Stage window, String str)
+  /**
+   * Sets the default values for window entities
+   * @param window The window to insert default values
+   * @param title The title of the window
+   */
+  private void nameWindow(Stage window, String title)
   {
     window.initModality(Modality.APPLICATION_MODAL);
-    window.setTitle(str);
+    window.setTitle(title);
     window.setMinWidth(windowMinWidth);
     window.setResizable(false);
   }
 
+  /**
+   * Creates a VBox container with label and TextField and defines the  values them
+   * @param inputText The TextField to set values
+   * @param labelName The text in the label
+   */
   private VBox textFieldWindowPart(TextField inputText, String labelName)
   {
     VBox nameContainer = new VBox(2);
@@ -212,6 +236,10 @@ public class ProjectListTab extends Tab
     return nameContainer;
   }
 
+  /*
+   * Inner action listener class
+   * @author
+   */
   private class MyActionListener implements EventHandler<ActionEvent>
   {
     public void handle(ActionEvent e)
@@ -280,7 +308,7 @@ public class ProjectListTab extends Tab
 
               Project project = new Project(inputProjectName.getText(),
                   selectedEmployees);
-              finalProjectList.add(project);
+              finalProjectList.addProject(project);
               adapterProject.saveProjects(finalProjectList);
 
               updateProjectArea();
