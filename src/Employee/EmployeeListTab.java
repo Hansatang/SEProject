@@ -251,7 +251,18 @@ public class EmployeeListTab extends Tab
                   finalProjectList.getProjectByName(projects.get(i).getName())
                       .getTeam().replaceEmployee(selectedEmployee.getName(),
                       inputEmployeeName.getText());
+                  for (int j = 0; j < projects.getProjectByName(projects.get(i).getName()).getRequirements().size(); j++)
+                  {
+                    finalProjectList.getProjectByName(projects.get(i).getName()).getRequirements().getRequirement(j).getTeam().replaceEmployee(selectedEmployee.getName(),
+                        inputEmployeeName.getText());
+                    for (int k = 0; k <projects.getProjectByName(projects.get(i).getName()).getRequirements().getRequirement(j).getTasks().size() ; k++)
+                    {
+                      finalProjectList.getProjectByName(projects.get(i).getName()).getRequirements().getRequirement(j).getTasks().getTask(k).getTaskMembers().replaceEmployee(selectedEmployee.getName(),
+                          inputEmployeeName.getText());
+                    }
+                  }
                 }
+
                 adapterProject.saveProjects(finalProjectList);
 
                 finalEmployeeList.get(finalEmployeeList
@@ -328,6 +339,14 @@ public class EmployeeListTab extends Tab
                   {
                     finalProjectList.getProjectByName(projects.get(i).getName())
                         .getTeam().deleteEmployee(selectedEmployee.getName());
+                    for (int j = 0; j < projects.getProjectByName(projects.get(i).getName()).getRequirements().size(); j++)
+                    {
+                      finalProjectList.getProjectByName(projects.get(i).getName()).getRequirements().getRequirement(j).getTeam().deleteEmployee(selectedEmployee.getName());
+                      for (int k = 0; k <projects.getProjectByName(projects.get(i).getName()).getRequirements().getRequirement(j).getTasks().size() ; k++)
+                      {
+                        finalProjectList.getProjectByName(projects.get(i).getName()).getRequirements().getRequirement(j).getTasks().getTask(k).getTaskMembers().deleteEmployee(selectedEmployee.getName());
+                      }
+                    }
                   }
                   adapterProject.saveProjects(finalProjectList);
                 }

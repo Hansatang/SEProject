@@ -40,6 +40,7 @@ public class MyFileIO
         }
         catch (IOException e)
         {
+          e.printStackTrace();
           System.out.println("IO Error closing file " + fileName);
         }
       }
@@ -71,6 +72,7 @@ public class MyFileIO
       }
       catch (EOFException eof)
       {
+        eof.printStackTrace();
         //Done reading
       }
     }
@@ -84,6 +86,7 @@ public class MyFileIO
         }
         catch (IOException e)
         {
+          e.printStackTrace();
           System.out.println("IO Error closing file " + fileName);
         }
       }

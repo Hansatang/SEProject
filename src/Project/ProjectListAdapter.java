@@ -6,7 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
- * An adapter to the projects file, making it easy to retrieve and store information.
+ * An adapter to the projects file, to retrieve and store information.
  *
  * @author Krzysztof Pacierz
  */
@@ -39,14 +39,17 @@ public class ProjectListAdapter
     }
     catch (FileNotFoundException e)
     {
+      e.printStackTrace();
       System.out.println("File not found");
     }
     catch (IOException e)
     {
+      e.printStackTrace();
       System.out.println("IO Error reading file");
     }
     catch (ClassNotFoundException e)
     {
+      e.printStackTrace();
       System.out.println("Class Not Found");
     }
     return projects;
@@ -75,14 +78,17 @@ public class ProjectListAdapter
     }
     catch (FileNotFoundException e)
     {
+      e.printStackTrace();
       System.out.println("File not found");
     }
     catch (IOException e)
     {
+      e.printStackTrace();
       System.out.println("IO Error reading file");
     }
     catch (ClassNotFoundException e)
     {
+      e.printStackTrace();
       System.out.println("Class Not Found");
     }
 
@@ -101,10 +107,12 @@ public class ProjectListAdapter
     }
     catch (FileNotFoundException e)
     {
+      e.printStackTrace();
       System.out.println("File not found");
     }
     catch (IOException e)
     {
+      e.printStackTrace();
       System.out.println("IO Error writing to file");
     }
   }
@@ -140,14 +148,17 @@ public class ProjectListAdapter
     }
     catch (FileNotFoundException e)
     {
+      e.printStackTrace();
       System.out.println("File not found: " + fileName);
     }
     catch (IOException e)
     {
+      e.printStackTrace();
       System.out.println("IO Error reading file: " + fileName);
     }
     catch (ClassNotFoundException e)
     {
+      e.printStackTrace();
       System.out.println("Class Not Found " + e.getClass().toString());
     }
 

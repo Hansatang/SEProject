@@ -48,7 +48,7 @@ public class ProjectListTab extends Tab
 
   TextField inputProjectName = new TextField();
 
-  //Harcoded values
+  //Hardcoded values
   private String name = "Name";
   private String team = "Team";
   final private int projectTableViewHeight = 500;
@@ -173,13 +173,13 @@ public class ProjectListTab extends Tab
    */
   private void setSelectedProject()
   {
-    projectTableView.getSelectionModel().selectedItemProperty()
+    defaultSelectionModel.selectedItemProperty()
         .addListener(new ChangeListener()
         {
           public void changed(ObservableValue observableValue, Object oldValue,
               Object newValue)
           {
-            if (projectTableView.getSelectionModel().getSelectedItem() != null)
+            if (defaultSelectionModel.getSelectedItem() != null)
             {
               int index = projectTableView.getSelectionModel()
                   .getSelectedIndex();

@@ -335,7 +335,7 @@ public class TaskListTab extends Tab
 
         VBox layout = new VBox(10);
 
-        Button closeWithSaveButton = new Button("Save and close");
+        Button closeWithSaveButton = new Button("Add task");
 
         closeWithSaveButton.setOnAction(new EventHandler<ActionEvent>()
         {
