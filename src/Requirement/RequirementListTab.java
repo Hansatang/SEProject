@@ -245,7 +245,8 @@ public class RequirementListTab extends Tab
 
   public void setSelectedProject(Project projectSelected)
   {
-    selectedProject = adapterProject.getAllProjects().getProjectByName(projectSelected.getName());
+    selectedProject = adapterProject.getAllProjects()
+        .getProjectByName(projectSelected.getName());
     updateRequirementArea();
   }
 
@@ -281,6 +282,18 @@ public class RequirementListTab extends Tab
            i < finalProjectList.getProjectByName(selectedProject.getName())
                .getRequirements().size(); i++)
       {
+        finalProjectList.getProjectByName(selectedProject.getName())
+            .getRequirements().getRequirement(i).setEstimatedHours(
+            finalProjectList.getProjectByName(selectedProject.getName())
+                .getRequirements().getRequirement(i).getTasks()
+                .getTotalEstimatedHours());
+        finalProjectList.getProjectByName(selectedProject.getName())
+            .getRequirements().getRequirement(i).setTotalHoursWorked(
+            finalProjectList.getProjectByName(selectedProject.getName())
+                .getRequirements().getRequirement(i).getTasks()
+                .getTotalWorkedHours());
+        finalProjectList.getProjectByName(selectedProject.getName())
+            .getRequirements().getRequirement(i).checkTasks();
         requirementTableView.getItems().add(
             finalProjectList.getProjectByName(selectedProject.getName())
                 .getRequirements().getRequirement(i));
@@ -622,8 +635,8 @@ public class RequirementListTab extends Tab
             {
               {
                 window.close();
-                finalProjectList.getProjectByName(selectedProject.getName()).getRequirements()
-                    .removeRequirement(selectedRequirement);
+                finalProjectList.getProjectByName(selectedProject.getName())
+                    .getRequirements().removeRequirement(selectedRequirement);
                 adapterProject.saveProjects(finalProjectList);
                 updateRequirementArea();
                 adapterGUI.closeTaskTabTitle();
