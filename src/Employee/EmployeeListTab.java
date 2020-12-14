@@ -23,7 +23,6 @@ public class EmployeeListTab extends Tab
   private EmployeeListAdapter adapterEmployee;
   private ProjectListAdapter adapterProject;
 
-
   private VBox tabEmployee;
 
   private TableView<Employee> employeeTableView;
@@ -63,8 +62,6 @@ public class EmployeeListTab extends Tab
   final private int windowMinWidth = 300;
   final private String errorLabelName = "ERROR: invalid project name";
 
-
-
   public EmployeeListTab(String title, ProjectListAdapter adapterP,
       EmployeeListAdapter adapterE)
   {
@@ -96,17 +93,18 @@ public class EmployeeListTab extends Tab
     removeEmployee = new Button(removeEmployeeButtonName);
     removeEmployee.setOnAction(listener);
 
-    HBox buttonsContainer = new HBox(addEmployee,editEmployee,removeEmployee);
+    HBox buttonsContainer = new HBox(addEmployee, editEmployee, removeEmployee);
     buttonsContainer.setPrefHeight(buttonsContainerHeight);
     buttonsContainer.setSpacing(buttonsContainerSpacing);
-    buttonsContainer.setPadding(new Insets(buttonsContainerV1, buttonsContainerV2, buttonsContainerV3, buttonsContainerV4));
+    buttonsContainer.setPadding(
+        new Insets(buttonsContainerV1, buttonsContainerV2, buttonsContainerV3,
+            buttonsContainerV4));
     buttonsContainer.setAlignment(Pos.CENTER);
 
     tabEmployee = new VBox(VBoxV);
     tabEmployee.setAlignment(Pos.CENTER);
     tabEmployee.getChildren().add(employeeTableView);
     tabEmployee.getChildren().add(buttonsContainer);
-
 
     super.setContent(tabEmployee);
 
@@ -212,6 +210,7 @@ public class EmployeeListTab extends Tab
         layout.getChildren()
             .addAll(nameContainer, errorMessage, closeWithSaveButton);
         layout.setAlignment(Pos.CENTER);
+        layout.setPadding(new Insets(0, 0, 10, 0));
 
         Scene scene = new Scene(layout);
         window.setResizable(false);
@@ -225,7 +224,8 @@ public class EmployeeListTab extends Tab
         {
           Stage window = new Stage();
 
-          nameWindow(window, editEmployeeButtonName+ selectedEmployee.getName());
+          nameWindow(window,
+              editEmployeeButtonName + selectedEmployee.getName());
 
           // Employee.Employee name input.
           VBox employeeNameContainer = textFieldWindowPart(inputEmployeeName,
@@ -251,14 +251,25 @@ public class EmployeeListTab extends Tab
                   finalProjectList.getProjectByName(projects.get(i).getName())
                       .getTeam().replaceEmployee(selectedEmployee.getName(),
                       inputEmployeeName.getText());
-                  for (int j = 0; j < projects.getProjectByName(projects.get(i).getName()).getRequirements().size(); j++)
+                  for (int j = 0;
+                       j < projects.getProjectByName(projects.get(i).getName())
+                           .getRequirements().size(); j++)
                   {
-                    finalProjectList.getProjectByName(projects.get(i).getName()).getRequirements().getRequirement(j).getTeam().replaceEmployee(selectedEmployee.getName(),
-                        inputEmployeeName.getText());
-                    for (int k = 0; k <projects.getProjectByName(projects.get(i).getName()).getRequirements().getRequirement(j).getTasks().size() ; k++)
+                    finalProjectList.getProjectByName(projects.get(i).getName())
+                        .getRequirements().getRequirement(j).getTeam()
+                        .replaceEmployee(selectedEmployee.getName(),
+                            inputEmployeeName.getText());
+                    for (int k = 0; k < projects
+                        .getProjectByName(projects.get(i).getName())
+                        .getRequirements().getRequirement(j).getTasks()
+                        .size(); k++)
                     {
-                      finalProjectList.getProjectByName(projects.get(i).getName()).getRequirements().getRequirement(j).getTasks().getTask(k).getTaskMembers().replaceEmployee(selectedEmployee.getName(),
-                          inputEmployeeName.getText());
+                      finalProjectList
+                          .getProjectByName(projects.get(i).getName())
+                          .getRequirements().getRequirement(j).getTasks()
+                          .getTask(k).getTaskMembers()
+                          .replaceEmployee(selectedEmployee.getName(),
+                              inputEmployeeName.getText());
                     }
                   }
                 }
@@ -271,7 +282,6 @@ public class EmployeeListTab extends Tab
 
                 adapterProject.saveProjects(finalProjectList);
                 adapterEmployee.saveEmployees(finalEmployeeList);
-
 
                 updateEmployeeArea();
               }
@@ -287,6 +297,7 @@ public class EmployeeListTab extends Tab
           layout.getChildren()
               .addAll(employeeNameContainer, errorLabel, closeWithSaveButton);
           layout.setAlignment(Pos.CENTER);
+          layout.setPadding(new Insets(0, 0, 10, 0));
 
           Scene scene = new Scene(layout);
           window.setScene(scene);
@@ -300,7 +311,8 @@ public class EmployeeListTab extends Tab
         {
           Stage window = new Stage();
 
-          nameWindow(window, removeEmployeeButtonName +selectedEmployee.getName());
+          nameWindow(window,
+              removeEmployeeButtonName + selectedEmployee.getName());
 
           // Employee.Employee name input.
           HBox nameContainer = new HBox(2);
@@ -318,7 +330,7 @@ public class EmployeeListTab extends Tab
 
           HBox closingButtons = new HBox(closeWithSaveButton,
               closeWithOutSaveButton);
-          closingButtons.setPadding(new Insets(10, 40, 10, 50));
+          closingButtons.setPadding(new Insets(10, 40, 0, 50));
           closingButtons.setSpacing(50);
 
           closeWithSaveButton.setOnAction(new EventHandler<ActionEvent>()
@@ -339,12 +351,24 @@ public class EmployeeListTab extends Tab
                   {
                     finalProjectList.getProjectByName(projects.get(i).getName())
                         .getTeam().deleteEmployee(selectedEmployee.getName());
-                    for (int j = 0; j < projects.getProjectByName(projects.get(i).getName()).getRequirements().size(); j++)
+                    for (int j = 0; j < projects
+                        .getProjectByName(projects.get(i).getName())
+                        .getRequirements().size(); j++)
                     {
-                      finalProjectList.getProjectByName(projects.get(i).getName()).getRequirements().getRequirement(j).getTeam().deleteEmployee(selectedEmployee.getName());
-                      for (int k = 0; k <projects.getProjectByName(projects.get(i).getName()).getRequirements().getRequirement(j).getTasks().size() ; k++)
+                      finalProjectList
+                          .getProjectByName(projects.get(i).getName())
+                          .getRequirements().getRequirement(j).getTeam()
+                          .deleteEmployee(selectedEmployee.getName());
+                      for (int k = 0; k < projects
+                          .getProjectByName(projects.get(i).getName())
+                          .getRequirements().getRequirement(j).getTasks()
+                          .size(); k++)
                       {
-                        finalProjectList.getProjectByName(projects.get(i).getName()).getRequirements().getRequirement(j).getTasks().getTask(k).getTaskMembers().deleteEmployee(selectedEmployee.getName());
+                        finalProjectList
+                            .getProjectByName(projects.get(i).getName())
+                            .getRequirements().getRequirement(j).getTasks()
+                            .getTask(k).getTaskMembers()
+                            .deleteEmployee(selectedEmployee.getName());
                       }
                     }
                   }
@@ -371,6 +395,7 @@ public class EmployeeListTab extends Tab
           layout.getChildren()
               .addAll(nameContainer, errorMessage, closingButtons);
           layout.setAlignment(Pos.CENTER);
+          layout.setPadding(new Insets(0, 0, 10, 0));
 
           Scene scene = new Scene(layout);
           window.setScene(scene);

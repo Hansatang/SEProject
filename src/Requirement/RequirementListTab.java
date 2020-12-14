@@ -91,7 +91,7 @@ public class RequirementListTab extends Tab
   private final String addRequirementString = "Add requirement ";
   private final String editRequirementString = "Edit requirement ";
   private final String removeRequirementString = "Remove requirement ";
-  private final String removeString = "Remove requirement";
+  private final String removeString = "Remove requirement ";
   private final String confirmRemoveString = "Do you really want to remove: ";
   private final String saveAndCloseString = "Save and close";
   private final String notSaveAndCloseString = "Save without closing";
@@ -292,8 +292,10 @@ public class RequirementListTab extends Tab
             finalProjectList.getProjectByName(selectedProject.getName())
                 .getRequirements().getRequirement(i).getTasks()
                 .getTotalWorkedHours());
+
         finalProjectList.getProjectByName(selectedProject.getName())
             .getRequirements().getRequirement(i).checkTasks();
+
         requirementTableView.getItems().add(
             finalProjectList.getProjectByName(selectedProject.getName())
                 .getRequirements().getRequirement(i));
@@ -523,7 +525,7 @@ public class RequirementListTab extends Tab
           deadlineContainer.getChildren()
               .addAll(taskDeadline, inputRequirementDeadline);
 
-          // Requirement.Requirement employee list input.
+          // Requirement employee list input.
           VBox employeeListContainer = new VBox();
           employeeListContainer.setPadding(new Insets(0, 10, 0, 10));
           Label employeesLabel = new Label(getSelectEmployeesString);
@@ -560,13 +562,7 @@ public class RequirementListTab extends Tab
           {
             @Override public void handle(ActionEvent e)
             {
-              // Edit new name
-              selectedRequirement.setName(inputRequirementName.getText());
-              // Edit new user story
-              selectedRequirement.setUserstory(inputUserStory.getText());
-              // Edit new status
-              selectedRequirement.setStatus(inputTaskStatus.getValue());
-              // New Employee.EmployeeList object to replace the old one
+              // EmployeeList object to replace the old one
               EmployeeList selectedEmployees = new EmployeeList();
               // Run loop to check which employees to add and which to not add
               for (int i = 0; i < employeeCheckBoxes.length; i++)
@@ -577,11 +573,11 @@ public class RequirementListTab extends Tab
                       .addEmployee(selectedProject.getTeam().get(i));
                 }
               }
-              // Edit new team from selected checkboxes
-              selectedRequirement.setTeam(selectedEmployees);
-              // Edit new deadline
+              // Edit new name, user story, status, employees team, deadline
               selectedRequirement
-                  .setDeadline(inputRequirementDeadline.getValue());
+                  .editRequirement(inputRequirementName.getText(),
+                      inputUserStory.getText(), inputTaskStatus.getValue(),
+                      selectedEmployees, inputRequirementDeadline.getValue());
               // Close window
               window.close();
               // Save all changes

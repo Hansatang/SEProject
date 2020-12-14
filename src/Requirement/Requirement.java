@@ -33,12 +33,21 @@ public class Requirement implements Serializable
     this.team = team;
   }
 
+  public void editRequirement(String name, String userStory , String status, EmployeeList team, LocalDate deadline)
+  {
+    this.name = name;
+    this.userstory = userStory;
+    this.status = status;
+    this.team = team;
+    this.deadline = deadline;
+  }
+
   public TaskList getTasks()
   {
     return tasks;
   }
 
-  public void setUserstory(String userstory)
+  public void setUserStory(String userstory)
   {
     this.userstory = userstory;
   }

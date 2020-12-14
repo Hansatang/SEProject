@@ -1,5 +1,6 @@
 package Requirement;
 
+import Project.Project;
 import Task.Task;
 
 import java.io.Serializable;
@@ -13,6 +14,8 @@ public class RequirementList implements Serializable
     public RequirementList(){
         this.requirements = new ArrayList<>();
     }
+
+
 
     public int size(){
         return requirements.size();
@@ -40,6 +43,17 @@ public class RequirementList implements Serializable
         return -1;
     }
 
+    public Requirement get(int index)
+    {
+        if (index < requirements.size())
+        {
+            return requirements.get(index);
+        }
+        else
+        {
+            return null;
+        }
+    }
 
     public ArrayList<Requirement> getRequirements() {
         return requirements;
