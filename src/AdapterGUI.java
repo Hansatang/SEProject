@@ -26,5 +26,7 @@ public class AdapterGUI extends Application
     // Set scene of window and show window.
     window.setScene(scene);
     window.show();
+
+    window.setOnCloseRequest(e->XML.run());
   }
 }
