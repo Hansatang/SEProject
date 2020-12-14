@@ -339,11 +339,11 @@ public class ProjectListTab extends Tab
           Stage window = new Stage();
           errorLabel.setText("");
 
-          nameWindow(window, "Edit project" + selectedProject.getName());
+          nameWindow(window, "Edit project " + selectedProject.getName());
 
           // Project.Project name input.
           VBox projectNameContainer = textFieldWindowPart(inputProjectName,
-              "New Project.Project name: ");
+              "New Project name: ");
           inputProjectName.setText(selectedProject.getName());
 
           // Project.Project employee list input.
@@ -404,7 +404,6 @@ public class ProjectListTab extends Tab
               }
               else
               {
-
                 window.close();
                 selectedProject
                     .editProject(inputProjectName.getText(), selectedEmployees);
@@ -434,7 +433,7 @@ public class ProjectListTab extends Tab
         {
           Stage window = new Stage();
 
-          nameWindow(window, "Remove employee" + selectedProject.getName());
+          nameWindow(window, "Remove project" + selectedProject.getName());
 
           // Employee.Employee name input.
           HBox nameContainer = new HBox(2);
@@ -452,7 +451,7 @@ public class ProjectListTab extends Tab
 
           HBox closingButtons = new HBox(closeWithSaveButton,
               closeWithOutSaveButton);
-          closingButtons.setPadding(new Insets(10, 40, 10, 50));
+          closingButtons.setPadding(new Insets(10, 40, 0, 50));
           closingButtons.setSpacing(50);
 
           closeWithSaveButton.setOnAction(new EventHandler<ActionEvent>()
@@ -492,10 +491,9 @@ public class ProjectListTab extends Tab
           Scene scene = new Scene(layout);
           window.setScene(scene);
           window.showAndWait();
-
         }
-
       }
+
       if (e.getSource() == searchButton || e.getSource() == searchField)
       {
         projectTableView.getItems().clear();
@@ -523,7 +521,6 @@ public class ProjectListTab extends Tab
       }
     }
   }
-
 }
 
 
