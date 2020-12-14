@@ -461,11 +461,6 @@ public class RequirementListTab extends Tab
               {
                 errorLabel.setText(errorName);
               }
-              else if (inputUserStory.getText().isEmpty() || inputUserStory
-                  .getText().equals(""))
-              {
-                errorLabel.setText(errorUserStory);
-              }
               else if (selectedEmployees.size() == 0)
               {
                 errorLabel.setText(errorEmployees);
