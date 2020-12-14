@@ -400,7 +400,7 @@ public class TaskListTab extends Tab
             {
               errorLabel.setText("ERROR: Fix task ID");
             }
-            else if (!inputTaskName.getText().matches("[0-9]+"))
+            else if (!inputTaskID.getText().matches("[0-9]+"))
             {
               errorLabel.setText("ERROR: Fix task ID");
             }
