@@ -358,7 +358,6 @@ public class RequirementListTab extends Tab
         requirementHoursWorkedLabel.setTextFill(Color.RED);
       }
       requirementUserStoryLabel.setText(selectedRequirement.getUserstory());
-      System.out.println("Lebels");
     }
   }
 

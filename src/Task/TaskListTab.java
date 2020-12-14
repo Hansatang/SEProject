@@ -241,7 +241,6 @@ public class TaskListTab extends Tab
     {
       for (int i = 0; i < selectedRequirement.getTasks().size(); i++)
       {
-        System.out.println(selectedRequirement.getTasks().size());
         taskTableView.getItems().add(selectedRequirement.getTasks().getTask(i));
       }
     }
