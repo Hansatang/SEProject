@@ -28,7 +28,6 @@ import java.util.Arrays;
 
 public class TaskListTab extends Tab
 {
-
   private VBox tabTask;
 
   private TableView<Task> taskTableView;
@@ -72,8 +71,15 @@ public class TaskListTab extends Tab
   VBox taskInfoContainer;
 
   private final ArrayList<String> statusOptions = new ArrayList<>(
-      Arrays.asList("Approved","Ended","Not Started","Rejected","Started"));
+      Arrays.asList("Approved", "Ended", "Not Started", "Rejected", "Started"));
 
+
+  /**
+   * Constructor initializing the GUI components
+   * @param title           The title of the tab
+   * @param adapterProject  object used for retrieving and storing project information
+   * @param adapterEmployees object used for retrieving and storing employee information
+   */
   public TaskListTab(String title, ProjectListAdapter adapterProject,
       EmployeeListAdapter adapterEmployees)
   {
@@ -166,14 +172,24 @@ public class TaskListTab extends Tab
     setSelectedTask();
   }
 
-  private void nameWindow(Stage window, String str)
+  /**
+   * Sets the default values for window entities
+   * @param window The window to insert default values
+   * @param title  The title of the window
+   */
+  private void nameWindow(Stage window, String title)
   {
     window.initModality(Modality.APPLICATION_MODAL);
-    window.setTitle(str);
+    window.setTitle(title);
     window.setMinWidth(300);
     window.setResizable(false);
   }
 
+  /**
+   * Creates a VBox container with label and TextField and defines the  values them
+   * @param inputText The TextField to set values
+   * @param labelName The text in the label
+   */
   private VBox textFieldWindowPart(TextField inputText, String labelName)
   {
     VBox nameContainer = new VBox(2);
@@ -185,6 +201,10 @@ public class TaskListTab extends Tab
     return nameContainer;
   }
 
+  /**
+   * Creates a VBox container with label and ComboBox and defines the  values them
+   * @return the VBox containing label and ComboBox for selecting status
+   */
   private VBox statusComboBoxWindowPart()
   {
 
@@ -202,16 +222,29 @@ public class TaskListTab extends Tab
     return statusContainer;
   }
 
-  public void setSelectedRequirement(Requirement selectedRequirement1)
+  /**
+   * Sets the selectedRequirement.
+   *
+   * @param requirementSelected The requirementSelected Requirement
+   */
+  public void setSelectedRequirement(Requirement requirementSelected)
   {
-    selectedRequirement = selectedRequirement1;
+    selectedRequirement = requirementSelected;
   }
 
-  public void setSelectedProject(Project selectedProject1)
+  /**
+   * Sets the selectedProject.
+   *
+   * @param projectSelected The projectSelected Project
+   */
+  public void setSelectedProject(Project projectSelected)
   {
-    selectedProject = selectedProject1;
+    selectedProject = projectSelected;
   }
 
+  /**
+   * Sets the selectedProject.
+   */
   private void setSelectedTask()
   {
     taskTableView.getSelectionModel().selectedItemProperty()
@@ -230,6 +263,9 @@ public class TaskListTab extends Tab
         });
   }
 
+  /**
+   * Updates the taskTableView tableView with information from the projects file
+   */
   public void updateTaskArea()
   {
     taskTableView.getItems().clear();
@@ -246,19 +282,24 @@ public class TaskListTab extends Tab
     }
   }
 
+  /**
+   * Updates the labels in the taskInfoContainer with information from the projects file
+   */
   private void updateTaskLabels()
   {
     taskNameLabel.setText(selectedTask.getName());
     taskIDLabel.setText(selectedTask.getTaskID());
-    taskEmployeeLabel.setText(selectedTask.getTaskMembers()+"");
+    taskEmployeeLabel.setText(selectedTask.getTaskMembers() + "");
     taskStatusLabel.setText(selectedTask.getStatus());
-    taskDeadlineLabel.setText(selectedTask.getDeadline()+"");
-    taskEstimatedHoursLabel
-        .setText(selectedTask.getEstimatedHours()+"");
-    taskTotalWorkLabel
-        .setText(selectedTask.getTotalHoursWorked()+"");
+    taskDeadlineLabel.setText(selectedTask.getDeadline() + "");
+    taskEstimatedHoursLabel.setText(selectedTask.getEstimatedHours() + "");
+    taskTotalWorkLabel.setText(selectedTask.getTotalHoursWorked() + "");
   }
 
+  /*
+   * Inner action listener class
+   * @author
+   */
   private class MyActionListener implements EventHandler<ActionEvent>
   {
     public void handle(ActionEvent e)
@@ -357,10 +398,18 @@ public class TaskListTab extends Tab
             else if (inputTaskID.getText().isEmpty() || inputTaskID.getText()
                 .equals(""))
             {
-              errorLabel.setText("ERROR: Fix taxID");
+              errorLabel.setText("ERROR: Fix task ID");
+            }
+            else if (!inputTaskName.getText().matches("[0-9]+"))
+            {
+              errorLabel.setText("ERROR: Fix task ID");
             }
             else if (inputTaskEstimation.getText().isEmpty()
                 || inputTaskEstimation.getText().equals(""))
+            {
+              errorLabel.setText("ERROR: Fix estimated hours");
+            }
+            else if (!inputTaskEstimation.getText().matches("[0-9]+"))
             {
               errorLabel.setText("ERROR: Fix estimated hours");
             }
@@ -402,168 +451,181 @@ public class TaskListTab extends Tab
 
       else if (e.getSource() == editTask)
       {
-        Stage window = new Stage();
-        errorLabel.setText("");
-        nameWindow(window, "Edit task " + selectedTask.getName());
-
-        // Task name input.
-        VBox taskNameContainer = textFieldWindowPart(inputTaskName,
-            "New Task name: ");
-
-        inputTaskName.setText(selectedTask.getName());
-
-        // task estimated hours input.
-        VBox taskEstimatedHoursContainer = textFieldWindowPart(
-            inputTaskEstimation, "Estimated hours: ");
-        inputTaskEstimation
-            .setText(String.valueOf(selectedTask.getEstimatedHours()));
-
-        //Task total hours input
-
-        VBox totalHoursContainer = new VBox();
-        totalHoursContainer.setPadding(new Insets(10, 10, 0, 10));
-        Label totalHours = new Label("Total hours: ");
-
-        ComboBox inputTaskWorkDone = new ComboBox();
-        inputTaskWorkDone.getItems().add(0);
-        inputTaskWorkDone.getSelectionModel().select(0);
-        inputTaskWorkDone.setOnMouseClicked(new EventHandler()
+        if (!(selectedTask == null))
         {
-          public void handle(Event t)
+          Stage window = new Stage();
+          errorLabel.setText("");
+          nameWindow(window, "Edit task " + selectedTask.getName());
+
+          // Task name input.
+          VBox taskNameContainer = textFieldWindowPart(inputTaskName,
+              "New Task name: ");
+
+          inputTaskName.setText(selectedTask.getName());
+
+          // task estimated hours input.
+          VBox taskEstimatedHoursContainer = textFieldWindowPart(
+              inputTaskEstimation, "Estimated hours: ");
+          inputTaskEstimation
+              .setText(String.valueOf(selectedTask.getEstimatedHours()));
+
+          //Task total hours input
+
+          VBox totalHoursContainer = new VBox();
+          totalHoursContainer.setPadding(new Insets(10, 10, 0, 10));
+          Label totalHours = new Label("Total hours: ");
+
+          ComboBox inputTaskWorkDone = new ComboBox();
+          inputTaskWorkDone.getItems().add(0);
+          inputTaskWorkDone.getSelectionModel().select(0);
+          inputTaskWorkDone.setOnMouseClicked(new EventHandler()
           {
-            inputTaskWorkDone.getItems()
-                .remove(1, inputTaskWorkDone.getItems().size());
-            for (int i = 1;
-                 i <= Integer.parseInt(inputTaskEstimation.getText()); i++)
+            public void handle(Event t)
             {
-              inputTaskWorkDone.getItems().add(i);
-            }
-          }
-
-        });
-        totalHoursContainer.getChildren().addAll(totalHours, inputTaskWorkDone);
-
-        //Task ID input
-        VBox taskIDContainer = textFieldWindowPart(inputTaskID, "Task ID: ");
-        inputTaskID.setText(String.valueOf(selectedTask.getTaskID()));
-
-        // Task status input.
-        VBox statusContainer = statusComboBoxWindowPart();
-        inputTaskStatus.setValue(selectedTask.getStatus());
-
-        // Task deadline input.
-        VBox deadlineContainer = new VBox();
-        deadlineContainer.setPadding(new Insets(10, 10, 0, 10));
-        Label taskDeadline = new Label("Deadline:");
-        inputTaskDeadline.setShowWeekNumbers(false);
-        final DatePicker datePicker = new DatePicker();
-        datePicker.setOnAction(new EventHandler()
-        {
-          public void handle(Event t)
-          {
-            LocalDate date = datePicker.getValue();
-            System.err.println("Selected date: " + date);
-          }
-        });
-        inputTaskDeadline.setDayCellFactory(picker -> new DateCell()
-        {
-          public void updateItem(LocalDate date, boolean empty)
-          {
-            super.updateItem(date, empty);
-            setDisable(empty || date.compareTo(LocalDate.now()) < 1
-                || date.compareTo(selectedRequirement.getDeadline()) > 0);
-          }
-        });
-        inputTaskDeadline.setPromptText("Set deadline..");
-        inputTaskDeadline.setValue(selectedTask.getDeadline());
-
-        deadlineContainer.getChildren().addAll(taskDeadline, inputTaskDeadline);
-
-        // Task employee list input.
-        VBox employeeListContainer = new VBox();
-        employeeListContainer.setPadding(new Insets(0, 10, 0, 10));
-        Label employeesLabel = new Label("Select employees: ");
-        GridPane employeeSelectContainer = new GridPane();
-
-        CheckBox[] employeeCheckBoxes = new CheckBox[selectedProject.getTeam()
-            .size()];
-
-        for (int i = 0; i < employeeCheckBoxes.length; i++)
-        {
-          employeeCheckBoxes[i] = new CheckBox(
-              selectedProject.getTeam().get(i).getName());
-          employeeSelectContainer.add(employeeCheckBoxes[i], i % 2, i / 2);
-          employeeCheckBoxes[i].setPadding(new Insets(3, 50, 3, 3));
-
-          for (int j = 0; j < selectedRequirement.getTeam().size(); j++)
-          {
-            if (employeeCheckBoxes[i].getText()
-                .equals(selectedRequirement.getTeam().get(j).getName()))
-            {
-              employeeCheckBoxes[i].setSelected(true);
-            }
-          }
-        }
-
-        // Add employee label Node and employee selection Node
-        employeeListContainer.getChildren()
-            .addAll(employeesLabel, employeeSelectContainer);
-
-        VBox layout = new VBox(10);
-
-        Button closeWithSaveButton = new Button("Save and close");
-
-        closeWithSaveButton.setOnAction(new EventHandler<ActionEvent>()
-        {
-          public void handle(ActionEvent e)
-          {
-            // Edit new name
-            selectedTask.setName(inputTaskName.getText());
-            // Edit new ID
-            selectedTask.setTaskID(inputTaskID.getText());
-            // Edit new status
-            selectedTask.setStatus(inputTaskStatus.getValue());
-            // New EmployeeList object to replace the old one
-            EmployeeList selectedEmployees = new EmployeeList();
-            // Run loop to check which employees to add and which to not add
-            for (int i = 0; i < employeeCheckBoxes.length; i++)
-            {
-              if (employeeCheckBoxes[i].isSelected())
+              inputTaskWorkDone.getItems()
+                  .remove(1, inputTaskWorkDone.getItems().size());
+              for (int i = 1;
+                   i <= Integer.parseInt(inputTaskEstimation.getText()); i++)
               {
-                selectedEmployees.addEmployee(selectedProject.getTeam().get(i));
+                inputTaskWorkDone.getItems().add(i);
               }
             }
-            // Edit new team from selected checkboxes
-            selectedTask.setTaskEmployees(selectedEmployees);
-            // Edit estimated hours
-            selectedTask.setEstimatedHours(
-                Integer.parseInt(inputTaskEstimation.getText()));
-            // Edit total hours
-            selectedTask
-                .setTotalHoursWorked((Integer) inputTaskWorkDone.getValue());
-            // Edit new deadline
-            selectedTask.setDeadline(inputTaskDeadline.getValue());
-            // Close window
-            window.close();
-            // Save all changes
-            adapterProject.saveProjects(finalProjectList);
-            // Update GUI table with requirements to show changes
-            updateTaskArea();
-            updateTaskLabels();
-            // END of editing task
+
+          });
+          totalHoursContainer.getChildren()
+              .addAll(totalHours, inputTaskWorkDone);
+
+          //Task ID input
+          VBox taskIDContainer = textFieldWindowPart(inputTaskID, "Task ID: ");
+          inputTaskID.setText(String.valueOf(selectedTask.getTaskID()));
+
+          // Task status input.
+          VBox statusContainer = statusComboBoxWindowPart();
+          inputTaskStatus.setValue(selectedTask.getStatus());
+
+          // Task deadline input.
+          VBox deadlineContainer = new VBox();
+          deadlineContainer.setPadding(new Insets(10, 10, 0, 10));
+          Label taskDeadline = new Label("Deadline:");
+          inputTaskDeadline.setShowWeekNumbers(false);
+          final DatePicker datePicker = new DatePicker();
+          datePicker.setOnAction(new EventHandler()
+          {
+            public void handle(Event t)
+            {
+              LocalDate date = datePicker.getValue();
+              System.err.println("Selected date: " + date);
+            }
+          });
+          inputTaskDeadline.setDayCellFactory(picker -> new DateCell()
+          {
+            public void updateItem(LocalDate date, boolean empty)
+            {
+              super.updateItem(date, empty);
+              setDisable(empty || date.compareTo(LocalDate.now()) < 1
+                  || date.compareTo(selectedRequirement.getDeadline()) > 0);
+            }
+          });
+          inputTaskDeadline.setPromptText("Set deadline..");
+          inputTaskDeadline.setValue(selectedTask.getDeadline());
+
+          deadlineContainer.getChildren()
+              .addAll(taskDeadline, inputTaskDeadline);
+
+          // Task employee list input.
+          VBox employeeListContainer = new VBox();
+          employeeListContainer.setPadding(new Insets(0, 10, 0, 10));
+          Label employeesLabel = new Label("Select employees: ");
+          GridPane employeeSelectContainer = new GridPane();
+
+          CheckBox[] employeeCheckBoxes = new CheckBox[selectedProject.getTeam()
+              .size()];
+
+          for (int i = 0; i < employeeCheckBoxes.length; i++)
+          {
+            employeeCheckBoxes[i] = new CheckBox(
+                selectedProject.getTeam().get(i).getName());
+            employeeSelectContainer.add(employeeCheckBoxes[i], i % 2, i / 2);
+            employeeCheckBoxes[i].setPadding(new Insets(3, 50, 3, 3));
+
+            for (int j = 0; j < selectedRequirement.getTeam().size(); j++)
+            {
+              if (employeeCheckBoxes[i].getText()
+                  .equals(selectedRequirement.getTeam().get(j).getName()))
+              {
+                employeeCheckBoxes[i].setSelected(true);
+              }
+            }
           }
-        });
 
-        layout.getChildren()
-            .addAll(taskNameContainer, taskIDContainer, statusContainer,
-                employeeListContainer, taskEstimatedHoursContainer,
-                totalHoursContainer, deadlineContainer, closeWithSaveButton,
-                errorLabel);
+          // Add employee label Node and employee selection Node
+          employeeListContainer.getChildren()
+              .addAll(employeesLabel, employeeSelectContainer);
 
-        layout.setAlignment(Pos.CENTER);
-        Scene scene = new Scene(layout);
-        window.setScene(scene);
-        window.showAndWait();
+          VBox layout = new VBox(10);
+
+          Button closeWithSaveButton = new Button("Save and close");
+
+          closeWithSaveButton.setOnAction(new EventHandler<ActionEvent>()
+          {
+            public void handle(ActionEvent e)
+            {
+              // Edit new name
+              selectedTask.setName(inputTaskName.getText());
+              // Edit new ID
+              selectedTask.setTaskID(inputTaskID.getText());
+              // Edit new status
+              selectedTask.setStatus(inputTaskStatus.getValue());
+              // New EmployeeList object to replace the old one
+              EmployeeList selectedEmployees = new EmployeeList();
+              // Run loop to check which employees to add and which to not add
+              for (int i = 0; i < employeeCheckBoxes.length; i++)
+              {
+                if (employeeCheckBoxes[i].isSelected())
+                {
+                  selectedEmployees
+                      .addEmployee(selectedProject.getTeam().get(i));
+                }
+              }
+              // Edit new team from selected checkboxes
+              selectedTask.setTaskEmployees(selectedEmployees);
+              // Edit estimated hours
+              if (!inputTaskEstimation.getText().matches("[0-9]+"))
+              {
+                selectedTask.setEstimatedHours(selectedTask.getEstimatedHours());
+                errorLabel.setText("ERROR: Fix estimated hours");
+              }
+              else
+              {
+                selectedTask.setEstimatedHours(Integer.parseInt(inputTaskEstimation.getText()));
+              }
+              // Edit total hours
+              selectedTask
+                  .setTotalHoursWorked((Integer) inputTaskWorkDone.getValue());
+              // Edit new deadline
+              selectedTask.setDeadline(inputTaskDeadline.getValue());
+              // Close window
+              window.close();
+              // Save all changes
+              adapterProject.saveProjects(finalProjectList);
+              // Update GUI table with requirements to show changes
+              updateTaskArea();
+              updateTaskLabels();
+              // END of editing task
+            }
+          });
+
+          layout.getChildren()
+              .addAll(taskNameContainer, taskIDContainer, statusContainer,
+                  employeeListContainer, taskEstimatedHoursContainer,
+                  totalHoursContainer, deadlineContainer, closeWithSaveButton,
+                  errorLabel);
+
+          layout.setAlignment(Pos.CENTER);
+          Scene scene = new Scene(layout);
+          window.setScene(scene);
+          window.showAndWait();
+        }
       }
 
       else if (e.getSource() == removeTask)

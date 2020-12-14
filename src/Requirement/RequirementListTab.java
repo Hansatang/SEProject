@@ -42,7 +42,7 @@ public class RequirementListTab extends Tab
   private TableColumn<Requirement, String> requirementStatus;
   private TableColumn<Requirement, String> requirementDeadline;
 
-  private Button searchButton,addRequirement, editRequirement, removeRequirement;
+  private Button searchButton, addRequirement, editRequirement, removeRequirement;
 
   private MyActionListener listener;
 
@@ -112,6 +112,14 @@ public class RequirementListTab extends Tab
   private String searchRadioButtonStatus = "Search by status";
   final private String searchButtonName = "Search";
 
+  /**
+   * Constructor initializing the GUI components
+   *
+   * @param title            The title of the tab
+   * @param adapterProjects  object used for retrieving and storing project information
+   * @param adapterEmployees object used for retrieving and storing employee information
+   * @param adapterGUI       object used for communication between Tabs
+   */
   public RequirementListTab(String title, ProjectListAdapter adapterProjects,
       EmployeeListAdapter adapterEmployees, ProjectListTab projectListTab,
       AdapterGUI adapterGUI)
@@ -157,7 +165,6 @@ public class RequirementListTab extends Tab
     searchField = new TextField();
     searchField.setOnAction(listener);
     searchField.setPrefWidth(380);
-
 
     searchButton = new Button(searchButtonName);
     searchButton.setOnAction(listener);
@@ -227,24 +234,46 @@ public class RequirementListTab extends Tab
     setSelectedRequirement();
   }
 
+  /**
+   * Gets the selectedRequirement Requirement.
+   *
+   * @return the selectedRequirement Requirement
+   */
   public Requirement getSelectedRequirement()
   {
     return selectedRequirement;
   }
 
+  /**
+   * Gets the selectedProject Project.
+   *
+   * @return the selectedProject Project
+   */
   public Project getSelectedProject()
   {
     return selectedProject;
   }
 
-  private void nameWindow(Stage window, String str)
+  /**
+   * Sets the default values for window entities
+   *
+   * @param window The window to insert default values
+   * @param title  The title of the window
+   */
+  private void nameWindow(Stage window, String title)
   {
     window.initModality(Modality.APPLICATION_MODAL);
-    window.setTitle(str);
+    window.setTitle(title);
     window.setMinWidth(300);
     window.setResizable(false);
   }
 
+  /**
+   * Creates a VBox container with label and TextField and defines the  values them
+   *
+   * @param inputText The TextField to set values
+   * @param labelName The text in the label
+   */
   private VBox textFieldWindowPart(TextField inputText, String labelName)
   {
     VBox nameContainer = new VBox(2);
@@ -256,6 +285,10 @@ public class RequirementListTab extends Tab
     return nameContainer;
   }
 
+  /**
+   * Creates a VBox container with label and ComboBox and defines the  values them
+   * @return the VBox containing label and ComboBox for selecting status
+   */
   private VBox statusComboBoxWindowPart()
   {
     VBox statusContainer = new VBox();
@@ -273,6 +306,11 @@ public class RequirementListTab extends Tab
     return statusContainer;
   }
 
+  /**
+   * Sets the selectedProject.
+   *
+   * @param projectSelected The projectSelected Project
+   */
   public void setSelectedProject(Project projectSelected)
   {
     selectedProject = adapterProject.getAllProjects()
@@ -280,6 +318,9 @@ public class RequirementListTab extends Tab
     updateRequirementArea();
   }
 
+  /**
+   * Sets the selectedProject.
+   */
   private void setSelectedRequirement()
   {
     requirementTableView.getSelectionModel().selectedItemProperty()
@@ -302,6 +343,9 @@ public class RequirementListTab extends Tab
         });
   }
 
+  /**
+   * Updates the requirementTableView tableView with information from the projects file
+   */
   public void updateRequirementArea()
   {
     requirementTableView.getItems().clear();
@@ -332,6 +376,9 @@ public class RequirementListTab extends Tab
     }
   }
 
+  /**
+   * Updates the labels in the requirementInfoContainer with information from the projects file
+   */
   public void updateRequirementLabels()
   {
     if (selectedRequirement != null)
@@ -343,8 +390,8 @@ public class RequirementListTab extends Tab
       requirementTeamLabel.setText(selectedRequirement.getTeam().toString());
       if (!selectedRequirement.getTasks().isEmpty())
       {
-        requirementEstimatedLabel.setText(
-           selectedRequirement.getEstimatedHours() + "");
+        requirementEstimatedLabel
+            .setText(selectedRequirement.getEstimatedHours() + "");
         requirementEstimatedLabel.setTextFill(Color.BLACK);
         requirementHoursWorkedLabel
             .setText(selectedRequirement.getTotalHoursWorked() + "");
@@ -361,6 +408,10 @@ public class RequirementListTab extends Tab
     }
   }
 
+  /*
+   * Inner action listener class
+   * @author
+   */
   private class MyActionListener implements EventHandler<ActionEvent>
   {
     public void handle(ActionEvent e)
@@ -695,7 +746,10 @@ public class RequirementListTab extends Tab
         {
           if (searchByName.isSelected())
           {
-            RequirementList requirements = adapterProject.getProjectByName(selectedProject.getName()).getProjectByName(selectedProject.getName()).getRequirementsByName(searchField.getText());
+            RequirementList requirements = adapterProject
+                .getProjectByName(selectedProject.getName())
+                .getProjectByName(selectedProject.getName())
+                .getRequirementsByName(searchField.getText());
             for (int i = 0; i < requirements.size(); i++)
             {
               requirementTableView.getItems().add(requirements.get(i));
@@ -703,7 +757,10 @@ public class RequirementListTab extends Tab
           }
           else if (searchByStatus.isSelected())
           {
-            RequirementList requirements = adapterProject.getProjectByName(selectedProject.getName()).getProjectByName(selectedProject.getName()).getRequirementsByStatus(searchField.getText());
+            RequirementList requirements = adapterProject
+                .getProjectByName(selectedProject.getName())
+                .getProjectByName(selectedProject.getName())
+                .getRequirementsByStatus(searchField.getText());
             for (int i = 0; i < requirements.size(); i++)
             {
               requirementTableView.getItems().add(requirements.get(i));

@@ -62,14 +62,20 @@ public class EmployeeListTab extends Tab
   final private int windowMinWidth = 300;
   final private String errorLabelName = "ERROR: invalid project name";
 
-  public EmployeeListTab(String title, ProjectListAdapter adapterP,
-      EmployeeListAdapter adapterE)
+  /**
+   * Constructor initializing the GUI components
+   * @param title           The title of the tab
+   * @param projectAdapter  object used for retrieving and storing project information
+   * @param employeeAdapter object used for retrieving and storing employee information
+   */
+  public EmployeeListTab(String title, ProjectListAdapter projectAdapter,
+      EmployeeListAdapter employeeAdapter)
   {
     super(title);
 
-    this.adapterProject = adapterP;
+    this.adapterProject = projectAdapter;
     finalProjectList = adapterProject.getAllProjects();
-    this.adapterEmployee = adapterE;
+    this.adapterEmployee = employeeAdapter;
     finalEmployeeList = adapterEmployee.getAllEmployees();
 
     listener = new MyActionListener();
@@ -113,7 +119,7 @@ public class EmployeeListTab extends Tab
   }
 
   /**
-   * Updates the allStudentsTable tableView with information from the students file
+   * Updates the employeeTableView tableView with information from the employees file
    */
   public void updateEmployeeArea()
   {
@@ -128,6 +134,9 @@ public class EmployeeListTab extends Tab
     }
   }
 
+  /**
+   * Sets the selectedProject.
+   */
   private void setSelectedEmployee()
   {
     employeeTableView.getSelectionModel().selectedItemProperty()
@@ -146,14 +155,24 @@ public class EmployeeListTab extends Tab
         });
   }
 
-  private void nameWindow(Stage window, String str)
+  /**
+   * Sets the default values for window entities
+   * @param window The window to insert default values
+   * @param title  The title of the window
+   */
+  private void nameWindow(Stage window, String title)
   {
     window.initModality(Modality.APPLICATION_MODAL);
-    window.setTitle(str);
+    window.setTitle(title);
     window.setMinWidth(windowMinWidth);
     window.setResizable(false);
   }
 
+  /**
+   * Creates a VBox container with label and TextField and defines the  values them
+   * @param inputText The TextField to set values
+   * @param labelName The text in the label
+   */
   private VBox textFieldWindowPart(TextField inputText, String labelName)
   {
     VBox nameContainer = new VBox(2);
@@ -166,6 +185,10 @@ public class EmployeeListTab extends Tab
     return nameContainer;
   }
 
+  /*
+   * Inner action listener class
+   * @author
+   */
   private class MyActionListener implements EventHandler<ActionEvent>
   {
     public void handle(ActionEvent e)
@@ -314,7 +337,7 @@ public class EmployeeListTab extends Tab
           nameWindow(window,
               removeEmployeeButtonName + selectedEmployee.getName());
 
-          // Employee.Employee name input.
+          // Employee name input.
           HBox nameContainer = new HBox(2);
           nameContainer.setPadding(new Insets(10, 10, 0, 10));
           Label employeeName = new Label(
