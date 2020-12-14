@@ -71,14 +71,13 @@ public class ProjectListTab extends Tab
   private String searchRadioButtonName = "Search by name";
   private String searchRadioButtonEmployee = "Search by employee";
 
-
-
   /**
    * Constructor initializing the GUI components
-   * @param title The title of the tab
-   * @param  projectAdapter object used for retrieving and storing project information
-   * @param  employeeAdapter object used for retrieving and storing employee information
-   * @param  adapterGUI object used for communication between Tabs
+   *
+   * @param title           The title of the tab
+   * @param projectAdapter  object used for retrieving and storing project information
+   * @param employeeAdapter object used for retrieving and storing employee information
+   * @param adapterGUI      object used for communication between Tabs
    */
   public ProjectListTab(String title, ProjectListAdapter projectAdapter,
       EmployeeListAdapter employeeAdapter, AdapterGUI adapterGUI)
@@ -96,13 +95,11 @@ public class ProjectListTab extends Tab
     projectTableView.setPrefHeight(projectTableViewHeight);
 
     projectName = new TableColumn<>(name);
-    projectName
-        .setCellValueFactory(new PropertyValueFactory<>(name));
+    projectName.setCellValueFactory(new PropertyValueFactory<>(name));
     projectName.setPrefWidth(projectColumnTableViewWidth);
 
     projectTeam = new TableColumn<>(team);
-    projectTeam
-        .setCellValueFactory(new PropertyValueFactory<>(team));
+    projectTeam.setCellValueFactory(new PropertyValueFactory<>(team));
     projectTeam.setPrefWidth(projectColumnTableViewWidth);
 
     searchByName = new RadioButton();
@@ -161,6 +158,7 @@ public class ProjectListTab extends Tab
 
   /**
    * Gets the selectedProject Project.
+   *
    * @return the selectedProject Project
    */
   public Project getSelectedProject()
@@ -208,8 +206,9 @@ public class ProjectListTab extends Tab
 
   /**
    * Sets the default values for window entities
+   *
    * @param window The window to insert default values
-   * @param title The title of the window
+   * @param title  The title of the window
    */
   private void nameWindow(Stage window, String title)
   {
@@ -221,6 +220,7 @@ public class ProjectListTab extends Tab
 
   /**
    * Creates a VBox container with label and TextField and defines the  values them
+   *
    * @param inputText The TextField to set values
    * @param labelName The text in the label
    */
@@ -259,7 +259,7 @@ public class ProjectListTab extends Tab
         employeeListContainer.setPadding(new Insets(0, 10, 0, 10));
         Label employeesLabel = new Label("Select employees: ");
         GridPane employeeSelectContainer = new GridPane();
-        finalEmployeeList=adapterEmployee.getAllEmployees();
+        finalEmployeeList = adapterEmployee.getAllEmployees();
         CheckBox[] employeeCheckBoxes = new CheckBox[finalEmployeeList.size()];
 
         for (int i = 0; i < employeeCheckBoxes.length; i++)
@@ -406,9 +406,8 @@ public class ProjectListTab extends Tab
               {
 
                 window.close();
-
-                selectedProject.setName(inputProjectName.getText());
-                selectedProject.setTeam(selectedEmployees);
+                selectedProject
+                    .editProject(inputProjectName.getText(), selectedEmployees);
                 adapterProject.saveProjects(finalProjectList);
                 updateProjectArea();
               }
