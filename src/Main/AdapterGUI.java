@@ -155,6 +155,7 @@ public class AdapterGUI extends Application
         requirementListTab
             .setSelectedProject(projectListTab.getSelectedProject());
         requirementListTab.updateRequirementArea();
+        requirementListTab.updateRequirementLabels();
       }
       else if (newTab == taskListTab)
       {

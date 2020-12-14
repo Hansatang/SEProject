@@ -301,7 +301,7 @@ public class RequirementListTab extends Tab
     }
   }
 
-  private void updateRequirementLabels()
+  public void updateRequirementLabels()
   {
     if (selectedRequirement != null)
     {
