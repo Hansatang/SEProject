@@ -40,7 +40,9 @@ public class TaskList implements Serializable
     public int getTotalEstimatedHours(){
         int sum = 0;
         for(int i = 0 ; i < tasks.size() ; i++){
-            sum =+ tasks.get(i).getEstimatedHours();
+            System.out.println("Size "+tasks.size());
+            sum += tasks.get(i).getEstimatedHours();
+            System.out.println("S "+sum);
         }
         return sum;
     }
@@ -48,7 +50,7 @@ public class TaskList implements Serializable
     public int getTotalWorkedHours(){
         int sum = 0;
         for(int i = 0 ; i < tasks.size() ; i++){
-            sum =+ tasks.get(i).getTotalHoursWorked();
+            sum += tasks.get(i).getTotalHoursWorked();
         }
         return sum;
     }

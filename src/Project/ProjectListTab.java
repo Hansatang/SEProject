@@ -113,6 +113,7 @@ public class ProjectListTab extends Tab
     searchField = new TextField();
     searchField.setOnAction(listener);
     searchField.setPrefWidth(searchFieldWidth);
+
     projectTableView.getColumns().add(projectName);
     projectTableView.getColumns().add(projectTeam);
 

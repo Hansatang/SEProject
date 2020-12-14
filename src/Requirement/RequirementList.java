@@ -26,6 +26,10 @@ public class RequirementList implements Serializable
         requirements.add(requirement);
     }
 
+    public void add(Requirement requirement){
+        requirements.add(requirement);
+    }
+
     public void removeRequirement(Requirement requirement){
         requirements.remove(requirement);
     }

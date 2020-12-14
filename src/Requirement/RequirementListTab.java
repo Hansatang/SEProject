@@ -30,8 +30,11 @@ import java.util.Arrays;
 
 public class RequirementListTab extends Tab
 {
-
   private VBox tabRequirement;
+
+  private RadioButton searchByName, searchByStatus;
+  private ToggleGroup searchingType;
+  private TextField searchField;
 
   private TableView<Requirement> requirementTableView;
   private TableView.TableViewSelectionModel<Requirement> defaultSelectionModel;
@@ -39,7 +42,7 @@ public class RequirementListTab extends Tab
   private TableColumn<Requirement, String> requirementStatus;
   private TableColumn<Requirement, String> requirementDeadline;
 
-  private Button addRequirement, editRequirement, removeRequirement;
+  private Button searchButton,addRequirement, editRequirement, removeRequirement;
 
   private MyActionListener listener;
 
@@ -105,6 +108,10 @@ public class RequirementListTab extends Tab
   private final String errorUserStory = "ERROR: Fix user story";
   private final String errorEmployees = "ERROR: Fix employees";
 
+  private String searchRadioButtonName = "Search by name";
+  private String searchRadioButtonStatus = "Search by status";
+  final private String searchButtonName = "Search";
+
   public RequirementListTab(String title, ProjectListAdapter adapterProjects,
       EmployeeListAdapter adapterEmployees, ProjectListTab projectListTab,
       AdapterGUI adapterGUI)
@@ -138,6 +145,28 @@ public class RequirementListTab extends Tab
         .setCellValueFactory(new PropertyValueFactory<>(deadline));
     requirementDeadline.setPrefWidth(199);
     requirementTableView.getColumns().add(requirementDeadline);
+
+    searchByName = new RadioButton();
+    searchByName.setText(searchRadioButtonName);
+    searchByName.setSelected(true);
+    searchByStatus = new RadioButton();
+    searchByStatus.setText(searchRadioButtonStatus);
+    searchingType = new ToggleGroup();
+    searchingType.getToggles().add(searchByName);
+    searchingType.getToggles().add(searchByStatus);
+    searchField = new TextField();
+    searchField.setOnAction(listener);
+    searchField.setPrefWidth(380);
+
+
+    searchButton = new Button(searchButtonName);
+    searchButton.setOnAction(listener);
+
+    VBox searchBarV = new VBox(searchByName, searchByStatus);
+    searchBarV.setPrefWidth(140);
+    HBox searchBarH = new HBox(searchBarV, searchField, searchButton);
+    searchBarH.setAlignment(Pos.CENTER);
+    searchBarH.setPadding(new Insets(10, 10, 0, 10));
 
     requirementInfoContainer = new VBox();
 
@@ -188,6 +217,7 @@ public class RequirementListTab extends Tab
 
     tabRequirement = new VBox(10);
     tabRequirement.setAlignment(Pos.CENTER);
+    tabRequirement.getChildren().add(searchBarH);
     tabRequirement.getChildren().add(requirementTableView);
     tabRequirement.getChildren().add(requirementInfoContainer);
     tabRequirement.getChildren().add(buttonContainer);
@@ -292,7 +322,6 @@ public class RequirementListTab extends Tab
             finalProjectList.getProjectByName(selectedProject.getName())
                 .getRequirements().getRequirement(i).getTasks()
                 .getTotalWorkedHours());
-
         finalProjectList.getProjectByName(selectedProject.getName())
             .getRequirements().getRequirement(i).checkTasks();
 
@@ -315,10 +344,10 @@ public class RequirementListTab extends Tab
       if (!selectedRequirement.getTasks().isEmpty())
       {
         requirementEstimatedLabel.setText(
-            selectedRequirement.getTasks().getTotalEstimatedHours() + "");
+           selectedRequirement.getEstimatedHours() + "");
         requirementEstimatedLabel.setTextFill(Color.BLACK);
         requirementHoursWorkedLabel
-            .setText(selectedRequirement.getTasks().getTotalWorkedHours() + "");
+            .setText(selectedRequirement.getTotalHoursWorked() + "");
         requirementHoursWorkedLabel.setTextFill(Color.BLACK);
       }
       else
@@ -329,6 +358,7 @@ public class RequirementListTab extends Tab
         requirementHoursWorkedLabel.setTextFill(Color.RED);
       }
       requirementUserStoryLabel.setText(selectedRequirement.getUserstory());
+      System.out.println("Lebels");
     }
   }
 
@@ -661,6 +691,30 @@ public class RequirementListTab extends Tab
           window.setScene(scene);
           window.showAndWait();
 
+        }
+      }
+
+      if (e.getSource() == searchButton || e.getSource() == searchField)
+      {
+        requirementTableView.getItems().clear();
+        if (adapterProject != null)
+        {
+          if (searchByName.isSelected())
+          {
+            RequirementList requirements = adapterProject.getProjectByName(selectedProject.getName()).getProjectByName(selectedProject.getName()).getRequirementsByName(searchField.getText());
+            for (int i = 0; i < requirements.size(); i++)
+            {
+              requirementTableView.getItems().add(requirements.get(i));
+            }
+          }
+          else if (searchByStatus.isSelected())
+          {
+            RequirementList requirements = adapterProject.getProjectByName(selectedProject.getName()).getProjectByName(selectedProject.getName()).getRequirementsByStatus(searchField.getText());
+            for (int i = 0; i < requirements.size(); i++)
+            {
+              requirementTableView.getItems().add(requirements.get(i));
+            }
+          }
         }
       }
     }

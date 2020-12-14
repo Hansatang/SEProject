@@ -84,17 +84,20 @@ public class Requirement implements Serializable
 
   public void checkTasks()
   {
-    int k = 0;
-    for (int i = 0; i < tasks.size(); i++)
+    if (!tasks.isEmpty())
     {
-      if (tasks.getTask(i).getStatus().equals("Ended"))
+      int k = 0;
+      for (int i = 0; i < tasks.size(); i++)
       {
-        k++;
+        if (tasks.getTask(i).getStatus().equals("Ended"))
+        {
+          k++;
+        }
       }
-    }
-    if (k == tasks.size())
-    {
-      setStatus("Ended");
+      if (k == tasks.size())
+      {
+        setStatus("Ended");
+      }
     }
   }
 
