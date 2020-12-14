@@ -1,13 +1,16 @@
 package Main;
 
-import java.io.FileInputStream;
+import Project.Project;
+import Project.ProjectList;
+import Project.ProjectListAdapter;
+
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-public class XML
-{
+public class XML {
+
 
   public static void run()
   {
@@ -21,20 +24,21 @@ public class XML
     }
     try
     {
-      FileOutputStream fileOut = new FileOutputStream(
-          "C:\\Users\\User\\OneDrive\\Desktop\\RWD\\xml\\projectList.xml");
+      FileOutputStream fileOut = new FileOutputStream("projectList.xml");
       PrintWriter write = new PrintWriter(fileOut);
 
-      write.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?> ");
+      write.println("<?xml version='1.0' encoding='UTF-8'?> ");
+      write.println("<projects> ");
 
-      write.println("<Projects>");
+      System.out.println("Writing to Main.XML");
+
       for (int i = 0; i < list.size(); i++)
       {
+        write.println("<Project>");
 
-        write.println("<project>");
-        write.println("<project_number>");
-        write.println(i+1);
-        write.println("</project_number>");
+        write.println("<project_no>");
+        write.println(i + 1);
+        write.println("</project_no>");
 
         write.println("<project_name>");
         write.println(list.get(i).getName());
@@ -59,12 +63,10 @@ public class XML
           write.println("</requirement_deadline>");
 
         }
-
-
         write.println("</project>");
 
-      }
-      write.println("</Projects>");
+
+      } write.println("</Projects>");
       write.close();
     }
     catch (FileNotFoundException e)
@@ -74,5 +76,4 @@ public class XML
     }
 
   }
-}
 }
