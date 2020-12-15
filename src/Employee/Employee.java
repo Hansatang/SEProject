@@ -34,6 +34,10 @@ public class Employee implements Serializable
     this.name = name;
   }
 
+  /**
+   * Returns a string representation of the employee.
+   * @return a string representation of the employee in the format: "name"
+   */
   @Override
   public String toString() {
     return name;
