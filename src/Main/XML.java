@@ -44,9 +44,9 @@ public class XML {
         write.println(list.get(i).getName());
         write.println("</project_name>");
 
-        write.println("<teamMembers>");
+        write.println("<teamEmployees>");
         write.println(list.get(i).getTeam());
-        write.println("</teamMembers>");
+        write.println("</teamEmployees>");
         for (int j = 0  ;i < list.get(i).getRequirements().size() ; i++)
         {
           write.println("<requirement_id>");

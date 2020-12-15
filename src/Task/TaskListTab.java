@@ -290,7 +290,7 @@ public class TaskListTab extends Tab implements GUIParts
   {
     taskNameLabel.setText(selectedTask.getName());
     taskIDLabel.setText(selectedTask.getTaskID());
-    taskEmployeeLabel.setText(selectedTask.getTaskMembers() + "");
+    taskEmployeeLabel.setText(selectedTask.getTaskEmployees() + "");
     taskStatusLabel.setText(selectedTask.getStatus());
     taskDeadlineLabel.setText(selectedTask.getDeadline() + "");
     taskEstimatedHoursLabel.setText(selectedTask.getEstimatedHours() + "");
