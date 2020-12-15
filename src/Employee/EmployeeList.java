@@ -27,40 +27,64 @@ public class EmployeeList implements Serializable {
     return employees.get(index);
   }
 
+  /**
+   * Adds a Employee to the list.
+   * @param employee the Employee to add to the list
+   */
   public void addEmployee(Employee employee) {
     employees.add(employee);
   }
 
-
+  /**
+   * Removes a Employee from the list.
+   * @param employee the Employee to remove from the list
+   */
   public void removeEmployee(Employee employee)
   {
     employees.remove(employee);
   }
 
+  /**
+   * Removes a Employee from the list.
+   * @param name the  name of Employee to remove from the list
+   */
   public void deleteEmployee(String name)
   {
     employees.remove(getIndexFromName(name));
   }
 
+  /**
+   * Changes the employee's name.
+   * @param  name of which employee name will be changes
+   * @param newName what the employee's name will be set to
+   */
   public void replaceEmployee(String name,String newName)
   {
     employees.get(getIndexFromName(name)).setName(newName);
   }
 
+  /**
+   * Gets a index of the given  name  of Employee from the list.
+   * @param name the  name of the Employee object
+   * @return the index of Employee with specific name if one exists
+   */
   public int getIndexFromName(String name)
   {
     for (int i = 0; i < employees.size(); i++)
     {
-
       if (employees.get(i).getName().equals(name))
       {
         return i;
       }
-
     }
     return -1;
   }
 
+  /**
+   * Gets the employee objects in ArrayList.
+   *
+   * @return the ArrayList of employees
+   */
   public ArrayList<Employee> getEmployees()
   {
     return employees;

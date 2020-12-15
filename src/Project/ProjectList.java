@@ -32,6 +32,7 @@ public class ProjectList implements Serializable
     projects.remove(selectedProject);
   }
 
+
   public void removeEmployee(int index, Employee employee)
   {
     projects.get(index).getTeam().removeEmployee(employee);
@@ -65,7 +66,6 @@ public class ProjectList implements Serializable
   {
     return projects.size();
   }
-
   /**
    * Gets a Project object from position index from the list.
    * @param index the position in the list of the Project object
@@ -81,48 +81,6 @@ public class ProjectList implements Serializable
     {
       return null;
     }
-  }
-
-  // Should be bullshit but...
-  public int[] getIndexesFromInput(String name)
-  {
-
-    ArrayList<Integer> searchResultIndexesArrList = new ArrayList<>();
-
-    for (int i = 0; i < projects.size(); i++)
-    {
-
-      if (projects.get(i).getName().contains(name))
-      {
-        searchResultIndexesArrList.add(i);
-      }
-    }
-
-    int[] searchResultIndexesArr = new int[searchResultIndexesArrList.size()];
-    for (int i = 0; i < searchResultIndexesArr.length; i++)
-    {
-      searchResultIndexesArr[i] = searchResultIndexesArrList.get(i);
-    }
-
-    return searchResultIndexesArr;
-  }
-
-  public ArrayList<Project> getProjectsWhereEmployeeIsIn(Employee employee)
-  {
-
-    ArrayList<Project> projectsEmployeeIsIn = new ArrayList<>();
-
-    for (int i = 0; i < projects.size(); i++)
-    {
-      for (int j = 0; j < projects.get(i).getTeam().size(); i++)
-      {
-        if (projects.get(i).getTeam().get(j).equals(employee))
-        {
-          projectsEmployeeIsIn.add(projects.get(i));
-        }
-      }
-    }
-    return projectsEmployeeIsIn;
   }
 
   /**
