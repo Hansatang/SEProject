@@ -47,19 +47,19 @@ public class XML {
         write.println("<teamMembers>");
         write.println(list.get(i).getTeam());
         write.println("</teamMembers>");
-        for (int j = 0  ;i < list.get(i).getRequirements().size() ; i++)
+        for (int j = 0  ;j < list.get(i).getRequirements().size() ; j++)
         {
           write.println("<requirement_id>");
-          write.println(list.get(i).getRequirements().getRequirements().get(i).getId());
+          write.println(list.get(i).getRequirements().getRequirements().get(j).getId());
           write.println("</requirement_id>");
 
           write.println("<requirement_status>");
-          write.println(list.get(i).getRequirements().getRequirements().get(i).getStatus());
+          write.println(list.get(i).getRequirements().getRequirements().get(j).getStatus());
           write.println("</requirement_status>");
 
           write.println("<requirement_deadline>");
           write.println(
-              list.get(i).getRequirements().getRequirements().get(i).getDeadline());
+              list.get(i).getRequirements().getRequirements().get(j).getDeadline());
           write.println("</requirement_deadline>");
 
         }
