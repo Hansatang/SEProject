@@ -14,7 +14,9 @@ public class RequirementList implements Serializable
         this.requirements = new ArrayList<>();
     }
 
-
+    public Requirement get(int index){
+        return requirements.get(index);
+    }
 
     public int size(){
         return requirements.size();
@@ -34,27 +36,6 @@ public class RequirementList implements Serializable
 
     public Requirement getRequirement(int index){
         return requirements.get(index);
-    }
-
-    public int getIndexFromName(String name){
-        for(int i = 0 ; i < requirements.size() ; i++){
-            if(requirements.get(i).getName().equals(name)){
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    public Requirement get(int index)
-    {
-        if (index < requirements.size())
-        {
-            return requirements.get(index);
-        }
-        else
-        {
-            return null;
-        }
     }
 
     public ArrayList<Requirement> getRequirements() {
