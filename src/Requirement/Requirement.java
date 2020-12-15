@@ -9,8 +9,8 @@ import java.time.LocalDate;
 
 public class Requirement implements Serializable
 {
-  private String name, userstory, status;
-  private int estimatedHours, totalHoursWorked, id;
+  private String name, userstory, status, requirementId;
+  private int estimatedHours, totalHoursWorked;
   private TaskList tasks;
   private LocalDate deadline;
   private EmployeeList team;
@@ -121,14 +121,14 @@ public class Requirement implements Serializable
     return name;
   }
 
-  public int getId()
+  public String getId()
   {
-    return id;
+    return requirementId;
   }
 
-  public void setId(int id)
+  public void setId(String requirementId)
   {
-    this.id = id;
+    this.requirementId = requirementId;
   }
 
   public int getTotalHoursWorked()

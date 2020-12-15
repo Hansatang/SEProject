@@ -23,13 +23,11 @@ public class EmployeeList implements Serializable {
    * @param index the position in the list of the Employee.Employee object
    * @return the Employee.Employee object at position index if one exists, else null
    */
-  public Employee get(int index)
-  {
+  public Employee get(int index) {
     return employees.get(index);
   }
 
-  public void addEmployee(Employee employee)
-  {
+  public void addEmployee(Employee employee) {
     employees.add(employee);
   }
 

@@ -34,7 +34,7 @@ public class XML {
 
       for (int i = 0; i < list.size(); i++)
       {
-        write.println("<project>");
+        write.println("<Project>");
 
         write.println("<project_no>");
         write.println(i + 1);
@@ -47,11 +47,26 @@ public class XML {
         write.println("<teamMembers>");
         write.println(list.get(i).getTeam());
         write.println("</teamMembers>");
+        for (int j = 0  ;i < list.get(i).getRequirements().size() ; i++)
+        {
+          write.println("<requirement_id>");
+          write.println(list.get(i).getRequirements().getRequirements().get(i).getId());
+          write.println("</requirement_id>");
 
+          write.println("<requirement_status>");
+          write.println(list.get(i).getRequirements().getRequirements().get(i).getStatus());
+          write.println("</requirement_status>");
+
+          write.println("<requirement_deadline>");
+          write.println(
+              list.get(i).getRequirements().getRequirements().get(i).getDeadline());
+          write.println("</requirement_deadline>");
+
+        }
         write.println("</project>");
 
 
-      } write.println("</projects>");
+      } write.println("</Projects>");
       write.close();
     }
     catch (FileNotFoundException e)
