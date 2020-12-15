@@ -2,7 +2,8 @@ package Project;
 
 import Employee.EmployeeList;
 import Employee.EmployeeListAdapter;
-import Main.AdapterGUI;
+import Main.GUI;
+import Main.GUIParts;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -18,7 +19,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class ProjectListTab extends Tab
+public class ProjectListTab extends Tab implements GUIParts
 {
   private VBox tabProjects;
 
@@ -36,7 +37,7 @@ public class ProjectListTab extends Tab
   private MyActionListener listener;
 
   private Project selectedProject;
-  private AdapterGUI adapterGUI;
+  private GUI GUI;
 
   private EmployeeListAdapter adapterEmployee;
   private ProjectListAdapter adapterProject;
@@ -73,17 +74,16 @@ public class ProjectListTab extends Tab
 
   /**
    * Constructor initializing the GUI components
-   *
    * @param title           The title of the tab
    * @param projectAdapter  object used for retrieving and storing project information
    * @param employeeAdapter object used for retrieving and storing employee information
-   * @param adapterGUI      object used for communication between Tabs
+   * @param GUI      object used for communication between Tabs
    */
   public ProjectListTab(String title, ProjectListAdapter projectAdapter,
-      EmployeeListAdapter employeeAdapter, AdapterGUI adapterGUI)
+      EmployeeListAdapter employeeAdapter, GUI GUI)
   {
     super(title);
-    this.adapterGUI = adapterGUI;
+    this.GUI = GUI;
     this.adapterProject = projectAdapter;
     finalProjectList = adapterProject.getAllProjects();
     this.adapterEmployee = employeeAdapter;
@@ -113,6 +113,7 @@ public class ProjectListTab extends Tab
     searchField = new TextField();
     searchField.setOnAction(listener);
     searchField.setPrefWidth(searchFieldWidth);
+
     projectTableView.getColumns().add(projectName);
     projectTableView.getColumns().add(projectTeam);
 
@@ -158,7 +159,6 @@ public class ProjectListTab extends Tab
 
   /**
    * Gets the selectedProject Project.
-   *
    * @return the selectedProject Project
    */
   public Project getSelectedProject()
@@ -182,7 +182,7 @@ public class ProjectListTab extends Tab
               int index = projectTableView.getSelectionModel()
                   .getSelectedIndex();
               selectedProject = projectTableView.getItems().get(index);
-              adapterGUI.changeRequirementTabTitle(selectedProject);
+              GUI.changeRequirementTabTitle(selectedProject);
             }
           }
         });
@@ -210,7 +210,7 @@ public class ProjectListTab extends Tab
    * @param window The window to insert default values
    * @param title  The title of the window
    */
-  private void nameWindow(Stage window, String title)
+  public void nameWindow(Stage window, String title)
   {
     window.initModality(Modality.APPLICATION_MODAL);
     window.setTitle(title);
@@ -224,7 +224,7 @@ public class ProjectListTab extends Tab
    * @param inputText The TextField to set values
    * @param labelName The text in the label
    */
-  private VBox textFieldWindowPart(TextField inputText, String labelName)
+  public VBox textFieldWindowPart(TextField inputText, String labelName)
   {
     VBox nameContainer = new VBox(2);
     nameContainer.setPadding(new Insets(10, 10, 0, 10));
@@ -464,8 +464,8 @@ public class ProjectListTab extends Tab
                 finalProjectList.removeProject(selectedProject);
                 adapterProject.saveProjects(finalProjectList);
                 updateProjectArea();
-                adapterGUI.closeRequirementTabTitle();
-                adapterGUI.closeTaskTabTitle();
+                GUI.closeRequirementTabTitle();
+                GUI.closeTaskTabTitle();
                 selectedProject = null;
               }
             }

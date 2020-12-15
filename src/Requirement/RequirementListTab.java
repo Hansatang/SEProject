@@ -2,7 +2,8 @@ package Requirement;
 
 import Employee.EmployeeList;
 import Employee.EmployeeListAdapter;
-import Main.AdapterGUI;
+import Main.GUI;
+import Main.GUIParts;
 import Project.ProjectListTab;
 import Project.Project;
 import Project.ProjectList;
@@ -28,10 +29,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class RequirementListTab extends Tab
+public class RequirementListTab extends Tab implements GUIParts
 {
-
   private VBox tabRequirement;
+
+  private RadioButton searchByName, searchByStatus;
+  private ToggleGroup searchingType;
+  private TextField searchField;
 
   private TableView<Requirement> requirementTableView;
   private TableView.TableViewSelectionModel<Requirement> defaultSelectionModel;
@@ -39,7 +43,7 @@ public class RequirementListTab extends Tab
   private TableColumn<Requirement, String> requirementStatus;
   private TableColumn<Requirement, String> requirementDeadline;
 
-  private Button addRequirement, editRequirement, removeRequirement;
+  private Button searchButton, addRequirement, editRequirement, removeRequirement;
 
   private MyActionListener listener;
 
@@ -47,7 +51,7 @@ public class RequirementListTab extends Tab
   private Project selectedProject;
 
   private ProjectListTab projectListTab;
-  private AdapterGUI adapterGUI;
+  private GUI GUI;
 
   private EmployeeListAdapter adapterEmployee;
   private ProjectListAdapter adapterProject;
@@ -61,12 +65,14 @@ public class RequirementListTab extends Tab
   private Label requirementStatusLabel = new Label();
   private Label requirementTeamLabel = new Label();
   private Label requirementDeadlineLabel = new Label();
+  private Label requirementIdLabel = new Label();
   private TextArea requirementUserStoryLabel = new TextArea();
   private Label requirementEstimatedLabel = new Label();
   private Label requirementHoursWorkedLabel = new Label();
 
   // Requirement.Requirement JavaFX objects
   TextField inputRequirementName = new TextField();
+  TextField inputRequirementID = new TextField();
   TextField inputUserStory = new TextField();
   ComboBox<String> inputTaskStatus = new ComboBox<>();
   DatePicker inputRequirementDeadline = new DatePicker();
@@ -79,6 +85,7 @@ public class RequirementListTab extends Tab
   private final String status = "Status";
   private final String team = "Team";
   private final String deadline = "Deadline";
+  private final String id = "ID";
   private final String userStory = "Userstory";
   private final String estimatedHours = "Estimated worked hours";
   private final String totalWorkedHours = "Total worked hours";
@@ -105,13 +112,25 @@ public class RequirementListTab extends Tab
   private final String errorUserStory = "ERROR: Fix user story";
   private final String errorEmployees = "ERROR: Fix employees";
 
+  private String searchRadioButtonName = "Search by name";
+  private String searchRadioButtonStatus = "Search by status";
+  final private String searchButtonName = "Search";
+
+  /**
+   * Constructor initializing the GUI components
+   *
+   * @param title            The title of the tab
+   * @param adapterProjects  object used for retrieving and storing project information
+   * @param adapterEmployees object used for retrieving and storing employee information
+   * @param GUI       object used for communication between Tabs
+   */
   public RequirementListTab(String title, ProjectListAdapter adapterProjects,
       EmployeeListAdapter adapterEmployees, ProjectListTab projectListTab,
-      AdapterGUI adapterGUI)
+      GUI GUI)
   {
     super(title);
 
-    this.adapterGUI = adapterGUI;
+    this.GUI = GUI;
     this.projectListTab = projectListTab;
     this.adapterProject = adapterProjects;
     this.adapterEmployee = adapterEmployees;
@@ -139,6 +158,28 @@ public class RequirementListTab extends Tab
     requirementDeadline.setPrefWidth(199);
     requirementTableView.getColumns().add(requirementDeadline);
 
+
+    searchByName = new RadioButton();
+    searchByName.setText(searchRadioButtonName);
+    searchByName.setSelected(true);
+    searchByStatus = new RadioButton();
+    searchByStatus.setText(searchRadioButtonStatus);
+    searchingType = new ToggleGroup();
+    searchingType.getToggles().add(searchByName);
+    searchingType.getToggles().add(searchByStatus);
+    searchField = new TextField();
+    searchField.setOnAction(listener);
+    searchField.setPrefWidth(380);
+
+    searchButton = new Button(searchButtonName);
+    searchButton.setOnAction(listener);
+
+    VBox searchBarV = new VBox(searchByName, searchByStatus);
+    searchBarV.setPrefWidth(140);
+    HBox searchBarH = new HBox(searchBarV, searchField, searchButton);
+    searchBarH.setAlignment(Pos.CENTER);
+    searchBarH.setPadding(new Insets(10, 10, 0, 10));
+
     requirementInfoContainer = new VBox();
 
     Label infoLabel = new Label(name);
@@ -156,6 +197,10 @@ public class RequirementListTab extends Tab
     infoLabel = new Label(deadline);
     infoLabel.setPrefWidth(150);
     infoBox = new HBox(infoLabel, requirementDeadlineLabel);
+    requirementInfoContainer.getChildren().add(infoBox);
+    infoLabel = new Label(id);
+    infoLabel.setPrefWidth(150);
+    infoBox = new HBox(infoLabel, requirementIdLabel);
     requirementInfoContainer.getChildren().add(infoBox);
     infoLabel = new Label(estimatedHours);
     infoLabel.setPrefWidth(150);
@@ -188,6 +233,7 @@ public class RequirementListTab extends Tab
 
     tabRequirement = new VBox(10);
     tabRequirement.setAlignment(Pos.CENTER);
+    tabRequirement.getChildren().add(searchBarH);
     tabRequirement.getChildren().add(requirementTableView);
     tabRequirement.getChildren().add(requirementInfoContainer);
     tabRequirement.getChildren().add(buttonContainer);
@@ -197,25 +243,47 @@ public class RequirementListTab extends Tab
     setSelectedRequirement();
   }
 
+  /**
+   * Gets the selectedRequirement Requirement.
+   *
+   * @return the selectedRequirement Requirement
+   */
   public Requirement getSelectedRequirement()
   {
     return selectedRequirement;
   }
 
+  /**
+   * Gets the selectedProject Project.
+   *
+   * @return the selectedProject Project
+   */
   public Project getSelectedProject()
   {
     return selectedProject;
   }
 
-  private void nameWindow(Stage window, String str)
+  /**
+   * Sets the default values for window entities
+   *
+   * @param window The window to insert default values
+   * @param title  The title of the window
+   */
+  public void nameWindow(Stage window, String title)
   {
     window.initModality(Modality.APPLICATION_MODAL);
-    window.setTitle(str);
+    window.setTitle(title);
     window.setMinWidth(300);
     window.setResizable(false);
   }
 
-  private VBox textFieldWindowPart(TextField inputText, String labelName)
+  /**
+   * Creates a VBox container with label and TextField and defines the  values them
+   *
+   * @param inputText The TextField to set values
+   * @param labelName The text in the label
+   */
+  public VBox textFieldWindowPart(TextField inputText, String labelName)
   {
     VBox nameContainer = new VBox(2);
     nameContainer.setPadding(new Insets(10, 10, 0, 10));
@@ -226,6 +294,10 @@ public class RequirementListTab extends Tab
     return nameContainer;
   }
 
+  /**
+   * Creates a VBox container with label and ComboBox and defines the  values them
+   * @return the VBox containing label and ComboBox for selecting status
+   */
   private VBox statusComboBoxWindowPart()
   {
     VBox statusContainer = new VBox();
@@ -243,6 +315,11 @@ public class RequirementListTab extends Tab
     return statusContainer;
   }
 
+  /**
+   * Sets the selectedProject.
+   *
+   * @param projectSelected The projectSelected Project
+   */
   public void setSelectedProject(Project projectSelected)
   {
     selectedProject = adapterProject.getAllProjects()
@@ -250,6 +327,9 @@ public class RequirementListTab extends Tab
     updateRequirementArea();
   }
 
+  /**
+   * Sets the selectedProject.
+   */
   private void setSelectedRequirement()
   {
     requirementTableView.getSelectionModel().selectedItemProperty()
@@ -265,13 +345,16 @@ public class RequirementListTab extends Tab
                   .getSelectedIndex();
 
               selectedRequirement = requirementTableView.getItems().get(index);
-              adapterGUI.changeTaskTabTitle(selectedRequirement);
+              GUI.changeTaskTabTitle(selectedRequirement);
               updateRequirementLabels();
             }
           }
         });
   }
 
+  /**
+   * Updates the requirementTableView tableView with information from the projects file
+   */
   public void updateRequirementArea()
   {
     requirementTableView.getItems().clear();
@@ -292,7 +375,6 @@ public class RequirementListTab extends Tab
             finalProjectList.getProjectByName(selectedProject.getName())
                 .getRequirements().getRequirement(i).getTasks()
                 .getTotalWorkedHours());
-
         finalProjectList.getProjectByName(selectedProject.getName())
             .getRequirements().getRequirement(i).checkTasks();
 
@@ -303,6 +385,9 @@ public class RequirementListTab extends Tab
     }
   }
 
+  /**
+   * Updates the labels in the requirementInfoContainer with information from the projects file
+   */
   public void updateRequirementLabels()
   {
     if (selectedRequirement != null)
@@ -311,14 +396,15 @@ public class RequirementListTab extends Tab
       requirementStatusLabel.setText(selectedRequirement.getStatus());
       requirementDeadlineLabel
           .setText(selectedRequirement.getDeadline().toString());
+      requirementIdLabel.setText(selectedRequirement.getId()+"");
       requirementTeamLabel.setText(selectedRequirement.getTeam().toString());
       if (!selectedRequirement.getTasks().isEmpty())
       {
-        requirementEstimatedLabel.setText(
-            selectedRequirement.getTasks().getTotalEstimatedHours() + "");
+        requirementEstimatedLabel
+            .setText(selectedRequirement.getEstimatedHours() + "");
         requirementEstimatedLabel.setTextFill(Color.BLACK);
         requirementHoursWorkedLabel
-            .setText(selectedRequirement.getTasks().getTotalWorkedHours() + "");
+            .setText(selectedRequirement.getTotalHoursWorked() + "");
         requirementHoursWorkedLabel.setTextFill(Color.BLACK);
       }
       else
@@ -332,6 +418,10 @@ public class RequirementListTab extends Tab
     }
   }
 
+  /*
+   * Inner action listener class
+   * @author
+   */
   private class MyActionListener implements EventHandler<ActionEvent>
   {
     public void handle(ActionEvent e)
@@ -353,6 +443,10 @@ public class RequirementListTab extends Tab
 
           // Requirement.Requirement status input.
           VBox statusContainer = statusComboBoxWindowPart();
+
+          // Requirement id input.
+          VBox requirementIdContainer = textFieldWindowPart(
+              inputRequirementID, id);
 
           // Requirement.Requirement deadline input.
           VBox deadlineContainer = new VBox();
@@ -432,11 +526,6 @@ public class RequirementListTab extends Tab
               {
                 errorLabel.setText(errorName);
               }
-              else if (inputUserStory.getText().isEmpty() || inputUserStory
-                  .getText().equals(""))
-              {
-                errorLabel.setText(errorUserStory);
-              }
               else if (selectedEmployees.size() == 0)
               {
                 errorLabel.setText(errorEmployees);
@@ -452,6 +541,7 @@ public class RequirementListTab extends Tab
                     inputRequirementName.getText(), inputUserStory.getText(),
                     inputTaskStatus.getValue(),
                     inputRequirementDeadline.getValue(), selectedEmployees);
+                requirement.setId(inputRequirementID.getText());
                 finalProjectList.getProjectByName(selectedProject.getName())
                     .getRequirements().addRequirement(requirement);
                 adapterProject.saveProjects(finalProjectList);
@@ -462,8 +552,8 @@ public class RequirementListTab extends Tab
 
           layout.getChildren()
               .addAll(requirementNameContainer, requirementUserStoryContainer,
-                  statusContainer, employeeListContainer, deadlineContainer,
-                  closeWithSaveButton, errorLabel);
+                  statusContainer, requirementIdContainer, employeeListContainer,
+                  deadlineContainer,closeWithSaveButton, errorLabel);
 
           layout.setAlignment(Pos.CENTER);
           Scene scene = new Scene(layout);
@@ -492,6 +582,11 @@ public class RequirementListTab extends Tab
               inputUserStory, userStory);
 
           inputUserStory.setText(selectedRequirement.getUserstory());
+
+          // Requirement id input.
+          VBox requirementIdContainer = textFieldWindowPart(
+              inputRequirementID, id);
+          inputRequirementID.setText(selectedRequirement.getId());
 
           // Requirement.Requirement status input.
           VBox statusContainer = statusComboBoxWindowPart();
@@ -578,20 +673,21 @@ public class RequirementListTab extends Tab
                   .editRequirement(inputRequirementName.getText(),
                       inputUserStory.getText(), inputTaskStatus.getValue(),
                       selectedEmployees, inputRequirementDeadline.getValue());
+              selectedRequirement.setId(inputRequirementID.getText());
               // Close window
               window.close();
               // Save all changes
               adapterProject.saveProjects(finalProjectList);
               // Update GUI table with requirements to show changes
               updateRequirementArea();
-              adapterGUI.changeTaskTabTitle(selectedRequirement);
+              GUI.changeTaskTabTitle(selectedRequirement);
               updateRequirementLabels();
               // END of editing requirement
             }
           });
 
           layout.getChildren()
-              .addAll(requirementNameContainer, requirementUserStoryContainer,
+              .addAll(requirementNameContainer, requirementIdContainer, requirementUserStoryContainer,
                   statusContainer, employeeListContainer, deadlineContainer,
                   closeWithSaveButton, errorLabel);
           layout.setAlignment(Pos.CENTER);
@@ -635,7 +731,7 @@ public class RequirementListTab extends Tab
                     .getRequirements().removeRequirement(selectedRequirement);
                 adapterProject.saveProjects(finalProjectList);
                 updateRequirementArea();
-                adapterGUI.closeTaskTabTitle();
+                GUI.closeTaskTabTitle();
                 selectedRequirement = null;
               }
             }
@@ -661,6 +757,36 @@ public class RequirementListTab extends Tab
           window.setScene(scene);
           window.showAndWait();
 
+        }
+      }
+
+      if (e.getSource() == searchButton || e.getSource() == searchField)
+      {
+        requirementTableView.getItems().clear();
+        if (adapterProject != null)
+        {
+          if (searchByName.isSelected())
+          {
+            RequirementList requirements = adapterProject
+                .getProjectByName(selectedProject.getName())
+                .getProjectByName(selectedProject.getName())
+                .getRequirementsByName(searchField.getText());
+            for (int i = 0; i < requirements.size(); i++)
+            {
+              requirementTableView.getItems().add(requirements.get(i));
+            }
+          }
+          else if (searchByStatus.isSelected())
+          {
+            RequirementList requirements = adapterProject
+                .getProjectByName(selectedProject.getName())
+                .getProjectByName(selectedProject.getName())
+                .getRequirementsByStatus(searchField.getText());
+            for (int i = 0; i < requirements.size(); i++)
+            {
+              requirementTableView.getItems().add(requirements.get(i));
+            }
+          }
         }
       }
     }

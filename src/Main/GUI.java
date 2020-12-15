@@ -16,7 +16,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class AdapterGUI extends Application
+public class GUI extends Application
 {
   // Adapters
   private ProjectListAdapter adapterProjects;
