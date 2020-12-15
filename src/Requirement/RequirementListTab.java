@@ -29,6 +29,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * A class containing GUI elements for the Requirement tab.
+ *
+ * @author
+ */
 public class RequirementListTab extends Tab implements GUIParts
 {
   private VBox tabRequirement;
