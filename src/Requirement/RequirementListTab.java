@@ -2,7 +2,8 @@ package Requirement;
 
 import Employee.EmployeeList;
 import Employee.EmployeeListAdapter;
-import Main.AdapterGUI;
+import Main.GUI;
+import Main.GUIParts;
 import Project.ProjectListTab;
 import Project.Project;
 import Project.ProjectList;
@@ -28,7 +29,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class RequirementListTab extends Tab
+public class RequirementListTab extends Tab implements GUIParts
 {
   private VBox tabRequirement;
 
@@ -50,7 +51,7 @@ public class RequirementListTab extends Tab
   private Project selectedProject;
 
   private ProjectListTab projectListTab;
-  private AdapterGUI adapterGUI;
+  private GUI GUI;
 
   private EmployeeListAdapter adapterEmployee;
   private ProjectListAdapter adapterProject;
@@ -121,15 +122,15 @@ public class RequirementListTab extends Tab
    * @param title            The title of the tab
    * @param adapterProjects  object used for retrieving and storing project information
    * @param adapterEmployees object used for retrieving and storing employee information
-   * @param adapterGUI       object used for communication between Tabs
+   * @param GUI       object used for communication between Tabs
    */
   public RequirementListTab(String title, ProjectListAdapter adapterProjects,
       EmployeeListAdapter adapterEmployees, ProjectListTab projectListTab,
-      AdapterGUI adapterGUI)
+      GUI GUI)
   {
     super(title);
 
-    this.adapterGUI = adapterGUI;
+    this.GUI = GUI;
     this.projectListTab = projectListTab;
     this.adapterProject = adapterProjects;
     this.adapterEmployee = adapterEmployees;
@@ -268,7 +269,7 @@ public class RequirementListTab extends Tab
    * @param window The window to insert default values
    * @param title  The title of the window
    */
-  private void nameWindow(Stage window, String title)
+  public void nameWindow(Stage window, String title)
   {
     window.initModality(Modality.APPLICATION_MODAL);
     window.setTitle(title);
@@ -282,7 +283,7 @@ public class RequirementListTab extends Tab
    * @param inputText The TextField to set values
    * @param labelName The text in the label
    */
-  private VBox textFieldWindowPart(TextField inputText, String labelName)
+  public VBox textFieldWindowPart(TextField inputText, String labelName)
   {
     VBox nameContainer = new VBox(2);
     nameContainer.setPadding(new Insets(10, 10, 0, 10));
@@ -344,7 +345,7 @@ public class RequirementListTab extends Tab
                   .getSelectedIndex();
 
               selectedRequirement = requirementTableView.getItems().get(index);
-              adapterGUI.changeTaskTabTitle(selectedRequirement);
+              GUI.changeTaskTabTitle(selectedRequirement);
               updateRequirementLabels();
             }
           }
@@ -679,7 +680,7 @@ public class RequirementListTab extends Tab
               adapterProject.saveProjects(finalProjectList);
               // Update GUI table with requirements to show changes
               updateRequirementArea();
-              adapterGUI.changeTaskTabTitle(selectedRequirement);
+              GUI.changeTaskTabTitle(selectedRequirement);
               updateRequirementLabels();
               // END of editing requirement
             }
@@ -730,7 +731,7 @@ public class RequirementListTab extends Tab
                     .getRequirements().removeRequirement(selectedRequirement);
                 adapterProject.saveProjects(finalProjectList);
                 updateRequirementArea();
-                adapterGUI.closeTaskTabTitle();
+                GUI.closeTaskTabTitle();
                 selectedRequirement = null;
               }
             }

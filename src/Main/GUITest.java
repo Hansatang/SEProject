@@ -2,7 +2,7 @@ package Main;
 
 import javafx.application.Application;
 
-public class AdapterGUITest
+public class GUITest
 {
   /**
    * Starts the program
@@ -10,6 +10,6 @@ public class AdapterGUITest
    */
   public static void main(String[] args)
   {
-    Application.launch(AdapterGUI.class);
+    Application.launch(GUI.class);
   }
 }
