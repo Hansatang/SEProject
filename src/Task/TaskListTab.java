@@ -2,6 +2,7 @@ package Task;
 
 import Employee.EmployeeList;
 import Employee.EmployeeListAdapter;
+import Main.GUIParts;
 import Project.Project;
 import Project.ProjectList;
 import Project.ProjectListAdapter;
@@ -26,7 +27,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class TaskListTab extends Tab
+public class TaskListTab extends Tab implements GUIParts
 {
   private VBox tabTask;
 
@@ -177,7 +178,7 @@ public class TaskListTab extends Tab
    * @param window The window to insert default values
    * @param title  The title of the window
    */
-  private void nameWindow(Stage window, String title)
+  public void nameWindow(Stage window, String title)
   {
     window.initModality(Modality.APPLICATION_MODAL);
     window.setTitle(title);
@@ -190,7 +191,7 @@ public class TaskListTab extends Tab
    * @param inputText The TextField to set values
    * @param labelName The text in the label
    */
-  private VBox textFieldWindowPart(TextField inputText, String labelName)
+  public VBox textFieldWindowPart(TextField inputText, String labelName)
   {
     VBox nameContainer = new VBox(2);
     nameContainer.setPadding(new Insets(10, 10, 0, 10));
