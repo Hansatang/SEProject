@@ -64,12 +64,14 @@ public class RequirementListTab extends Tab
   private Label requirementStatusLabel = new Label();
   private Label requirementTeamLabel = new Label();
   private Label requirementDeadlineLabel = new Label();
+  private Label requirementIdLabel = new Label();
   private TextArea requirementUserStoryLabel = new TextArea();
   private Label requirementEstimatedLabel = new Label();
   private Label requirementHoursWorkedLabel = new Label();
 
   // Requirement.Requirement JavaFX objects
   TextField inputRequirementName = new TextField();
+  TextField inputRequirementID = new TextField();
   TextField inputUserStory = new TextField();
   ComboBox<String> inputTaskStatus = new ComboBox<>();
   DatePicker inputRequirementDeadline = new DatePicker();
@@ -82,6 +84,7 @@ public class RequirementListTab extends Tab
   private final String status = "Status";
   private final String team = "Team";
   private final String deadline = "Deadline";
+  private final String id = "ID";
   private final String userStory = "Userstory";
   private final String estimatedHours = "Estimated worked hours";
   private final String totalWorkedHours = "Total worked hours";
@@ -154,6 +157,7 @@ public class RequirementListTab extends Tab
     requirementDeadline.setPrefWidth(199);
     requirementTableView.getColumns().add(requirementDeadline);
 
+
     searchByName = new RadioButton();
     searchByName.setText(searchRadioButtonName);
     searchByName.setSelected(true);
@@ -192,6 +196,10 @@ public class RequirementListTab extends Tab
     infoLabel = new Label(deadline);
     infoLabel.setPrefWidth(150);
     infoBox = new HBox(infoLabel, requirementDeadlineLabel);
+    requirementInfoContainer.getChildren().add(infoBox);
+    infoLabel = new Label(id);
+    infoLabel.setPrefWidth(150);
+    infoBox = new HBox(infoLabel, requirementIdLabel);
     requirementInfoContainer.getChildren().add(infoBox);
     infoLabel = new Label(estimatedHours);
     infoLabel.setPrefWidth(150);
@@ -387,6 +395,7 @@ public class RequirementListTab extends Tab
       requirementStatusLabel.setText(selectedRequirement.getStatus());
       requirementDeadlineLabel
           .setText(selectedRequirement.getDeadline().toString());
+      requirementIdLabel.setText(selectedRequirement.getId()+"");
       requirementTeamLabel.setText(selectedRequirement.getTeam().toString());
       if (!selectedRequirement.getTasks().isEmpty())
       {
@@ -433,6 +442,10 @@ public class RequirementListTab extends Tab
 
           // Requirement.Requirement status input.
           VBox statusContainer = statusComboBoxWindowPart();
+
+          // Requirement id input.
+          VBox requirementIdContainer = textFieldWindowPart(
+              inputRequirementID, id);
 
           // Requirement.Requirement deadline input.
           VBox deadlineContainer = new VBox();
@@ -527,6 +540,7 @@ public class RequirementListTab extends Tab
                     inputRequirementName.getText(), inputUserStory.getText(),
                     inputTaskStatus.getValue(),
                     inputRequirementDeadline.getValue(), selectedEmployees);
+                requirement.setId(inputRequirementID.getText());
                 finalProjectList.getProjectByName(selectedProject.getName())
                     .getRequirements().addRequirement(requirement);
                 adapterProject.saveProjects(finalProjectList);
@@ -537,8 +551,8 @@ public class RequirementListTab extends Tab
 
           layout.getChildren()
               .addAll(requirementNameContainer, requirementUserStoryContainer,
-                  statusContainer, employeeListContainer, deadlineContainer,
-                  closeWithSaveButton, errorLabel);
+                  statusContainer, requirementIdContainer, employeeListContainer,
+                  deadlineContainer,closeWithSaveButton, errorLabel);
 
           layout.setAlignment(Pos.CENTER);
           Scene scene = new Scene(layout);
@@ -567,6 +581,11 @@ public class RequirementListTab extends Tab
               inputUserStory, userStory);
 
           inputUserStory.setText(selectedRequirement.getUserstory());
+
+          // Requirement id input.
+          VBox requirementIdContainer = textFieldWindowPart(
+              inputRequirementID, id);
+          inputRequirementID.setText(selectedRequirement.getId());
 
           // Requirement.Requirement status input.
           VBox statusContainer = statusComboBoxWindowPart();
@@ -653,6 +672,7 @@ public class RequirementListTab extends Tab
                   .editRequirement(inputRequirementName.getText(),
                       inputUserStory.getText(), inputTaskStatus.getValue(),
                       selectedEmployees, inputRequirementDeadline.getValue());
+              selectedRequirement.setId(inputRequirementID.getText());
               // Close window
               window.close();
               // Save all changes
@@ -666,7 +686,7 @@ public class RequirementListTab extends Tab
           });
 
           layout.getChildren()
-              .addAll(requirementNameContainer, requirementUserStoryContainer,
+              .addAll(requirementNameContainer, requirementIdContainer, requirementUserStoryContainer,
                   statusContainer, employeeListContainer, deadlineContainer,
                   closeWithSaveButton, errorLabel);
           layout.setAlignment(Pos.CENTER);

@@ -1,6 +1,5 @@
 package Requirement;
 
-import Project.Project;
 import Task.Task;
 
 import java.io.Serializable;
@@ -22,7 +21,6 @@ public class RequirementList implements Serializable
     }
 
     public void addRequirement(Requirement requirement){
-        requirement.setId(size());
         requirements.add(requirement);
     }
 

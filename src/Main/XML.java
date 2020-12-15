@@ -47,7 +47,7 @@ public class XML {
         write.println("<teamMembers>");
         write.println(list.get(i).getTeam());
         write.println("</teamMembers>");
-        for (var j=0;i<list.get(i).getRequirements().size();i++)
+        for (int j = 0  ;i < list.get(i).getRequirements().size() ; i++)
         {
           write.println("<requirement_id>");
           write.println(list.get(i).getRequirements().getRequirements().get(i).getId());
