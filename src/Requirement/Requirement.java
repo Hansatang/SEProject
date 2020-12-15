@@ -233,6 +233,11 @@ public class Requirement implements Serializable
     this.requirementId = requirementId;
   }
 
+  /**
+   * Gets the total amount of hours worked on each task in the requirement.
+   *
+   * @return the total hours worked.
+   */
   public int getTotalHoursWorked()
   {
     int sum = 0;
@@ -243,6 +248,12 @@ public class Requirement implements Serializable
     return sum;
   }
 
+  /**
+   * Gets the total amount of estimated work hours summarized from each task
+   * in the task list.
+   *
+   * @return the total estimated work hours.
+   */
   public int getEstimatedHours()
   {
     int sum = 0;
@@ -253,6 +264,11 @@ public class Requirement implements Serializable
     return sum;
   }
 
+  /**
+   * Gets the user story.
+   *
+   * @return String value of the user story.
+   */
   public String getUserstory()
   {
     return userstory;
