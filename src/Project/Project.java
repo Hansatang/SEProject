@@ -85,7 +85,7 @@ public class Project implements Serializable
       if (requirements.get(i).getName().contains(searchPhrase))
       {
 
-        requirementLists.add(requirements.get(i));
+        requirementLists.addRequirement(requirements.get(i));
       }
     }
     return requirementLists;
@@ -109,7 +109,7 @@ public class Project implements Serializable
       {
         if (requirements.get(i).getStatus().contains(searchPhrase))
         {
-          requirementLists.add(requirements.get(i));
+          requirementLists.addRequirement(requirements.get(i));
         }
       }
     }

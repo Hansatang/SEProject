@@ -11,7 +11,7 @@ import java.time.LocalDate;
  * A class representing a requirement with a name, user story, status, id, estimated working hours,
  * total worked hours, task list, deadline and a employee team.
  *
- * @author Esben Fogh
+ * @author
  */
 public class Requirement implements Serializable
 {
