@@ -299,7 +299,7 @@ public class EmployeeListTab extends Tab implements GUIParts
 
                 adapterProject.saveProjects(finalProjectList);
 
-                finalEmployeeList.get(finalEmployeeList
+                finalEmployeeList.getEmployee(finalEmployeeList
                     .getIndexFromName(selectedEmployee.getName()))
                     .setName(inputEmployeeName.getText());
 

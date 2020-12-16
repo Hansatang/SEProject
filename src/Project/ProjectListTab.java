@@ -265,7 +265,7 @@ public class ProjectListTab extends Tab implements GUIParts
         for (int i = 0; i < employeeCheckBoxes.length; i++)
         {
           employeeCheckBoxes[i] = new CheckBox(
-              finalEmployeeList.get(i).getName());
+              finalEmployeeList.getEmployee(i).getName());
           employeeSelectContainer.add(employeeCheckBoxes[i], i % 2, i / 2);
           employeeCheckBoxes[i].setPadding(new Insets(3, 50, 3, 3));
         }
@@ -289,7 +289,7 @@ public class ProjectListTab extends Tab implements GUIParts
             {
               if (employeeCheckBoxes[i].isSelected())
               {
-                selectedEmployees.addEmployee(finalEmployeeList.get(i));
+                selectedEmployees.addEmployee(finalEmployeeList.getEmployee(i));
               }
             }
 
@@ -358,13 +358,13 @@ public class ProjectListTab extends Tab implements GUIParts
           for (int i = 0; i < employeeCheckBoxes.length; i++)
           {
             employeeCheckBoxes[i] = new CheckBox(
-                finalEmployeeList.get(i).getName());
+                finalEmployeeList.getEmployee(i).getName());
             employeeSelectContainer.add(employeeCheckBoxes[i], i % 2, i / 2);
 
             for (int j = 0; j < selectedProject.getTeam().size(); j++)
             {
               if (employeeCheckBoxes[i].getText()
-                  .equals(selectedProject.getTeam().get(j).getName()))
+                  .equals(selectedProject.getTeam().getEmployee(j).getName()))
               {
                 employeeCheckBoxes[i].setSelected(true);
               }
@@ -387,7 +387,7 @@ public class ProjectListTab extends Tab implements GUIParts
               {
                 if (employeeCheckBoxes[i].isSelected())
                 {
-                  selectedEmployees.addEmployee(finalEmployeeList.get(i));
+                  selectedEmployees.addEmployee(finalEmployeeList.getEmployee(i));
                 }
               }
 
