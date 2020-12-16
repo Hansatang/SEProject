@@ -137,7 +137,7 @@ public class ProjectListAdapter
         {
           for (int j = 0; j < result.getProjectByIndex(i).getTeam().size(); j++)
           {
-            if (result.getProjectByIndex(i).getTeam().get(j).getName().contains(searchPhrase))
+            if (result.getProjectByIndex(i).getTeam().getEmployee(j).getName().contains(searchPhrase))
             {
               projects.addProject(result.getProjectByIndex(i));
             }
