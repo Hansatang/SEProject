@@ -29,6 +29,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * A class containing GUI elements for the Requirement tab.
+ *
+ * @author
+ */
 public class RequirementListTab extends Tab implements GUIParts
 {
   private VBox tabRequirement;
@@ -396,7 +401,7 @@ public class RequirementListTab extends Tab implements GUIParts
       requirementStatusLabel.setText(selectedRequirement.getStatus());
       requirementDeadlineLabel
           .setText(selectedRequirement.getDeadline().toString());
-      requirementIdLabel.setText(selectedRequirement.getId()+"");
+      requirementIdLabel.setText(selectedRequirement.getRequirementId()+"");
       requirementTeamLabel.setText(selectedRequirement.getTeam().toString());
       if (!selectedRequirement.getTasks().isEmpty())
       {
@@ -414,7 +419,7 @@ public class RequirementListTab extends Tab implements GUIParts
         requirementHoursWorkedLabel.setText(noTaskMessage);
         requirementHoursWorkedLabel.setTextFill(Color.RED);
       }
-      requirementUserStoryLabel.setText(selectedRequirement.getUserstory());
+      requirementUserStoryLabel.setText(selectedRequirement.getUserStory());
     }
   }
 
@@ -495,7 +500,7 @@ public class RequirementListTab extends Tab implements GUIParts
           for (int i = 0; i < employeeCheckBoxes.length; i++)
           {
             employeeCheckBoxes[i] = new CheckBox(
-                selectedProject.getTeam().get(i).getName());
+                selectedProject.getTeam().getEmployee(i).getName());
             employeeSelectContainer.add(employeeCheckBoxes[i], i % 2, i / 2);
             employeeCheckBoxes[i].setPadding(new Insets(3, 50, 3, 3));
           }
@@ -518,7 +523,7 @@ public class RequirementListTab extends Tab implements GUIParts
               {
                 if (employeeCheckBoxes[i].isSelected())
                 {
-                  selectedEmployees.addEmployee(finalEmployeeList.get(i));
+                  selectedEmployees.addEmployee(finalEmployeeList.getEmployee(i));
                 }
               }
               if (inputRequirementName.getText().isEmpty()
@@ -541,7 +546,7 @@ public class RequirementListTab extends Tab implements GUIParts
                     inputRequirementName.getText(), inputUserStory.getText(),
                     inputTaskStatus.getValue(),
                     inputRequirementDeadline.getValue(), selectedEmployees);
-                requirement.setId(inputRequirementID.getText());
+                requirement.setRequirementId(inputRequirementID.getText());
                 finalProjectList.getProjectByName(selectedProject.getName())
                     .getRequirements().addRequirement(requirement);
                 adapterProject.saveProjects(finalProjectList);
@@ -581,12 +586,12 @@ public class RequirementListTab extends Tab implements GUIParts
           VBox requirementUserStoryContainer = textFieldWindowPart(
               inputUserStory, userStory);
 
-          inputUserStory.setText(selectedRequirement.getUserstory());
+          inputUserStory.setText(selectedRequirement.getUserStory());
 
           // Requirement id input.
           VBox requirementIdContainer = textFieldWindowPart(
               inputRequirementID, id);
-          inputRequirementID.setText(selectedRequirement.getId());
+          inputRequirementID.setText(selectedRequirement.getRequirementId());
 
           // Requirement.Requirement status input.
           VBox statusContainer = statusComboBoxWindowPart();
@@ -631,7 +636,7 @@ public class RequirementListTab extends Tab implements GUIParts
           for (int i = 0; i < employeeCheckBoxes.length; i++)
           {
             employeeCheckBoxes[i] = new CheckBox(
-                selectedProject.getTeam().get(i).getName());
+                selectedProject.getTeam().getEmployee(i).getName());
             employeeSelectContainer.add(employeeCheckBoxes[i], i % 2, i / 2);
             employeeCheckBoxes[i].setPadding(new Insets(3, 50, 3, 3));
             for (int j = 0; j < selectedRequirement.getTeam().size(); j++)
@@ -665,7 +670,7 @@ public class RequirementListTab extends Tab implements GUIParts
                 if (employeeCheckBoxes[i].isSelected())
                 {
                   selectedEmployees
-                      .addEmployee(selectedProject.getTeam().get(i));
+                      .addEmployee(selectedProject.getTeam().getEmployee(i));
                 }
               }
               // Edit new name, user story, status, employees team, deadline
@@ -673,7 +678,7 @@ public class RequirementListTab extends Tab implements GUIParts
                   .editRequirement(inputRequirementName.getText(),
                       inputUserStory.getText(), inputTaskStatus.getValue(),
                       selectedEmployees, inputRequirementDeadline.getValue());
-              selectedRequirement.setId(inputRequirementID.getText());
+              selectedRequirement.setRequirementId(inputRequirementID.getText());
               // Close window
               window.close();
               // Save all changes
@@ -773,7 +778,7 @@ public class RequirementListTab extends Tab implements GUIParts
                 .getRequirementsByName(searchField.getText());
             for (int i = 0; i < requirements.size(); i++)
             {
-              requirementTableView.getItems().add(requirements.get(i));
+              requirementTableView.getItems().add(requirements.getRequirement(i));
             }
           }
           else if (searchByStatus.isSelected())
@@ -784,7 +789,7 @@ public class RequirementListTab extends Tab implements GUIParts
                 .getRequirementsByStatus(searchField.getText());
             for (int i = 0; i < requirements.size(); i++)
             {
-              requirementTableView.getItems().add(requirements.get(i));
+              requirementTableView.getItems().add(requirements.getRequirement(i));
             }
           }
         }

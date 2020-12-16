@@ -11,19 +11,11 @@ public class EmployeeList implements Serializable {
     this.employees = new ArrayList<>();
   }
 
- /** Gets how many Employees objects are in the list.
-   * @return integer of the number of Employee objects in the list
-   */
-  public int size()
-  {
-    return employees.size();
-  }
-
- /** Gets an Employee object from position index from the list.
+  /** Gets an Employee object from position index from the list.
    * @param index the position in the list of the Employee.Employee object
    * @return the Employee.Employee object at position index if one exists, else null
    */
-  public Employee get(int index) {
+  public Employee getEmployee(int index) {
     return employees.get(index);
   }
 
@@ -51,6 +43,14 @@ public class EmployeeList implements Serializable {
   public void deleteEmployee(String name)
   {
     employees.remove(getIndexFromName(name));
+  }
+
+  /** Gets how many Employees objects are in the list.
+   * @return integer of the number of Employee objects in the list
+   */
+  public int size()
+  {
+    return employees.size();
   }
 
   /**

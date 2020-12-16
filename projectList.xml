@@ -1,3 +1,23 @@
 <?xml version='1.0' encoding='UTF-8'?> 
 <projects> 
+<Project>
+<project_no>
+1
+</project_no>
+<project_name>
+SEP
+</project_name>
+<teamMembers>
+Esben , Simon 
+</teamMembers>
+<requirement_id>
+123
+</requirement_id>
+<requirement_status>
+Not Started
+</requirement_status>
+<requirement_deadline>
+2020-12-25
+</requirement_deadline>
+</project>
 </Projects>
