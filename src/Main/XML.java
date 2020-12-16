@@ -20,7 +20,7 @@ public class XML {
 
     for (int i = 0; i < projectList.size(); i++)
     {
-      list.add(projectList.get(i));
+      list.add(projectList.getProjectByIndex(i));
     }
     try
     {

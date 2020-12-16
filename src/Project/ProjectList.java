@@ -71,7 +71,7 @@ public class ProjectList implements Serializable
    * @param index the position in the list of the Project object
    * @return the Project.Project object at position index if one exists, else null
    */
-  public Project get(int index)
+  public Project getProjectByIndex(int index)
   {
     if (index < projects.size())
     {
