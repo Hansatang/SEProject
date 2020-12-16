@@ -6,10 +6,14 @@ import Employee.EmployeeList;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+/**
+    * A class representing a task with a name, status, taskID, relatedRequirement, estimatedHours, totalHoursWorked, deadline, respo
+    *
+    */
 public class Task implements Serializable
 {
   private String name, status, taskID;
-  private int relatedRequirement, estimatedHours, totalHoursWorked;
+  private int estimatedHours, totalHoursWorked;
   private LocalDate deadline;
   private Employee responsibleEmployee;
   private EmployeeList taskMembers;
@@ -20,7 +24,6 @@ public class Task implements Serializable
     this.deadline = deadline;
     this.name = name;
     this.status = status;
-    relatedRequirement = 0;
     this.taskID = taskID;
     this.estimatedHours = estimatedHours;
     totalHoursWorked = 0;

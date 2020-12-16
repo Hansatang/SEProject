@@ -24,7 +24,7 @@ public class XML {
     }
     try
     {
-      FileOutputStream fileOut = new FileOutputStream("projectList.xml");
+      FileOutputStream fileOut = new FileOutputStream("C:\\Users\\User\\OneDrive\\Desktop\\RWD\\xml\\projectList.xml");
       PrintWriter write = new PrintWriter(fileOut);
 
       write.println("<?xml version='1.0' encoding='UTF-8'?> ");
@@ -50,16 +50,16 @@ public class XML {
         for (int j = 0  ;j < list.get(i).getRequirements().size() ; j++)
         {
           write.println("<requirement_id>");
-          write.println(list.get(i).getRequirements().getRequirements().get(i).getId());
+          write.println(list.get(i).getRequirements().getRequirements().get(j).getId());
           write.println("</requirement_id>");
 
           write.println("<requirement_status>");
-          write.println(list.get(i).getRequirements().getRequirements().get(i).getStatus());
+          write.println(list.get(i).getRequirements().getRequirements().get(j).getStatus());
           write.println("</requirement_status>");
 
           write.println("<requirement_deadline>");
           write.println(
-              list.get(i).getRequirements().getRequirements().get(i).getDeadline());
+              list.get(i).getRequirements().getRequirements().get(j).getDeadline());
           write.println("</requirement_deadline>");
 
         }
