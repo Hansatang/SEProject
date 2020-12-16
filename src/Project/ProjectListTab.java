@@ -199,7 +199,7 @@ public class ProjectListTab extends Tab implements GUIParts
       finalProjectList = adapterProject.getAllProjects();
       for (int i = 0; i < finalProjectList.size(); i++)
       {
-        projectTableView.getItems().add(finalProjectList.get(i));
+        projectTableView.getItems().add(finalProjectList.getProjectByIndex(i));
       }
     }
   }
@@ -505,7 +505,7 @@ public class ProjectListTab extends Tab implements GUIParts
                 .getProjectByName(searchField.getText());
             for (int i = 0; i < projects.size(); i++)
             {
-              projectTableView.getItems().add(projects.get(i));
+              projectTableView.getItems().add(projects.getProjectByIndex(i));
             }
           }
           else if (searchByEmployee.isSelected())
@@ -514,7 +514,7 @@ public class ProjectListTab extends Tab implements GUIParts
                 .getProjectByEmployeeName(searchField.getText());
             for (int i = 0; i < projects.size(); i++)
             {
-              projectTableView.getItems().add(projects.get(i));
+              projectTableView.getItems().add(projects.getProjectByIndex(i));
             }
           }
         }
