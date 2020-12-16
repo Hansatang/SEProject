@@ -365,7 +365,7 @@ public class TaskListTab extends Tab implements GUIParts
         for (int i = 0; i < employeeCheckBoxes.length; i++)
         {
           employeeCheckBoxes[i] = new CheckBox(
-              selectedRequirement.getTeam().get(i).getName());
+              selectedRequirement.getTeam().getEmployee(i).getName());
           employeeSelectContainer.add(employeeCheckBoxes[i], i % 2, i / 2);
           employeeCheckBoxes[i].setPadding(new Insets(3, 50, 3, 3));
         }
@@ -388,7 +388,7 @@ public class TaskListTab extends Tab implements GUIParts
             {
               if (employeeCheckBoxes[i].isSelected())
               {
-                selectedEmployees.addEmployee(finalEmployeeList.get(i));
+                selectedEmployees.addEmployee(finalEmployeeList.getEmployee(i));
               }
             }
             if (inputTaskName.getText().isEmpty() || inputTaskName.getText()
@@ -545,14 +545,14 @@ public class TaskListTab extends Tab implements GUIParts
           for (int i = 0; i < employeeCheckBoxes.length; i++)
           {
             employeeCheckBoxes[i] = new CheckBox(
-                selectedProject.getTeam().get(i).getName());
+                selectedProject.getTeam().getEmployee(i).getName());
             employeeSelectContainer.add(employeeCheckBoxes[i], i % 2, i / 2);
             employeeCheckBoxes[i].setPadding(new Insets(3, 50, 3, 3));
 
             for (int j = 0; j < selectedRequirement.getTeam().size(); j++)
             {
               if (employeeCheckBoxes[i].getText()
-                  .equals(selectedRequirement.getTeam().get(j).getName()))
+                  .equals(selectedRequirement.getTeam().getEmployee(j).getName()))
               {
                 employeeCheckBoxes[i].setSelected(true);
               }
@@ -585,7 +585,7 @@ public class TaskListTab extends Tab implements GUIParts
                 if (employeeCheckBoxes[i].isSelected())
                 {
                   selectedEmployees
-                      .addEmployee(selectedProject.getTeam().get(i));
+                      .addEmployee(selectedProject.getTeam().getEmployee(i));
                 }
               }
               // Edit new team from selected checkboxes

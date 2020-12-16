@@ -14,17 +14,7 @@ public class RequirementList implements Serializable
         this.requirements = new ArrayList<>();
     }
 
-
-
-    public int size(){
-        return requirements.size();
-    }
-
     public void addRequirement(Requirement requirement){
-        requirements.add(requirement);
-    }
-
-    public void add(Requirement requirement){
         requirements.add(requirement);
     }
 
@@ -32,20 +22,15 @@ public class RequirementList implements Serializable
         requirements.remove(requirement);
     }
 
-    public Requirement getRequirement(int index){
-        return requirements.get(index);
+    public int size(){
+        return requirements.size();
     }
 
-    public int getIndexFromName(String name){
-        for(int i = 0 ; i < requirements.size() ; i++){
-            if(requirements.get(i).getName().equals(name)){
-                return i;
-            }
-        }
-        return -1;
+    public void add(Requirement requirement){
+        requirements.add(requirement);
     }
 
-    public Requirement get(int index)
+    public Requirement getRequirement(int index)
     {
         if (index < requirements.size())
         {

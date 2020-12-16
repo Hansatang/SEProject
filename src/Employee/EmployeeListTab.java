@@ -129,7 +129,7 @@ public class EmployeeListTab extends Tab implements GUIParts
       finalEmployeeList = adapterEmployee.getAllEmployees();
       for (int i = 0; i < finalEmployeeList.size(); i++)
       {
-        employeeTableView.getItems().add(finalEmployeeList.get(i));
+        employeeTableView.getItems().add(finalEmployeeList.getEmployee(i));
       }
     }
   }
@@ -271,24 +271,24 @@ public class EmployeeListTab extends Tab implements GUIParts
                 finalProjectList = adapterProject.getAllProjects();
                 for (int i = 0; i < projects.size(); i++)
                 {
-                  finalProjectList.getProjectByName(projects.get(i).getName())
+                  finalProjectList.getProjectByName(projects.getProjectByIndex(i).getName())
                       .getTeam().replaceEmployee(selectedEmployee.getName(),
                       inputEmployeeName.getText());
                   for (int j = 0;
-                       j < projects.getProjectByName(projects.get(i).getName())
+                       j < projects.getProjectByName(projects.getProjectByIndex(i).getName())
                            .getRequirements().size(); j++)
                   {
-                    finalProjectList.getProjectByName(projects.get(i).getName())
+                    finalProjectList.getProjectByName(projects.getProjectByIndex(i).getName())
                         .getRequirements().getRequirement(j).getTeam()
                         .replaceEmployee(selectedEmployee.getName(),
                             inputEmployeeName.getText());
                     for (int k = 0; k < projects
-                        .getProjectByName(projects.get(i).getName())
+                        .getProjectByName(projects.getProjectByIndex(i).getName())
                         .getRequirements().getRequirement(j).getTasks()
                         .size(); k++)
                     {
                       finalProjectList
-                          .getProjectByName(projects.get(i).getName())
+                          .getProjectByName(projects.getProjectByIndex(i).getName())
                           .getRequirements().getRequirement(j).getTasks()
                           .getTask(k).getTaskMembers()
                           .replaceEmployee(selectedEmployee.getName(),
@@ -299,7 +299,7 @@ public class EmployeeListTab extends Tab implements GUIParts
 
                 adapterProject.saveProjects(finalProjectList);
 
-                finalEmployeeList.get(finalEmployeeList
+                finalEmployeeList.getEmployee(finalEmployeeList
                     .getIndexFromName(selectedEmployee.getName()))
                     .setName(inputEmployeeName.getText());
 
@@ -372,23 +372,23 @@ public class EmployeeListTab extends Tab implements GUIParts
                       .getProjectByEmployeeName(selectedEmployee.getName());
                   for (int i = 0; i < projects.size(); i++)
                   {
-                    finalProjectList.getProjectByName(projects.get(i).getName())
+                    finalProjectList.getProjectByName(projects.getProjectByIndex(i).getName())
                         .getTeam().deleteEmployee(selectedEmployee.getName());
                     for (int j = 0; j < projects
-                        .getProjectByName(projects.get(i).getName())
+                        .getProjectByName(projects.getProjectByIndex(i).getName())
                         .getRequirements().size(); j++)
                     {
                       finalProjectList
-                          .getProjectByName(projects.get(i).getName())
+                          .getProjectByName(projects.getProjectByIndex(i).getName())
                           .getRequirements().getRequirement(j).getTeam()
                           .deleteEmployee(selectedEmployee.getName());
                       for (int k = 0; k < projects
-                          .getProjectByName(projects.get(i).getName())
+                          .getProjectByName(projects.getProjectByIndex(i).getName())
                           .getRequirements().getRequirement(j).getTasks()
                           .size(); k++)
                       {
                         finalProjectList
-                            .getProjectByName(projects.get(i).getName())
+                            .getProjectByName(projects.getProjectByIndex(i).getName())
                             .getRequirements().getRequirement(j).getTasks()
                             .getTask(k).getTaskMembers()
                             .deleteEmployee(selectedEmployee.getName());

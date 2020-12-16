@@ -1,7 +1,6 @@
 package Project;
 
 import Employee.EmployeeList;
-import Requirement.Requirement;
 import Requirement.RequirementList;
 
 import java.io.Serializable;
@@ -14,8 +13,8 @@ import java.io.Serializable;
 public class Project implements Serializable
 {
   private String name;
-  private RequirementList requirements;
   private EmployeeList team;
+  private RequirementList requirements;
 
   /**
    * Two-argument constructor.
@@ -26,20 +25,18 @@ public class Project implements Serializable
   public Project(String name, EmployeeList team)
   {
     this.name = name;
-    this.requirements = new RequirementList();
     this.team = team;
+    this.requirements = new RequirementList();
   }
 
   /**
-   * Two-argument setter.
+   * Gets the project's requirement list.
    *
-   * @param name the project's name
-   * @param team the project's employee team
+   * @return the project's requirement list
    */
-  public void editProject(String name, EmployeeList team)
+  public RequirementList getRequirements()
   {
-    this.name = name;
-    this.team = team;
+    return requirements;
   }
 
   /**
@@ -63,13 +60,35 @@ public class Project implements Serializable
   }
 
   /**
-   * Gets the project's requirement list.
+   * Sets the project's team.
    *
-   * @return the project's requirement list
+   * @param team what the project's team will be set to
    */
-  public RequirementList getRequirements()
+  public void setTeam(EmployeeList team)
   {
-    return requirements;
+    this.team = team;
+  }
+
+  /**
+   * Gets the project's team.
+   *
+   * @return the project's team
+   */
+  public EmployeeList getTeam()
+  {
+    return team;
+  }
+
+  /**
+   * Two-argument setter.
+   *
+   * @param name the project's name
+   * @param team the project's employee team
+   */
+  public void editProject(String name, EmployeeList team)
+  {
+    this.name = name;
+    this.team = team;
   }
 
   /**
@@ -82,10 +101,10 @@ public class Project implements Serializable
     RequirementList requirementLists = new RequirementList();
     for (int i = 0; i < requirements.size(); i++)
     {
-      if (requirements.get(i).getName().contains(searchPhrase))
+      if (requirements.getRequirement(i).getName().contains(searchPhrase))
       {
 
-        requirementLists.add(requirements.get(i));
+        requirementLists.addRequirement(requirements.getRequirement(i));
       }
     }
     return requirementLists;
@@ -107,9 +126,9 @@ public class Project implements Serializable
     {
       for (int i = 0; i < requirements.size(); i++)
       {
-        if (requirements.get(i).getStatus().contains(searchPhrase))
+        if (requirements.getRequirement(i).getStatus().contains(searchPhrase))
         {
-          requirementLists.add(requirements.get(i));
+          requirementLists.addRequirement(requirements.getRequirement(i));
         }
       }
     }
@@ -126,25 +145,7 @@ public class Project implements Serializable
     this.requirements = requirements;
   }
 
-  /**
-   * Gets the project's team.
-   *
-   * @return the project's team
-   */
-  public EmployeeList getTeam()
-  {
-    return team;
-  }
 
-  /**
-   * Sets the project's team.
-   *
-   * @param team what the project's team will be set to
-   */
-  public void setTeam(EmployeeList team)
-  {
-    this.team = team;
-  }
 
   /**
    * Returns a string representation of the project.
