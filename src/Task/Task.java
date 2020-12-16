@@ -12,10 +12,10 @@ public class Task implements Serializable
   private int relatedRequirement, estimatedHours, totalHoursWorked;
   private LocalDate deadline;
   private Employee responsibleEmployee;
-  private EmployeeList taskMembers;
+  private EmployeeList taskEmployees;
 
   public Task(String name, String taskID,String status, int estimatedHours, LocalDate deadline,
-      EmployeeList taskMembers)
+      EmployeeList taskEmployees)
   {
     this.deadline = deadline;
     this.name = name;
@@ -25,7 +25,7 @@ public class Task implements Serializable
     this.estimatedHours = estimatedHours;
     totalHoursWorked = 0;
     responsibleEmployee = null;
-    this.taskMembers = taskMembers;
+    this.taskEmployees = taskEmployees;
   }
 
   public void setName(String name)
@@ -53,9 +53,9 @@ public class Task implements Serializable
     this.deadline = deadline;
   }
 
-  public EmployeeList getTaskMembers()
+  public EmployeeList getTaskEmployees()
   {
-    return taskMembers;
+    return taskEmployees;
   }
 
   public void setEstimatedHours(int estimatedHours)
@@ -68,9 +68,9 @@ public class Task implements Serializable
     this.totalHoursWorked = totalHoursWorked;
   }
 
-  public void setTaskEmployees(EmployeeList taskMembers)
+  public void setTaskEmployees(EmployeeList taskEmployees)
   {
-    this.taskMembers = taskMembers;
+    this.taskEmployees = taskEmployees;
   }
 
   public String getName()

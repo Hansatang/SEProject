@@ -71,7 +71,6 @@ public class ProjectList implements Serializable
   {
     return projects.size();
   }
-
   /**
    * Gets a Project object from position index from the list.
    *
