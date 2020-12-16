@@ -289,7 +289,10 @@ public class EmployeeListTab extends Tab implements GUIParts
                     {
                       finalProjectList
                           .getProjectByName(projects.get(i).getName())
-                          .getRequirements().getRequirement(j).getTasks().getTask(k).getResponsibleEmployee().setName(inputEmployeeName.getText());
+                          .getRequirements().getRequirement(j).getTasks()
+                          .getTask(k).getTaskEmployees()
+                          .replaceEmployee(selectedEmployee.getName(),
+                              inputEmployeeName.getText());
                     }
                   }
                 }
@@ -387,7 +390,8 @@ public class EmployeeListTab extends Tab implements GUIParts
                         finalProjectList
                             .getProjectByName(projects.get(i).getName())
                             .getRequirements().getRequirement(j).getTasks()
-                            .getTask(k).setResponsibleEmployee(null);
+                            .getTask(k).getTaskEmployees()
+                            .deleteEmployee(selectedEmployee.getName());
                       }
                     }
                   }
