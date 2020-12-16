@@ -199,7 +199,7 @@ public class EmployeeListTab extends Tab implements GUIParts
 
         nameWindow(window, addEmployeeButtonName);
 
-        // Member name input.
+        // Employee name input.
         VBox nameContainer = textFieldWindowPart(inputEmployeeName,
             addEmployeeButtonName);
 
@@ -289,10 +289,7 @@ public class EmployeeListTab extends Tab implements GUIParts
                     {
                       finalProjectList
                           .getProjectByName(projects.get(i).getName())
-                          .getRequirements().getRequirement(j).getTasks()
-                          .getTask(k).getTaskMembers()
-                          .replaceEmployee(selectedEmployee.getName(),
-                              inputEmployeeName.getText());
+                          .getRequirements().getRequirement(j).getTasks().getTask(k).getResponsibleEmployee().setName(inputEmployeeName.getText());
                     }
                   }
                 }
@@ -390,8 +387,7 @@ public class EmployeeListTab extends Tab implements GUIParts
                         finalProjectList
                             .getProjectByName(projects.get(i).getName())
                             .getRequirements().getRequirement(j).getTasks()
-                            .getTask(k).getTaskMembers()
-                            .deleteEmployee(selectedEmployee.getName());
+                            .getTask(k).setResponsibleEmployee(null);
                       }
                     }
                   }

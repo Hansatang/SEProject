@@ -30,6 +30,12 @@ public class Project implements Serializable
     this.team = team;
   }
 
+  /**
+   * Two-argument setter.
+   *
+   * @param name the project's name
+   * @param team the project's employee team
+   */
   public void editProject(String name, EmployeeList team)
   {
     this.name = name;
@@ -66,6 +72,11 @@ public class Project implements Serializable
     return requirements;
   }
 
+  /**
+   * Retrieve all requirements with specified name.
+   * @param searchPhrase the name to retrieve requirements with
+   * @return a RequirementList object with requirements with specified name
+   */
   public RequirementList getRequirementsByName(String searchPhrase)
   {
     RequirementList requirementLists = new RequirementList();
@@ -74,12 +85,17 @@ public class Project implements Serializable
       if (requirements.get(i).getName().contains(searchPhrase))
       {
 
-        requirementLists.add(requirements.get(i));
+        requirementLists.addRequirement(requirements.get(i));
       }
     }
     return requirementLists;
   }
 
+  /**
+   * Retrieve all requirements with specified status.
+   * @param searchPhrase the status to retrieve requirements with
+   * @return a RequirementList object with requirements with specified status
+   */
   public RequirementList getRequirementsByStatus(String searchPhrase)
   {
     RequirementList requirementLists = new RequirementList();
@@ -93,7 +109,7 @@ public class Project implements Serializable
       {
         if (requirements.get(i).getStatus().contains(searchPhrase))
         {
-          requirementLists.add(requirements.get(i));
+          requirementLists.addRequirement(requirements.get(i));
         }
       }
     }
@@ -130,6 +146,10 @@ public class Project implements Serializable
     this.team = team;
   }
 
+  /**
+   * Returns a string representation of the project.
+   * @return a string representation of the project in the format: "name"
+   */
   public String toString()
   {
     return name;

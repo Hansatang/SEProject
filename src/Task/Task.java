@@ -1,7 +1,6 @@
 package Task;
 
 import Employee.Employee;
-import Employee.EmployeeList;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -16,10 +15,9 @@ public class Task implements Serializable
   private int estimatedHours, totalHoursWorked;
   private LocalDate deadline;
   private Employee responsibleEmployee;
-  private EmployeeList taskMembers;
 
   public Task(String name, String taskID,String status, int estimatedHours, LocalDate deadline,
-      EmployeeList taskMembers)
+      Employee responsibleEmployee)
   {
     this.deadline = deadline;
     this.name = name;
@@ -27,8 +25,7 @@ public class Task implements Serializable
     this.taskID = taskID;
     this.estimatedHours = estimatedHours;
     totalHoursWorked = 0;
-    responsibleEmployee = null;
-    this.taskMembers = taskMembers;
+    this.responsibleEmployee = responsibleEmployee;
   }
 
   public void setName(String name)
@@ -56,9 +53,14 @@ public class Task implements Serializable
     this.deadline = deadline;
   }
 
-  public EmployeeList getTaskMembers()
+  public Employee getResponsibleEmployee()
   {
-    return taskMembers;
+    return responsibleEmployee;
+  }
+
+  public void setResponsibleEmployee(Employee responsibleEmployee)
+  {
+    this.responsibleEmployee = responsibleEmployee;
   }
 
   public void setEstimatedHours(int estimatedHours)
@@ -71,10 +73,6 @@ public class Task implements Serializable
     this.totalHoursWorked = totalHoursWorked;
   }
 
-  public void setTaskEmployees(EmployeeList taskMembers)
-  {
-    this.taskMembers = taskMembers;
-  }
 
   public String getName()
   {
