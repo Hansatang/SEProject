@@ -70,9 +70,9 @@ public class ProjectListAdapter
 
       for (int i = 0; i < result.size(); i++)
       {
-        if (result.getProjectByIndex(i).getName().contains(searchPhrase))
+        if (result.get(i).getName().contains(searchPhrase))
         {
-          projects.addProject(result.getProjectByIndex(i));
+          projects.addProject(result.get(i));
         }
       }
     }
@@ -135,11 +135,11 @@ public class ProjectListAdapter
       {
         for (int i = 0; i < result.size(); i++)
         {
-          for (int j = 0; j < result.getProjectByIndex(i).getTeam().size(); j++)
+          for (int j = 0; j < result.get(i).getTeam().size(); j++)
           {
-            if (result.getProjectByIndex(i).getTeam().getEmployee(j).getName().contains(searchPhrase))
+            if (result.get(i).getTeam().get(j).getName().contains(searchPhrase))
             {
-              projects.addProject(result.getProjectByIndex(i));
+              projects.addProject(result.get(i));
             }
           }
 

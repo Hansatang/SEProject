@@ -22,19 +22,9 @@ public class ProjectList implements Serializable
     this.projects = new ArrayList<>();
   }
 
-  /**
-   * Adds a Project to the list.
-   *
-   * @param project the project to add to the list
-   */
-  public void addProject(Project project)
-  {
-    projects.add(project);
-  }
 
   /**
    * Removes a Project from the list.
-   *
    * @param selectedProject the project to remove from the list
    */
   public void removeProject(Project selectedProject)
@@ -42,9 +32,15 @@ public class ProjectList implements Serializable
     projects.remove(selectedProject);
   }
 
+
+  public void removeEmployee(int index, Employee employee)
+  {
+    projects.get(index).getTeam().removeEmployee(employee);
+  }
+
+
   /**
    * Gets a Project object with the given  name from the list.
-   *
    * @param projectName the  name of the Project object
    * @return the Project object with the given  name if one exists
    */
@@ -64,7 +60,6 @@ public class ProjectList implements Serializable
 
   /**
    * Gets how many Project objects are in the list.
-   *
    * @return the number of Project objects in the list
    */
   public int size()
@@ -73,11 +68,10 @@ public class ProjectList implements Serializable
   }
   /**
    * Gets a Project object from position index from the list.
-   *
    * @param index the position in the list of the Project object
    * @return the Project.Project object at position index if one exists, else null
    */
-  public Project getProjectByIndex(int index)
+  public Project get(int index)
   {
     if (index < projects.size())
     {
@@ -88,4 +82,14 @@ public class ProjectList implements Serializable
       return null;
     }
   }
+
+  /**
+   * Adds a Project to the list.
+   * @param project the project to add to the list
+   */
+  public void addProject(Project project)
+  {
+    projects.add(project);
+  }
+
 }
