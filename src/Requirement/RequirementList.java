@@ -49,22 +49,11 @@ public class RequirementList implements Serializable
     public boolean equals(Object obj){
 
         if(obj instanceof ArrayList){
-            if(getRequirements().equals((ArrayList)obj)){
-                return true;
-            }
+            return getRequirements().equals((ArrayList) obj);
         }
         return false;
     }
 
-    public void remove(Requirement requirement)
-    {
-        requirements.remove(requirement);
-    }
-
-    public void remove(Task selectedTask)
-    {
-        requirements.remove(selectedTask);
-    }
 
     public Requirement getRequirementsByName(String requirementName){
         int k=0 ;

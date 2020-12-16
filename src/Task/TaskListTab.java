@@ -74,11 +74,11 @@ public class TaskListTab extends Tab implements GUIParts
   private final ArrayList<String> statusOptions = new ArrayList<>(
       Arrays.asList("Approved", "Ended", "Not Started", "Rejected", "Started"));
 
-
   /**
    * Constructor initializing the GUI components
-   * @param title           The title of the tab
-   * @param adapterProject  object used for retrieving and storing project information
+   *
+   * @param title            The title of the tab
+   * @param adapterProject   object used for retrieving and storing project information
    * @param adapterEmployees object used for retrieving and storing employee information
    */
   public TaskListTab(String title, ProjectListAdapter adapterProject,
@@ -175,6 +175,7 @@ public class TaskListTab extends Tab implements GUIParts
 
   /**
    * Sets the default values for window entities
+   *
    * @param window The window to insert default values
    * @param title  The title of the window
    */
@@ -188,6 +189,7 @@ public class TaskListTab extends Tab implements GUIParts
 
   /**
    * Creates a VBox container with label and TextField and defines the  values them
+   *
    * @param inputText The TextField to set values
    * @param labelName The text in the label
    */
@@ -204,6 +206,7 @@ public class TaskListTab extends Tab implements GUIParts
 
   /**
    * Creates a VBox container with label and ComboBox and defines the  values them
+   *
    * @return the VBox containing label and ComboBox for selecting status
    */
   private VBox statusComboBoxWindowPart()
@@ -549,10 +552,10 @@ public class TaskListTab extends Tab implements GUIParts
             employeeSelectContainer.add(employeeCheckBoxes[i], i % 2, i / 2);
             employeeCheckBoxes[i].setPadding(new Insets(3, 50, 3, 3));
 
-            for (int j = 0; j < selectedRequirement.getTeam().size(); j++)
+            for (int j = 0; j < selectedTask.getTaskEmployees().size(); j++)
             {
-              if (employeeCheckBoxes[i].getText()
-                  .equals(selectedRequirement.getTeam().getEmployee(j).getName()))
+              if (employeeCheckBoxes[i].getText().equals(
+                  selectedTask.getTaskEmployees().getEmployee(j).getName()))
               {
                 employeeCheckBoxes[i].setSelected(true);
               }
@@ -593,12 +596,14 @@ public class TaskListTab extends Tab implements GUIParts
               // Edit estimated hours
               if (!inputTaskEstimation.getText().matches("[0-9]+"))
               {
-                selectedTask.setEstimatedHours(selectedTask.getEstimatedHours());
+                selectedTask
+                    .setEstimatedHours(selectedTask.getEstimatedHours());
                 errorLabel.setText("ERROR: Fix estimated hours");
               }
               else
               {
-                selectedTask.setEstimatedHours(Integer.parseInt(inputTaskEstimation.getText()));
+                selectedTask.setEstimatedHours(
+                    Integer.parseInt(inputTaskEstimation.getText()));
               }
               // Edit total hours
               selectedTask
@@ -660,7 +665,7 @@ public class TaskListTab extends Tab implements GUIParts
                 finalProjectList.getProjectByName(selectedProject.getName())
                     .getRequirements()
                     .getRequirementsByName(selectedRequirement.getName())
-                    .remove(selectedTask);
+                    .getTasks().removeTask(selectedTask);
                 adapterProject.saveProjects(finalProjectList);
                 updateTaskArea();
                 selectedTask = null;

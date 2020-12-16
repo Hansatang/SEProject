@@ -50,7 +50,7 @@ public class XML {
         for (int j = 0  ;j < list.get(i).getRequirements().size() ; j++)
         {
           write.println("<requirement_id>");
-          write.println(list.get(i).getRequirements().getRequirements().get(j).getId());
+          write.println(list.get(i).getRequirements().getRequirements().get(j).getRequirementId());
           write.println("</requirement_id>");
 
           write.println("<requirement_status>");
