@@ -5,10 +5,30 @@
 1
 </project_no>
 <project_name>
-Robotic Arms2
+Robotic Arms
 </project_name>
 <teamMembers>
 John , Mike 
+</teamMembers>
+<requirement_id>
+1
+</requirement_id>
+<requirement_status>
+Approved
+</requirement_status>
+<requirement_deadline>
+2020-12-30
+</requirement_deadline>
+</project>
+<Project>
+<project_no>
+2
+</project_no>
+<project_name>
+Power Plant
+</project_name>
+<teamMembers>
+John , Lila 
 </teamMembers>
 </project>
 </Projects>
