@@ -387,6 +387,7 @@ public class TaskListTab extends Tab implements GUIParts
           {
 
             EmployeeList selectedEmployees = new EmployeeList();
+            finalEmployeeList = adapterEmployee.getAllEmployees();
             for (int i = 0; i < employeeCheckBoxes.length; i++)
             {
               if (employeeCheckBoxes[i].isSelected())
