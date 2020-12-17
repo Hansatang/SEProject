@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * A class containing a list of Requirement objects
  *
- * @author
+ * @author Simon Samuel
  */
 public class RequirementList implements Serializable
 {

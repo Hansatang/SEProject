@@ -32,7 +32,7 @@ import java.util.Arrays;
 /**
  * A class containing GUI elements for the Requirement tab.
  *
- * @author
+ * @author Simon Samuel
  */
 public class RequirementListTab extends Tab implements GUIParts
 {
