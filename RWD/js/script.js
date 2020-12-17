@@ -24,7 +24,7 @@ function showData(xml) {
                 "<td>" + x[i].getElementsByTagName("teamMembers")[0].childNodes[0].nodeValue + "</td>" +
             "</tr>" +
             "<tr>" +
-                "<td id='requirement" + i + "' colspan='3' class='hidden'>" + " Requirement ID: <b>" + x[i].getElementsByTagName("requirement_id")[0].childNodes[0].nodeValue + "</b><br/>" +
+                "<td id='requirement" + i + "' colspan='3' class='display'>" + " Requirement ID: <b>" + x[i].getElementsByTagName("requirement_id")[0].childNodes[0].nodeValue + "</b><br/>" +
                 " Requirement status: <b>" + x[i].getElementsByTagName("requirement_status")[0].childNodes[0].nodeValue + "</b><br/>" +
              " Requirement deadline: <b>" + x[i].getElementsByTagName("requirement_deadline")[0].childNodes[0].nodeValue +"</td>"
             "</tr>";
@@ -34,6 +34,6 @@ function showData(xml) {
 }
 
 function showRequirements(index){
-    document.getElementById("requirement" + index).classList.toggle("hidden");
+    document.getElementById("requirement" + index).classList.toggle("display");
     console.log("");
 }
