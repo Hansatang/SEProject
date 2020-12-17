@@ -4,16 +4,12 @@ tr {
     border: 3px solid black;
 }
 
-
-
 table.center {
   margin-left: auto; 
   margin-right: auto;
 }
 
 #tab {
-
-   
    padding-bottom: 10px;
     padding-top: 10px;
    margin-left: auto; 
