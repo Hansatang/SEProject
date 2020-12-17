@@ -8,7 +8,7 @@
 Robotic Arms
 </project_name>
 <teamMembers>
-John , Mike 
+Mike , John 
 </teamMembers>
 <requirement_id>
 1
@@ -17,18 +17,7 @@ John , Mike
 Approved
 </requirement_status>
 <requirement_deadline>
-2020-12-30
+2020-12-22
 </requirement_deadline>
-</project>
-<Project>
-<project_no>
-2
-</project_no>
-<project_name>
-Power Plant
-</project_name>
-<teamMembers>
-John , Lila 
-</teamMembers>
 </project>
 </Projects>
