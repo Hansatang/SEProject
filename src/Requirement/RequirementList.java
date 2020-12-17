@@ -24,27 +24,6 @@ public class RequirementList implements Serializable
   }
 
   /**
-   * Gets a Requirement object with a given index from the ArrayList of Requirement objects.
-   *
-   * @param index the index number of the Requirement object
-   * @return the Requirement object with the given index if it is in the requirement list.
-   */
-  public Requirement get(int index)
-  {
-    return requirements.get(index);
-  }
-
-  /**
-   * Gets how many Requirement object are in the ArrayList requirements.
-   *
-   * @return the number of Requirement objects in the ArrayList requirements.
-   */
-  public int size()
-  {
-    return requirements.size();
-  }
-
-  /**
    * Adds a Requirement to the ArrayList requirements.
    *
    * @param requirement the Requirement to be added to the ArrayList requirements.
@@ -65,14 +44,44 @@ public class RequirementList implements Serializable
   }
 
   /**
-   * Gets a Requirement object from position index from the ArrayList requirements.
+   * Gets how many Requirement object are in the ArrayList requirements.
    *
-   * @param index the position in the ArrayList requirements.
-   * @return the Requirement object at position index if one exists, else null.
+   * @return the number of Requirement objects in the ArrayList requirements.
+   */
+  public int size()
+  {
+    return requirements.size();
+  }
+
+  /**
+   * Gets a Requirement object with a given index from the ArrayList of Requirement objects.
+   *
+   * @param index the index number of the Requirement object
+   * @return the Requirement object with the given index if it is in the requirement list.
    */
   public Requirement getRequirement(int index)
   {
     return requirements.get(index);
+  }
+
+  /**
+   * Gets the first Requirement object that has the same String as the parameter.
+   *
+   * @param requirementName the name to check the ArrayList requirements through.
+   * @return a Requirement object that has the name equal to requirementName.
+   */
+  public Requirement getRequirementsByName(String requirementName)
+  {
+    int k = 0;
+    for (int i = 0; i < requirements.size(); i++)
+    {
+      if (requirements.get(i).getName().equals(requirementName))
+      {
+        k = i;
+        break;
+      }
+    }
+    return requirements.get(k);
   }
 
   /**
@@ -104,24 +113,5 @@ public class RequirementList implements Serializable
     return false;
   }
 
-  /**
-   * Gets the first Requirement object that has the same String as the parameter.
-   *
-   * @param requirementName the name to check the ArrayList requirements through.
-   * @return a Requirement object that has the name equal to requirementName.
-   */
-  public Requirement getRequirementsByName(String requirementName)
-  {
-    int k = 0;
-    for (int i = 0; i < requirements.size(); i++)
-    {
-      if (requirements.get(i).getName().equals(requirementName))
-      {
-        k = i;
-        break;
-      }
-    }
-    ;
-    return requirements.get(k);
-  }
+
 }

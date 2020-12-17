@@ -23,6 +23,16 @@ public class ProjectList implements Serializable
   }
 
   /**
+   * Adds a Project to the list.
+   *
+   * @param project the project to add to the list
+   */
+  public void addProject(Project project)
+  {
+    projects.add(project);
+  }
+
+  /**
    * Removes a Project from the list.
    *
    * @param selectedProject the project to remove from the list
@@ -31,12 +41,6 @@ public class ProjectList implements Serializable
   {
     projects.remove(selectedProject);
   }
-
-  public void removeEmployee(int index, Employee employee)
-  {
-    projects.get(index).getTeam().removeEmployee(employee);
-  }
-
   /**
    * Gets a Project object with the given  name from the list.
    *
@@ -86,13 +90,18 @@ public class ProjectList implements Serializable
   }
 
   /**
-   * Adds a Project to the list.
+   * Removes a Employee from the Project inside list.
    *
-   * @param project the project to add to the list
+   * @param index the project index to remove employee
+   * @param employee the Employee to remove
    */
-  public void addProject(Project project)
+  public void removeEmployee(int index, Employee employee)
   {
-    projects.add(project);
+    projects.get(index).getTeam().removeEmployee(employee);
   }
+
+
+
+
 
 }

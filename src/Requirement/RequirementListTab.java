@@ -781,7 +781,7 @@ public class RequirementListTab extends Tab implements GUIParts
                 .getRequirementsByName(searchField.getText());
             for (int i = 0; i < requirements.size(); i++)
             {
-              requirementTableView.getItems().add(requirements.get(i));
+              requirementTableView.getItems().add(requirements.getRequirement(i));
             }
           }
           else if (searchByStatus.isSelected())
@@ -792,7 +792,7 @@ public class RequirementListTab extends Tab implements GUIParts
                 .getRequirementsByStatus(searchField.getText());
             for (int i = 0; i < requirements.size(); i++)
             {
-              requirementTableView.getItems().add(requirements.get(i));
+              requirementTableView.getItems().add(requirements.getRequirement(i));
             }
           }
         }

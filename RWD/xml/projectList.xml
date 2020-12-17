@@ -14,30 +14,10 @@ Mike , John
 1
 </requirement_id>
 <requirement_status>
-Approved
-</requirement_status>
-<requirement_deadline>
-2020-12-22
-</requirement_deadline>
-</project>
-<Project>
-<project_no>
-2
-</project_no>
-<project_name>
-Power Plant
-</project_name>
-<teamMembers>
-Mike , John 
-</teamMembers>
-<requirement_id>
-2
-</requirement_id>
-<requirement_status>
 Rejected
 </requirement_status>
 <requirement_deadline>
-2020-12-30
+2020-12-31
 </requirement_deadline>
 </project>
 </Projects>
