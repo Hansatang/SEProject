@@ -45,11 +45,11 @@ public class Requirement implements Serializable
 
   /**
    *
-   * @param name
-   * @param userStory
-   * @param status
-   * @param team
-   * @param deadline
+   * @param name the requirement's new name.
+   * @param userStory the requirement's new userStory.
+   * @param status the requirement's new status.
+   * @param team the requirement's new employee team.
+   * @param deadline the requirement's new deadline.
    */
   public void editRequirement(String name, String userStory , String status, EmployeeList team, LocalDate deadline)
   {
