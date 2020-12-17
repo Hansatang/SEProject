@@ -19,6 +19,12 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ *  A View/Controller class for ProjectListTab.
+ *
+ * @author Krzysztof Pacierz
+ * @version 1.0
+ */
 public class ProjectListTab extends Tab implements GUIParts
 {
   private VBox tabProjects;

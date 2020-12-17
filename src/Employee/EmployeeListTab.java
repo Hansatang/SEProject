@@ -18,6 +18,12 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ *  A View/Controller class for EmployeeListTab.
+ *
+ * @author Esben Fogh
+ * @version 1.0
+ */
 public class EmployeeListTab extends Tab implements GUIParts
 {
   private EmployeeListAdapter adapterEmployee;

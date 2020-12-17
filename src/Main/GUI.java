@@ -16,6 +16,12 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+
+/**
+ * A class containing main frame of GUI elements.
+ *
+ * @author Esben Fogh
+ */
 public class GUI extends Application
 {
   // Adapters
@@ -60,7 +66,7 @@ public class GUI extends Application
     projectListTab = new ProjectListTab("Projects", adapterProjects,
         adapterEmployee, this);
     requirementListTab = new RequirementListTab("Project detail",
-        adapterProjects, adapterEmployee, projectListTab, this);
+        adapterProjects, adapterEmployee, this);
     taskListTab = new TaskListTab("Requirement detail", adapterProjects,
         adapterEmployee);
 
@@ -104,6 +110,7 @@ public class GUI extends Application
 
   /**
    * Updates the name of the requirementListTable Tab and set it's state to not disabled
+   * @param  selectedProject the Project to put it's name into Tab title
    */
   public void changeRequirementTabTitle(Project selectedProject)
   {
@@ -113,6 +120,7 @@ public class GUI extends Application
 
   /**
    * Updates the name of the taskListTable Tab and set it's state to not disabled
+   * @param  selectedRequirement the Requirement to put it's name into Tab title
    */
   public void changeTaskTabTitle(Requirement selectedRequirement)
   {

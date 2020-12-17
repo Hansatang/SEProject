@@ -9,9 +9,16 @@ import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+/**
+ * A class for creating XML file to update the website with.
+ *
+ * @author Dorin Pascal
+ */
 public class XML {
 
-
+  /**
+   * A class responsible for importing the essential part of projects in XML File.
+   */
   public static void run()
   {
     ProjectListAdapter adapterProjects = new ProjectListAdapter("Projects.bin");
@@ -50,7 +57,7 @@ public class XML {
         for (int j = 0  ;j < list.get(i).getRequirements().size() ; j++)
         {
           write.println("<requirement_id>");
-          write.println(list.get(i).getRequirements().getRequirements().get(j).getId());
+          write.println(list.get(i).getRequirements().getRequirements().get(j).getRequirementId());
           write.println("</requirement_id>");
 
           write.println("<requirement_status>");

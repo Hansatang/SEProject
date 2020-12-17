@@ -6,8 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
- * An adapter to the students file, making it easy to retrieve and store information.
- * @author Krzysztof PAcierz
+ * An adapter to the EmployeeList file, making it easy to retrieve and store information.
+ * @author Krzysztof Pacierz
  * @version 1.0
  */
 public class EmployeeListAdapter
