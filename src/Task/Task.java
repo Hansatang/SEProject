@@ -1,7 +1,6 @@
 package Task;
 
 import Employee.Employee;
-import Employee.EmployeeList;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -12,10 +11,9 @@ public class Task implements Serializable
   private int relatedRequirement, estimatedHours, totalHoursWorked;
   private LocalDate deadline;
   private Employee responsibleEmployee;
-  private EmployeeList taskEmployees;
 
   public Task(String name, String taskID,String status, int estimatedHours, LocalDate deadline,
-      EmployeeList taskEmployees)
+      Employee responsibleEmployee)
   {
     this.deadline = deadline;
     this.name = name;
@@ -24,8 +22,7 @@ public class Task implements Serializable
     this.taskID = taskID;
     this.estimatedHours = estimatedHours;
     totalHoursWorked = 0;
-    responsibleEmployee = null;
-    this.taskEmployees = taskEmployees;
+    this.responsibleEmployee = responsibleEmployee;
   }
 
   public void setName(String name)
@@ -53,10 +50,22 @@ public class Task implements Serializable
     this.deadline = deadline;
   }
 
-  public EmployeeList getTaskEmployees()
+  public Employee getResponsibleEmployee()
   {
-    return taskEmployees;
+    return responsibleEmployee;
   }
+
+  public void setResponsibleEmployee(Employee responsibleEmployee)
+  {
+    this.responsibleEmployee = responsibleEmployee;
+  }
+
+  public void setEmpty()
+  {
+    Employee empty = new Employee("");
+    this.responsibleEmployee = empty;
+  }
+
 
   public void setEstimatedHours(int estimatedHours)
   {
@@ -66,11 +75,6 @@ public class Task implements Serializable
   public void setTotalHoursWorked(int totalHoursWorked)
   {
     this.totalHoursWorked = totalHoursWorked;
-  }
-
-  public void setTaskEmployees(EmployeeList taskEmployees)
-  {
-    this.taskEmployees = taskEmployees;
   }
 
   public String getName()

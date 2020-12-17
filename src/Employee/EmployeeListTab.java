@@ -64,6 +64,7 @@ public class EmployeeListTab extends Tab implements GUIParts
 
   /**
    * Constructor initializing the GUI components
+   *
    * @param title           The title of the tab
    * @param projectAdapter  object used for retrieving and storing project information
    * @param employeeAdapter object used for retrieving and storing employee information
@@ -129,7 +130,8 @@ public class EmployeeListTab extends Tab implements GUIParts
       finalEmployeeList = adapterEmployee.getAllEmployees();
       for (int i = 0; i < finalEmployeeList.size(); i++)
       {
-        employeeTableView.getItems().add(finalEmployeeList.getEmployees().get(i));
+        employeeTableView.getItems()
+            .add(finalEmployeeList.getEmployees().get(i));
       }
     }
   }
@@ -157,6 +159,7 @@ public class EmployeeListTab extends Tab implements GUIParts
 
   /**
    * Sets the default values for window entities
+   *
    * @param window The window to insert default values
    * @param title  The title of the window
    */
@@ -170,6 +173,7 @@ public class EmployeeListTab extends Tab implements GUIParts
 
   /**
    * Creates a VBox container with label and TextField and defines the  values them
+   *
    * @param inputText The TextField to set values
    * @param labelName The text in the label
    */
@@ -271,28 +275,29 @@ public class EmployeeListTab extends Tab implements GUIParts
                 finalProjectList = adapterProject.getAllProjects();
                 for (int i = 0; i < projects.size(); i++)
                 {
-                  finalProjectList.getProjectByName(projects.getProjectByIndex(i).getName())
+                  finalProjectList
+                      .getProjectByName(projects.getProjectByIndex(i).getName())
                       .getTeam().replaceEmployee(selectedEmployee.getName(),
                       inputEmployeeName.getText());
-                  for (int j = 0;
-                       j < projects.getProjectByName(projects.getProjectByIndex(i).getName())
-                           .getRequirements().size(); j++)
+                  for (int j = 0; j < projects
+                      .getProjectByName(projects.getProjectByIndex(i).getName())
+                      .getRequirements().size(); j++)
                   {
-                    finalProjectList.getProjectByName(projects.getProjectByIndex(i).getName())
+                    finalProjectList.getProjectByName(
+                        projects.getProjectByIndex(i).getName())
                         .getRequirements().getRequirement(j).getTeam()
                         .replaceEmployee(selectedEmployee.getName(),
                             inputEmployeeName.getText());
-                    for (int k = 0; k < projects
-                        .getProjectByName(projects.getProjectByIndex(i).getName())
+                    for (int k = 0; k < projects.getProjectByName(
+                        projects.getProjectByIndex(i).getName())
                         .getRequirements().getRequirement(j).getTasks()
                         .size(); k++)
                     {
-                      finalProjectList
-                          .getProjectByName(projects.getProjectByIndex(i).getName())
+                      finalProjectList.getProjectByName(
+                          projects.getProjectByIndex(i).getName())
                           .getRequirements().getRequirement(j).getTasks()
-                          .getTask(k).getTaskEmployees()
-                          .replaceEmployee(selectedEmployee.getName(),
-                              inputEmployeeName.getText());
+                          .getTask(k).getResponsibleEmployee()
+                          .setName(inputEmployeeName.getText());
                     }
                   }
                 }
@@ -372,26 +377,26 @@ public class EmployeeListTab extends Tab implements GUIParts
                       .getProjectByEmployeeName(selectedEmployee.getName());
                   for (int i = 0; i < projects.size(); i++)
                   {
-                    finalProjectList.getProjectByName(projects.getProjectByIndex(i).getName())
-                        .getTeam().deleteEmployee(selectedEmployee.getName());
-                    for (int j = 0; j < projects
-                        .getProjectByName(projects.getProjectByIndex(i).getName())
+                    finalProjectList.getProjectByName(
+                        projects.getProjectByIndex(i).getName()).getTeam()
+                        .deleteEmployee(selectedEmployee.getName());
+                    for (int j = 0; j < projects.getProjectByName(
+                        projects.getProjectByIndex(i).getName())
                         .getRequirements().size(); j++)
                     {
-                      finalProjectList
-                          .getProjectByName(projects.getProjectByIndex(i).getName())
+                      finalProjectList.getProjectByName(
+                          projects.getProjectByIndex(i).getName())
                           .getRequirements().getRequirement(j).getTeam()
                           .deleteEmployee(selectedEmployee.getName());
-                      for (int k = 0; k < projects
-                          .getProjectByName(projects.getProjectByIndex(i).getName())
+                      for (int k = 0; k < projects.getProjectByName(
+                          projects.getProjectByIndex(i).getName())
                           .getRequirements().getRequirement(j).getTasks()
                           .size(); k++)
                       {
-                        finalProjectList
-                            .getProjectByName(projects.getProjectByIndex(i).getName())
+                        finalProjectList.getProjectByName(
+                            projects.getProjectByIndex(i).getName())
                             .getRequirements().getRequirement(j).getTasks()
-                            .getTask(k).getTaskEmployees()
-                            .deleteEmployee(selectedEmployee.getName());
+                            .getTask(k).setEmpty();
                       }
                     }
                   }
