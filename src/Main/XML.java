@@ -9,8 +9,8 @@ import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-public class XML {
-
+public class XML
+{
 
   public static void run()
   {
@@ -24,7 +24,7 @@ public class XML {
     }
     try
     {
-      FileOutputStream fileOut = new FileOutputStream("projectList.xml");
+      FileOutputStream fileOut = new FileOutputStream("RWD\\xml\\projectList.xml");
       PrintWriter write = new PrintWriter(fileOut);
 
       write.println("<?xml version='1.0' encoding='UTF-8'?> ");
@@ -47,26 +47,28 @@ public class XML {
         write.println("<teamMembers>");
         write.println(list.get(i).getTeam());
         write.println("</teamMembers>");
-        for (int j = 0  ;j < list.get(i).getRequirements().size() ; j++)
+        for (int j = 0; j < list.get(i).getRequirements().size(); j++)
         {
           write.println("<requirement_id>");
-          write.println(list.get(i).getRequirements().getRequirements().get(j).getId());
+          write.println(
+              list.get(i).getRequirements().getRequirements().get(j).getId());
           write.println("</requirement_id>");
 
           write.println("<requirement_status>");
-          write.println(list.get(i).getRequirements().getRequirements().get(j).getStatus());
+          write.println(list.get(i).getRequirements().getRequirements().get(j)
+              .getStatus());
           write.println("</requirement_status>");
 
           write.println("<requirement_deadline>");
-          write.println(
-              list.get(i).getRequirements().getRequirements().get(j).getDeadline());
+          write.println(list.get(i).getRequirements().getRequirements().get(j)
+              .getDeadline());
           write.println("</requirement_deadline>");
 
         }
         write.println("</project>");
 
-
-      } write.println("</Projects>");
+      }
+      write.println("</Projects>");
       write.close();
     }
     catch (FileNotFoundException e)
