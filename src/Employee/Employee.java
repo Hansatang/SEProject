@@ -8,6 +8,7 @@ public class Employee implements Serializable
 
   /**
    * One-argument constructor.
+   *
    * @param name the employee's name
    */
   public Employee(String name)
@@ -30,16 +31,18 @@ public class Employee implements Serializable
    *
    * @param name what the employee's name will be set to
    */
-  public void setName(String name){
+  public void setName(String name)
+  {
     this.name = name;
   }
 
   /**
    * Returns a string representation of the employee.
+   *
    * @return a string representation of the employee in the format: "name"
    */
-  @Override
-  public String toString() {
+  @Override public String toString()
+  {
     return name;
   }
 }

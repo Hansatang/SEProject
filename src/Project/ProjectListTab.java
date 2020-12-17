@@ -74,10 +74,11 @@ public class ProjectListTab extends Tab implements GUIParts
 
   /**
    * Constructor initializing the GUI components
+   *
    * @param title           The title of the tab
    * @param projectAdapter  object used for retrieving and storing project information
    * @param employeeAdapter object used for retrieving and storing employee information
-   * @param GUI      object used for communication between Tabs
+   * @param GUI             object used for communication between Tabs
    */
   public ProjectListTab(String title, ProjectListAdapter projectAdapter,
       EmployeeListAdapter employeeAdapter, GUI GUI)
@@ -159,6 +160,7 @@ public class ProjectListTab extends Tab implements GUIParts
 
   /**
    * Gets the selectedProject Project.
+   *
    * @return the selectedProject Project
    */
   public Project getSelectedProject()
@@ -387,7 +389,8 @@ public class ProjectListTab extends Tab implements GUIParts
               {
                 if (employeeCheckBoxes[i].isSelected())
                 {
-                  selectedEmployees.addEmployee(finalEmployeeList.getEmployee(i));
+                  selectedEmployees
+                      .addEmployee(finalEmployeeList.getEmployee(i));
                 }
               }
 

@@ -51,7 +51,7 @@ public class TaskListTab extends Tab implements GUIParts
   private Project selectedProject;
   private Requirement selectedRequirement;
   private Task selectedTask;
-  private  Employee selectedEmployee;
+  private Employee selectedEmployee;
 
   private EmployeeListAdapter adapterEmployee;
   private ProjectListAdapter adapterProject;
@@ -82,11 +82,11 @@ public class TaskListTab extends Tab implements GUIParts
   private final ArrayList<String> statusOptions = new ArrayList<>(
       Arrays.asList("Approved", "Ended", "Not Started", "Rejected", "Started"));
 
-
   /**
    * Constructor initializing the GUI components
-   * @param title           The title of the tab
-   * @param adapterProject  object used for retrieving and storing project information
+   *
+   * @param title            The title of the tab
+   * @param adapterProject   object used for retrieving and storing project information
    * @param adapterEmployees object used for retrieving and storing employee information
    */
   public TaskListTab(String title, ProjectListAdapter adapterProject,
@@ -183,6 +183,7 @@ public class TaskListTab extends Tab implements GUIParts
 
   /**
    * Sets the default values for window entities
+   *
    * @param window The window to insert default values
    * @param title  The title of the window
    */
@@ -196,6 +197,7 @@ public class TaskListTab extends Tab implements GUIParts
 
   /**
    * Creates a VBox container with label and TextField and defines the  values them
+   *
    * @param inputText The TextField to set values
    * @param labelName The text in the label
    */
@@ -212,6 +214,7 @@ public class TaskListTab extends Tab implements GUIParts
 
   /**
    * Creates a VBox container with label and ComboBox and defines the  values them
+   *
    * @return the VBox containing label and ComboBox for selecting status
    */
   private VBox statusComboBoxWindowPart()
@@ -369,10 +372,13 @@ public class TaskListTab extends Tab implements GUIParts
         GridPane employeeSelectContainer = new GridPane();
 
         ToggleGroup employeeToggleGroup = new ToggleGroup();
-        RadioButton[] employeeRadioButtons = new RadioButton[selectedRequirement.getTeam().size()];
+        RadioButton[] employeeRadioButtons = new RadioButton[selectedRequirement
+            .getTeam().size()];
 
-        for (int i = 0 ; i < employeeRadioButtons.length ; i++){
-          employeeRadioButtons[i] = new RadioButton(selectedRequirement.getTeam().getEmployee(i).getName());
+        for (int i = 0; i < employeeRadioButtons.length; i++)
+        {
+          employeeRadioButtons[i] = new RadioButton(
+              selectedRequirement.getTeam().getEmployee(i).getName());
           employeeSelectContainer.add(employeeRadioButtons[i], i % 2, i / 2);
           employeeRadioButtons[i].setPadding(new Insets(3, 50, 3, 3));
           employeeRadioButtons[i].setToggleGroup(employeeToggleGroup);
@@ -547,20 +553,23 @@ public class TaskListTab extends Tab implements GUIParts
           GridPane employeeSelectContainer = new GridPane();
 
           ToggleGroup employeeToggleGroup = new ToggleGroup();
-          RadioButton[] employeeRadioButtons = new RadioButton[selectedRequirement.getTeam().size()];
+          RadioButton[] employeeRadioButtons = new RadioButton[selectedRequirement
+              .getTeam().size()];
 
-          for (int i = 0 ; i < employeeRadioButtons.length ; i++){
-            employeeRadioButtons[i] = new RadioButton(selectedRequirement.getTeam().getEmployee(i).getName());
+          for (int i = 0; i < employeeRadioButtons.length; i++)
+          {
+            employeeRadioButtons[i] = new RadioButton(
+                selectedRequirement.getTeam().getEmployee(i).getName());
             employeeSelectContainer.add(employeeRadioButtons[i], i % 2, i / 2);
             employeeRadioButtons[i].setPadding(new Insets(3, 50, 3, 3));
             employeeRadioButtons[i].setToggleGroup(employeeToggleGroup);
             for (int j = 0; j < selectedRequirement.getTeam().size(); j++)
             {
-              if (employeeRadioButtons[i].getText().equals(selectedTask.getResponsibleEmployee().getName()))
+              if (employeeRadioButtons[i].getText()
+                  .equals(selectedTask.getResponsibleEmployee().getName()))
               {
                 employeeRadioButtons[i].setSelected(true);
               }
-
             }
           }
 
@@ -589,7 +598,8 @@ public class TaskListTab extends Tab implements GUIParts
               {
                 if (employeeRadioButtons[i].isSelected())
                 {
-                  selectedEmployee = selectedRequirement.getTeam().getEmployee(i);
+                  selectedEmployee = selectedRequirement.getTeam()
+                      .getEmployee(i);
                 }
               }
 
@@ -598,12 +608,14 @@ public class TaskListTab extends Tab implements GUIParts
               // Edit estimated hours
               if (!inputTaskEstimation.getText().matches("[0-9]+"))
               {
-                selectedTask.setEstimatedHours(selectedTask.getEstimatedHours());
+                selectedTask
+                    .setEstimatedHours(selectedTask.getEstimatedHours());
                 errorLabel.setText("ERROR: Fix estimated hours");
               }
               else
               {
-                selectedTask.setEstimatedHours(Integer.parseInt(inputTaskEstimation.getText()));
+                selectedTask.setEstimatedHours(
+                    Integer.parseInt(inputTaskEstimation.getText()));
               }
               // Edit total hours
               selectedTask
@@ -664,8 +676,8 @@ public class TaskListTab extends Tab implements GUIParts
                 selectedRequirement.getTasks().removeTask(selectedTask);
                 finalProjectList.getProjectByName(selectedProject.getName())
                     .getRequirements()
-                    .getRequirementsByName(selectedRequirement.getName())
-                    .remove(selectedTask);
+                    .getRequirementsByName(selectedRequirement.getName()).getTasks()
+                    .removeTask(selectedTask);
                 adapterProject.saveProjects(finalProjectList);
                 updateTaskArea();
                 selectedTask = null;

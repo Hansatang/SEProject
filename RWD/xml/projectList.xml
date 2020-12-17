@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+<projects> 
+<Project>
+<project_no>
+1
+</project_no>
+<project_name>
+Robotic Arms
+</project_name>
+<teamMembers>
+Mike , John 
+</teamMembers>
+<requirement_id>
+1
+</requirement_id>
+<requirement_status>
+Rejected
+</requirement_status>
+<requirement_deadline>
+2020-12-31
+</requirement_deadline>
+</project>
+</Projects>

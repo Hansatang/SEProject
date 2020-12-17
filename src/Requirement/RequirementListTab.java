@@ -127,7 +127,7 @@ public class RequirementListTab extends Tab implements GUIParts
    * @param title            The title of the tab
    * @param adapterProjects  object used for retrieving and storing project information
    * @param adapterEmployees object used for retrieving and storing employee information
-   * @param GUI       object used for communication between Tabs
+   * @param GUI              object used for communication between Tabs
    */
   public RequirementListTab(String title, ProjectListAdapter adapterProjects,
       EmployeeListAdapter adapterEmployees, ProjectListTab projectListTab,
@@ -162,7 +162,6 @@ public class RequirementListTab extends Tab implements GUIParts
         .setCellValueFactory(new PropertyValueFactory<>(deadline));
     requirementDeadline.setPrefWidth(199);
     requirementTableView.getColumns().add(requirementDeadline);
-
 
     searchByName = new RadioButton();
     searchByName.setText(searchRadioButtonName);
@@ -301,6 +300,7 @@ public class RequirementListTab extends Tab implements GUIParts
 
   /**
    * Creates a VBox container with label and ComboBox and defines the  values them
+   *
    * @return the VBox containing label and ComboBox for selecting status
    */
   private VBox statusComboBoxWindowPart()
@@ -401,7 +401,7 @@ public class RequirementListTab extends Tab implements GUIParts
       requirementStatusLabel.setText(selectedRequirement.getStatus());
       requirementDeadlineLabel
           .setText(selectedRequirement.getDeadline().toString());
-      requirementIdLabel.setText(selectedRequirement.getId()+"");
+      requirementIdLabel.setText(selectedRequirement.getRequirementId() + "");
       requirementTeamLabel.setText(selectedRequirement.getTeam().toString());
       if (!selectedRequirement.getTasks().isEmpty())
       {
@@ -450,8 +450,8 @@ public class RequirementListTab extends Tab implements GUIParts
           VBox statusContainer = statusComboBoxWindowPart();
 
           // Requirement id input.
-          VBox requirementIdContainer = textFieldWindowPart(
-              inputRequirementID, id);
+          VBox requirementIdContainer = textFieldWindowPart(inputRequirementID,
+              id);
 
           // Requirement.Requirement deadline input.
           VBox deadlineContainer = new VBox();
@@ -523,7 +523,8 @@ public class RequirementListTab extends Tab implements GUIParts
               {
                 if (employeeCheckBoxes[i].isSelected())
                 {
-                  selectedEmployees.addEmployee(finalEmployeeList.getEmployee(i));
+                  selectedEmployees
+                      .addEmployee(finalEmployeeList.getEmployee(i));
                 }
               }
               if (inputRequirementName.getText().isEmpty()
@@ -546,7 +547,7 @@ public class RequirementListTab extends Tab implements GUIParts
                     inputRequirementName.getText(), inputUserStory.getText(),
                     inputTaskStatus.getValue(),
                     inputRequirementDeadline.getValue(), selectedEmployees);
-                requirement.setId(inputRequirementID.getText());
+                requirement.setRequirementId(inputRequirementID.getText());
                 finalProjectList.getProjectByName(selectedProject.getName())
                     .getRequirements().addRequirement(requirement);
                 adapterProject.saveProjects(finalProjectList);
@@ -557,8 +558,9 @@ public class RequirementListTab extends Tab implements GUIParts
 
           layout.getChildren()
               .addAll(requirementNameContainer, requirementUserStoryContainer,
-                  statusContainer, requirementIdContainer, employeeListContainer,
-                  deadlineContainer,closeWithSaveButton, errorLabel);
+                  statusContainer, requirementIdContainer,
+                  employeeListContainer, deadlineContainer, closeWithSaveButton,
+                  errorLabel);
 
           layout.setAlignment(Pos.CENTER);
           Scene scene = new Scene(layout);
@@ -589,9 +591,9 @@ public class RequirementListTab extends Tab implements GUIParts
           inputUserStory.setText(selectedRequirement.getUserstory());
 
           // Requirement id input.
-          VBox requirementIdContainer = textFieldWindowPart(
-              inputRequirementID, id);
-          inputRequirementID.setText(selectedRequirement.getId());
+          VBox requirementIdContainer = textFieldWindowPart(inputRequirementID,
+              id);
+          inputRequirementID.setText(selectedRequirement.getRequirementId());
 
           // Requirement.Requirement status input.
           VBox statusContainer = statusComboBoxWindowPart();
@@ -678,7 +680,7 @@ public class RequirementListTab extends Tab implements GUIParts
                   .editRequirement(inputRequirementName.getText(),
                       inputUserStory.getText(), inputTaskStatus.getValue(),
                       selectedEmployees, inputRequirementDeadline.getValue());
-              selectedRequirement.setId(inputRequirementID.getText());
+              selectedRequirement.setRequirementId(inputRequirementID.getText());
               // Close window
               window.close();
               // Save all changes
@@ -692,9 +694,10 @@ public class RequirementListTab extends Tab implements GUIParts
           });
 
           layout.getChildren()
-              .addAll(requirementNameContainer, requirementIdContainer, requirementUserStoryContainer,
-                  statusContainer, employeeListContainer, deadlineContainer,
-                  closeWithSaveButton, errorLabel);
+              .addAll(requirementNameContainer, requirementIdContainer,
+                  requirementUserStoryContainer, statusContainer,
+                  employeeListContainer, deadlineContainer, closeWithSaveButton,
+                  errorLabel);
           layout.setAlignment(Pos.CENTER);
 
           Scene scene = new Scene(layout);
@@ -778,7 +781,7 @@ public class RequirementListTab extends Tab implements GUIParts
                 .getRequirementsByName(searchField.getText());
             for (int i = 0; i < requirements.size(); i++)
             {
-              requirementTableView.getItems().add(requirements.get(i));
+              requirementTableView.getItems().add(requirements.getRequirement(i));
             }
           }
           else if (searchByStatus.isSelected())
@@ -789,7 +792,7 @@ public class RequirementListTab extends Tab implements GUIParts
                 .getRequirementsByStatus(searchField.getText());
             for (int i = 0; i < requirements.size(); i++)
             {
-              requirementTableView.getItems().add(requirements.get(i));
+              requirementTableView.getItems().add(requirements.getRequirement(i));
             }
           }
         }
