@@ -28,6 +28,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+
+/**
+ * A class containing GUI elements for the Task tab.
+ *
+ * @author Dorin Pascal
+ */
 public class TaskListTab extends Tab implements GUIParts
 {
   private VBox tabTask;

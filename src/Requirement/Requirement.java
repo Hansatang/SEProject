@@ -151,7 +151,7 @@ public class Requirement implements Serializable
   }
 
   /**
-   * Sets the status to "Emded" if all the tasks have the status "Ended".
+   * Sets the status to "Ended" if all the tasks have the status "Ended".
    */
   public void checkTasks()
   {
