@@ -27,7 +27,6 @@ public class Task implements Serializable
    * @param responsibleEmployee the task's responsible employee.
    * @param estimatedHours      the task's estimated hours worked.
    */
-
   public Task(String name, String taskID, String status, int estimatedHours,
       LocalDate deadline, Employee responsibleEmployee)
   {

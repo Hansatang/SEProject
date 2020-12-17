@@ -50,7 +50,6 @@ public class MyFileIO
   /**
    * Reads the first object from the file with the given file name and returns it.
    * Whoever calls the method will need to cast it from type Object to its real type
-   *
    * @param fileName the name and path of the file that is read
    * @return the Object read from the file
    * @throws FileNotFoundException  if the file with fileName is not found
