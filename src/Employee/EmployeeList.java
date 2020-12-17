@@ -3,7 +3,8 @@ package Employee;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class EmployeeList implements Serializable {
+public class EmployeeList implements Serializable
+{
   private ArrayList<Employee> employees;
 
   public EmployeeList()
@@ -11,7 +12,9 @@ public class EmployeeList implements Serializable {
     this.employees = new ArrayList<>();
   }
 
- /** Gets how many Employees objects are in the list.
+  /**
+   * Gets how many Employees objects are in the list.
+   *
    * @return integer of the number of Employee objects in the list
    */
   public int size()
@@ -19,24 +22,30 @@ public class EmployeeList implements Serializable {
     return employees.size();
   }
 
- /** Gets an Employee object from position index from the list.
+  /**
+   * Gets an Employee object from position index from the list.
+   *
    * @param index the position in the list of the Employee.Employee object
    * @return the Employee.Employee object at position index if one exists, else null
    */
-  public Employee getEmployee(int index) {
+  public Employee getEmployee(int index)
+  {
     return employees.get(index);
   }
 
   /**
    * Adds a Employee to the list.
+   *
    * @param employee the Employee to add to the list
    */
-  public void addEmployee(Employee employee) {
+  public void addEmployee(Employee employee)
+  {
     employees.add(employee);
   }
 
   /**
    * Removes a Employee from the list.
+   *
    * @param employee the Employee to remove from the list
    */
   public void removeEmployee(Employee employee)
@@ -46,6 +55,7 @@ public class EmployeeList implements Serializable {
 
   /**
    * Removes a Employee from the list.
+   *
    * @param name the  name of Employee to remove from the list
    */
   public void deleteEmployee(String name)
@@ -55,16 +65,18 @@ public class EmployeeList implements Serializable {
 
   /**
    * Changes the employee's name.
-   * @param  name of which employee name will be changes
+   *
+   * @param name    of which employee name will be changes
    * @param newName what the employee's name will be set to
    */
-  public void replaceEmployee(String name,String newName)
+  public void replaceEmployee(String name, String newName)
   {
     employees.get(getIndexFromName(name)).setName(newName);
   }
 
   /**
    * Gets a index of the given  name  of Employee from the list.
+   *
    * @param name the  name of the Employee object
    * @return the index of Employee with specific name if one exists
    */
@@ -105,7 +117,7 @@ public class EmployeeList implements Serializable {
   public String toString()
   {
     String str = "";
-    if (employees.size()!=0)
+    if (employees.size() != 0)
     {
       for (int i = 0; i < employees.size(); i++)
       {

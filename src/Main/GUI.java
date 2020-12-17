@@ -43,7 +43,8 @@ public class GUI extends Application
   /**
    * @param window The Stage object that will be displayed
    */
-  public void start(Stage window) {
+  public void start(Stage window)
+  {
     window.setTitle("Project Management System");
 
     adapterProjects = new ProjectListAdapter("Projects.bin");
@@ -54,10 +55,14 @@ public class GUI extends Application
     tabPane = new TabPane();
     tabPane.getSelectionModel().selectedItemProperty().addListener(tabListener);
 
-    employeeListTab = new EmployeeListTab("Employees", adapterProjects, adapterEmployee);
-    projectListTab = new ProjectListTab("Projects", adapterProjects, adapterEmployee, this);
-    requirementListTab = new RequirementListTab("Project detail", adapterProjects, adapterEmployee, projectListTab, this);
-    taskListTab = new TaskListTab("Requirement detail", adapterProjects, adapterEmployee);
+    employeeListTab = new EmployeeListTab("Employees", adapterProjects,
+        adapterEmployee);
+    projectListTab = new ProjectListTab("Projects", adapterProjects,
+        adapterEmployee, this);
+    requirementListTab = new RequirementListTab("Project detail",
+        adapterProjects, adapterEmployee, projectListTab, this);
+    taskListTab = new TaskListTab("Requirement detail", adapterProjects,
+        adapterEmployee);
 
     requirementListTab.setDisable(true);
     taskListTab.setDisable(true);
@@ -68,7 +73,7 @@ public class GUI extends Application
     tabPane.getTabs().add(requirementListTab);
     tabPane.getTabs().add(taskListTab);
     exitMenuItem = new MenuItem("Exit");
-    exitMenuItem.setOnAction(e->window.close());
+    exitMenuItem.setOnAction(e -> window.close());
 
     aboutMenuItem = new MenuItem("About");
 

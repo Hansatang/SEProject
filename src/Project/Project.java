@@ -74,6 +74,7 @@ public class Project implements Serializable
 
   /**
    * Retrieve all requirements with specified name.
+   *
    * @param searchPhrase the name to retrieve requirements with
    * @return a RequirementList object with requirements with specified name
    */
@@ -93,6 +94,7 @@ public class Project implements Serializable
 
   /**
    * Retrieve all requirements with specified status.
+   *
    * @param searchPhrase the status to retrieve requirements with
    * @return a RequirementList object with requirements with specified status
    */
@@ -148,6 +150,7 @@ public class Project implements Serializable
 
   /**
    * Returns a string representation of the project.
+   *
    * @return a string representation of the project in the format: "name"
    */
   public String toString()

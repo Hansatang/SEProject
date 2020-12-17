@@ -24,11 +24,11 @@ public class Requirement implements Serializable
   /**
    * Five-argument constructor.
    *
-   * @param name the requirement's name.
+   * @param name      the requirement's name.
    * @param userstory the requirement's user story.
-   * @param status the requirement's status.
-   * @param deadline the requirement's deadline.
-   * @param team the requirement's employee team.
+   * @param status    the requirement's status.
+   * @param deadline  the requirement's deadline.
+   * @param team      the requirement's employee team.
    */
   public Requirement(String name, String userstory, String status,
       LocalDate deadline, EmployeeList team)
@@ -44,14 +44,14 @@ public class Requirement implements Serializable
   }
 
   /**
-   *
    * @param name
    * @param userStory
    * @param status
    * @param team
    * @param deadline
    */
-  public void editRequirement(String name, String userStory , String status, EmployeeList team, LocalDate deadline)
+  public void editRequirement(String name, String userStory, String status,
+      EmployeeList team, LocalDate deadline)
   {
     this.name = name;
     this.userstory = userStory;

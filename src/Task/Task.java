@@ -12,8 +12,8 @@ public class Task implements Serializable
   private LocalDate deadline;
   private Employee responsibleEmployee;
 
-  public Task(String name, String taskID,String status, int estimatedHours, LocalDate deadline,
-      Employee responsibleEmployee)
+  public Task(String name, String taskID, String status, int estimatedHours,
+      LocalDate deadline, Employee responsibleEmployee)
   {
     this.deadline = deadline;
     this.name = name;
@@ -65,7 +65,6 @@ public class Task implements Serializable
     Employee empty = new Employee("");
     this.responsibleEmployee = empty;
   }
-
 
   public void setEstimatedHours(int estimatedHours)
   {
