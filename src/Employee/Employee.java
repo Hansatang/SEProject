@@ -2,6 +2,12 @@ package Employee;
 
 import java.io.Serializable;
 
+/**
+ *  A class representing a employee with a name.
+ *
+ * @author Esben Fogh
+ * @version 1.0
+ */
 public class Employee implements Serializable
 {
   private String name;

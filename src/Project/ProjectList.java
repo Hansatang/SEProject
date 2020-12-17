@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * A class containing a list of Project objects.
  *
- * @author
+ * @author Krzysztof Pacierz
  */
 public class ProjectList implements Serializable
 {

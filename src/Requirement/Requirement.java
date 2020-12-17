@@ -218,7 +218,7 @@ public class Requirement implements Serializable
    *
    * @return String value of the requirement's ID.
    */
-  public String getId()
+  public String getRequirementId()
   {
     return requirementId;
   }
@@ -228,7 +228,7 @@ public class Requirement implements Serializable
    *
    * @param requirementId the requirement's ID.
    */
-  public void setId(String requirementId)
+  public void setRequirementId(String requirementId)
   {
     this.requirementId = requirementId;
   }

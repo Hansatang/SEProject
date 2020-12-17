@@ -4,7 +4,6 @@ import Employee.EmployeeList;
 import Employee.EmployeeListAdapter;
 import Main.GUI;
 import Main.GUIParts;
-import Project.ProjectListTab;
 import Project.Project;
 import Project.ProjectList;
 import Project.ProjectListAdapter;
@@ -55,7 +54,7 @@ public class RequirementListTab extends Tab implements GUIParts
   private Requirement selectedRequirement;
   private Project selectedProject;
 
-  private ProjectListTab projectListTab;
+
   private GUI GUI;
 
   private EmployeeListAdapter adapterEmployee;
@@ -130,13 +129,12 @@ public class RequirementListTab extends Tab implements GUIParts
    * @param GUI              object used for communication between Tabs
    */
   public RequirementListTab(String title, ProjectListAdapter adapterProjects,
-      EmployeeListAdapter adapterEmployees, ProjectListTab projectListTab,
+      EmployeeListAdapter adapterEmployees,
       GUI GUI)
   {
     super(title);
 
     this.GUI = GUI;
-    this.projectListTab = projectListTab;
     this.adapterProject = adapterProjects;
     this.adapterEmployee = adapterEmployees;
 

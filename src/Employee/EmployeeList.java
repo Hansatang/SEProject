@@ -3,6 +3,12 @@ package Employee;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ *  A class representing a employeeList with an ArrayList of Employees.
+ *
+ * @author Esben Fogh
+ * @version 1.0
+ */
 public class EmployeeList implements Serializable
 {
   private ArrayList<Employee> employees;
