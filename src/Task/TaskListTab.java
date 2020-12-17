@@ -670,8 +670,8 @@ public class TaskListTab extends Tab implements GUIParts
                 selectedRequirement.getTasks().removeTask(selectedTask);
                 finalProjectList.getProjectByName(selectedProject.getName())
                     .getRequirements()
-                    .getRequirementsByName(selectedRequirement.getName())
-                    .remove(selectedTask);
+                    .getRequirementsByName(selectedRequirement.getName()).getTasks()
+                    .removeTask(selectedTask);
                 adapterProject.saveProjects(finalProjectList);
                 updateTaskArea();
                 selectedTask = null;

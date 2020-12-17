@@ -52,7 +52,7 @@ public class XML
         {
           write.println("<requirement_id>");
           write.println(
-              list.get(i).getRequirements().getRequirements().get(j).getId());
+              list.get(i).getRequirements().getRequirements().get(j).getRequirementId());
           write.println("</requirement_id>");
 
           write.println("<requirement_status>");

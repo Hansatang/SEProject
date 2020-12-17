@@ -44,20 +44,59 @@ public class Requirement implements Serializable
   }
 
   /**
-   * @param name
-   * @param userStory
-   * @param status
-   * @param team
-   * @param deadline
+   * Gets the requirement's name.
+   *
+   * @return String value of the requirement's name.
    */
-  public void editRequirement(String name, String userStory, String status,
-      EmployeeList team, LocalDate deadline)
+  public String getName()
   {
-    this.name = name;
-    this.userstory = userStory;
-    this.status = status;
-    this.team = team;
-    this.deadline = deadline;
+    return name;
+  }
+
+  /**
+   * Gets the user story.
+   *
+   * @return String value of the user story.
+   */
+  public String getUserstory()
+  {
+    return userstory;
+  }
+
+  /**
+   * Gets the total amount of estimated work hours summarized from each task
+   * in the task list.
+   *
+   * @return the total estimated work hours.
+   */
+  public int getEstimatedHours()
+  {
+    int sum = 0;
+    for (int i = 0; i < tasks.size(); i++)
+    {
+      sum += tasks.getTask(i).getEstimatedHours();
+    }
+    return sum;
+  }
+
+  /**
+   * Gets the requirement's deadline.
+   *
+   * @return LocalDate class object of the requirement's deadline.
+   */
+  public LocalDate getDeadline()
+  {
+    return deadline;
+  }
+
+  /**
+   * Gets the requirement's employee team.
+   *
+   * @return EmployeeList class object of the requirement's team.
+   */
+  public EmployeeList getTeam()
+  {
+    return team;
   }
 
   /**
@@ -71,6 +110,31 @@ public class Requirement implements Serializable
   }
 
   /**
+   * Gets the total amount of hours worked on each task in the requirement.
+   *
+   * @return the total hours worked.
+   */
+  public int getTotalHoursWorked()
+  {
+    int sum = 0;
+    for (int i = 0; i < tasks.size(); i++)
+    {
+      sum += tasks.getTask(i).getTotalHoursWorked();
+    }
+    return sum;
+  }
+
+  /**
+   * Get the requirement's ID.
+   *
+   * @return String value of the requirement's ID.
+   */
+  public String getRequirementId()
+  {
+    return requirementId;
+  }
+
+  /**
    * Gets the requirement's tasks.
    *
    * @return TaskList class object of the requirement's task list.
@@ -78,6 +142,16 @@ public class Requirement implements Serializable
   public TaskList getTasks()
   {
     return tasks;
+  }
+
+  /**
+   * Sets the requirement's name.
+   *
+   * @param name what the requirement's name will be set to.
+   */
+  public void setName(String name)
+  {
+    this.name = name;
   }
 
   /**
@@ -91,13 +165,13 @@ public class Requirement implements Serializable
   }
 
   /**
-   * Sets the requirement's status.
+   * Sets the requirement's amount of estimated hours to finish the requirement.
    *
-   * @param status what the requirement's status will be set to.
+   * @param estimatedHours what the requirement's estimated hours will be set to.
    */
-  public void setStatus(String status)
+  public void setEstimatedHours(int estimatedHours)
   {
-    this.status = status;
+    this.estimatedHours = estimatedHours;
   }
 
   /**
@@ -121,23 +195,13 @@ public class Requirement implements Serializable
   }
 
   /**
-   * Sets the requirement's name.
+   * Sets the requirement's status.
    *
-   * @param name what the requirement's name will be set to.
+   * @param status what the requirement's status will be set to.
    */
-  public void setName(String name)
+  public void setStatus(String status)
   {
-    this.name = name;
-  }
-
-  /**
-   * Sets the requirement's amount of estimated hours to finish the requirement.
-   *
-   * @param estimatedHours what the requirement's estimated hours will be set to.
-   */
-  public void setEstimatedHours(int estimatedHours)
-  {
-    this.estimatedHours = estimatedHours;
+    this.status = status;
   }
 
   /**
@@ -148,6 +212,16 @@ public class Requirement implements Serializable
   public void setTotalHoursWorked(int totalHoursWorked)
   {
     this.totalHoursWorked = totalHoursWorked;
+  }
+
+  /**
+   * Sets the requirement's ID.
+   *
+   * @param requirementId the requirement's ID.
+   */
+  public void setRequirementId(String requirementId)
+  {
+    this.requirementId = requirementId;
   }
 
   /**
@@ -173,105 +247,21 @@ public class Requirement implements Serializable
   }
 
   /**
-   * Removes a specific task from the task list.
+   * Five-argument setter.
    *
-   * @param task the removed task.
+   * @param name
+   * @param userStory
+   * @param status
+   * @param team
+   * @param deadline
    */
-
-  public void remove(Task task)
+  public void editRequirement(String name, String userStory, String status,
+      EmployeeList team, LocalDate deadline)
   {
-    tasks.removeTask(task);
+    this.name = name;
+    this.userstory = userStory;
+    this.status = status;
+    this.team = team;
+    this.deadline = deadline;
   }
-
-  /**
-   * Gets the requirement's employee team.
-   *
-   * @return EmployeeList class object of the requirement's team.
-   */
-  public EmployeeList getTeam()
-  {
-    return team;
-  }
-
-  /**
-   * Gets the requirement's deadline.
-   *
-   * @return LocalDate class object of the requirement's deadline.
-   */
-  public LocalDate getDeadline()
-  {
-    return deadline;
-  }
-
-  /**
-   * Gets the requirement's name.
-   *
-   * @return String value of the requirement's name.
-   */
-  public String getName()
-  {
-    return name;
-  }
-
-  /**
-   * Get the requirement's ID.
-   *
-   * @return String value of the requirement's ID.
-   */
-  public String getId()
-  {
-    return requirementId;
-  }
-
-  /**
-   * Sets the requirement's ID.
-   *
-   * @param requirementId the requirement's ID.
-   */
-  public void setId(String requirementId)
-  {
-    this.requirementId = requirementId;
-  }
-
-  /**
-   * Gets the total amount of hours worked on each task in the requirement.
-   *
-   * @return the total hours worked.
-   */
-  public int getTotalHoursWorked()
-  {
-    int sum = 0;
-    for (int i = 0; i < tasks.size(); i++)
-    {
-      sum += tasks.getTask(i).getTotalHoursWorked();
-    }
-    return sum;
-  }
-
-  /**
-   * Gets the total amount of estimated work hours summarized from each task
-   * in the task list.
-   *
-   * @return the total estimated work hours.
-   */
-  public int getEstimatedHours()
-  {
-    int sum = 0;
-    for (int i = 0; i < tasks.size(); i++)
-    {
-      sum += tasks.getTask(i).getEstimatedHours();
-    }
-    return sum;
-  }
-
-  /**
-   * Gets the user story.
-   *
-   * @return String value of the user story.
-   */
-  public String getUserstory()
-  {
-    return userstory;
-  }
-
 }
